@@ -6,7 +6,7 @@
 
 ### 介绍
 
-Bitwarden可以导入来自许多[应用程序](https://help.bitwarden.com/article/import-data/)的数据。
+Bitwarden可以导入来自许多[应用程序](https://help.bitwarden.com/article/import-data/)的数据。\[**译者注**\]：我翻译的[此链接的中文版](https://bitwardenhelp.ppgg.in/categories/getting-started/import-your-data-from-another-application)
 
 当前的导入器仅允许您选择导入文件的格式，而不能告诉您是如何将数据转换为Bitwarden的。
 
