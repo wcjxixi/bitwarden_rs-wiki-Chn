@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page)
 {% endhint %}
 
-**重要说明**：强烈建议在启用此功能之前激活HTTPS，以避免可能的MITM攻击。
+**重要说明**：强烈建议在启用此功能之前激活HTTPS，以避免可能的[MITM](https://www.jianshu.com/p/a825de42ccbc)攻击。
 
 该页面允许服务器管理员查看所有注册用户并将其删除。即使禁用了注册，它也允许邀请新用户。
 
