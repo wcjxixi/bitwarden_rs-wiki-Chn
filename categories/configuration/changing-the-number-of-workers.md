@@ -1,0 +1,20 @@
+# 更改worker数量
+
+\[译者注\]：worker相当于工人，就是干活的人。也不知如何翻译才准备，就不翻译这个词了。“Master-Worker模式是常用的并行设计模式。核心思想是，系统由两个角色组成：Master和Worker。Master负责接收和分配任务，Worker负责处理子任务。任务处理过程中，Master还负责监督任务进展和Worker的健康状态；Master将接收Client提交的任务，并将任务的进展汇总反馈给Client。”
+
+{% hint style="success" %}
+对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Changing-the-number-of-workers)
+{% endhint %}
+
+当bitwarden\_rs运行时，默认它会产生`2 * <number of cpu cores>`个worker来处理请求。在某些系统上，这可能会由于worker数量太少，从而导致性能降低。docker映像中默认为产生10个线程。您可以通过设置`ROCKET_WORKERS`变量来增加或减少worker数量以覆盖此默认设置。
+
+在下面的示例中，我们从20个worker开始：
+
+```php
+docker run -d --name bitwarden \
+  -e ROCKET_WORKERS=20 \
+  -v /bw-data/:/data/ \
+  -p 80:80 \
+  bitwardenrs/server:latest
+```
+
