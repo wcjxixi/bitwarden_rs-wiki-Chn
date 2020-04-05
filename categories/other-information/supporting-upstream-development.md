@@ -6,7 +6,7 @@
 
 bitwarden\_rs仅提供API（服务器）端实现，用户仍依赖上游的客户端程序（移动应用程序、桌面应用程序和网页密码库），这些都是8bit Solutions LLC公司在上游完成的许多工作。同时bitwarden\_rs支持上游的某些付费功能并免费提供该功能。这就提出了一些有关[维持和支持上游发展](https://github.com/dani-garcia/bitwarden_rs/issues/331)的问题。许多用户提出了这个问题，并咨询他们如何在使用bitwarden\_rs的同时支持上游的发展。
 
-### 捐赠
+### 捐献
 
 您可以通过[PayPal](https://www.paypal.me/bitwarden)直接捐赠给上游以支持他们的发展。
 
