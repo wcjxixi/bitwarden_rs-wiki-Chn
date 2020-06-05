@@ -48,6 +48,6 @@
   * [使用私有CA并使SSL证书兼容Chrome](other-information/using-a-private-ca-and-making-ssl-certs-work-with-chrome.md)
   * [与上游API实施的区别](other-information/differences-from-the-upstream-api-implementation.md)
   * [支持上游发展](other-information/supporting-upstream-development.md)
-  * [强化指南（WIP）](other-information/hardening-guide-wip.md)
+  * [增强指南](other-information/hardening-guide.md)
 * [资源](resources.md)
 

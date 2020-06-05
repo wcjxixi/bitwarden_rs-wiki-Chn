@@ -1,7 +1,7 @@
-# 强化指南（WIP）
+# 增强指南
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Hardening-Guide-%28WIP%29)
+对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Hardening-Guide)
 {% endhint %}
 
 ### 禁用注册和（可选）邀请
