@@ -1,4 +1,4 @@
-# 禁用邀请
+# 3.禁用邀请
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations)

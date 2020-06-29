@@ -1,4 +1,4 @@
-# 在未启用WAL的情况下运行
+# 20.在未启用WAL的情况下运行
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-without-WAL-enabled)

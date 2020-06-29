@@ -1,4 +1,4 @@
-# 启用U2F身份验证
+# 8.启用U2F身份验证
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-U2F-authentication)

@@ -1,4 +1,4 @@
-# 概要
+# 1.概要
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Configuration-overview)

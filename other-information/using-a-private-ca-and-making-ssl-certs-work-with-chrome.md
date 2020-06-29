@@ -1,4 +1,4 @@
-# 使用私有CA并使SSL证书兼容Chrome
+# 4.使用私有CA并使SSL证书兼容Chrome
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Private-CA-and-self-signed-certs-that-work-with-Chrome)

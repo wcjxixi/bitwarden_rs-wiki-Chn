@@ -1,4 +1,4 @@
-# 使用非root用户运行服务器
+# 3.使用非root用户运行服务器
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-the-server-with-non-root-user)

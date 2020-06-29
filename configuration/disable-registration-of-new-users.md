@@ -1,4 +1,4 @@
-# 禁用新用户注册
+# 2.禁用新用户注册
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users)

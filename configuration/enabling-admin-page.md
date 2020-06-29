@@ -1,4 +1,4 @@
-# 启用管理页面
+# 4.启用管理页面
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page)

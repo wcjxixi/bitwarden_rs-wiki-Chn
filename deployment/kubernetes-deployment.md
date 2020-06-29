@@ -1,4 +1,4 @@
-# 在kubernetes上部署
+# 4.在kubernetes上部署
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Kubernetes-deployment)

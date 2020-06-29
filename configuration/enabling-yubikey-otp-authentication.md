@@ -1,4 +1,4 @@
-# 启用Yubikey OPT身份验证
+# 9.启用Yubikey OPT身份验证
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-Yubikey-OTP-authentication)

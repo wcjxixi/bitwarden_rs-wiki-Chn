@@ -1,4 +1,4 @@
-# 日志记录
+# 16.日志记录
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging)

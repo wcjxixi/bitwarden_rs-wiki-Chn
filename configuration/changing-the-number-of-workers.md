@@ -1,4 +1,4 @@
-# 更改worker数量
+# 12.更改worker数量
 
 \[译者注\]：worker相当于工人，就是干活的人。也不知如何翻译才准备，就不翻译这个词了。“Master-Worker模式是常用的并行设计模式。核心思想是，系统由两个角色组成：Master和Worker。Master负责接收和分配任务，Worker负责处理子任务。任务处理过程中，Master还负责监督任务进展和Worker的健康状态；Master将接收Client提交的任务，并将任务的进展汇总反馈给Client。”
 

@@ -1,4 +1,4 @@
-# 使用备用基本目录（子目录/子路径）
+# 25.使用备用基本目录（子目录/子路径）
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-an-alternate-base-dir)

@@ -1,4 +1,4 @@
-# 构建你自己的镜像
+# 1.构建你自己的镜像
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-your-own-docker-image)

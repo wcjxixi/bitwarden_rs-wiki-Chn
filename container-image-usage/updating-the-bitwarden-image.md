@@ -1,4 +1,4 @@
-# 更新Bitwarden镜像
+# 3.更新Bitwarden镜像
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Updating-the-bitwarden-image)

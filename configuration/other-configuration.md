@@ -1,4 +1,4 @@
-# 其他配置
+# 23.其他配置
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Other-configuration)

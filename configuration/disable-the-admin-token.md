@@ -1,4 +1,4 @@
-# 禁用管理令牌
+# 5.禁用管理令牌
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token)

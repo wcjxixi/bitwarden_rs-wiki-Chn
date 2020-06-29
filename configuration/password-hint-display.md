@@ -1,4 +1,4 @@
-# 禁用显示密码提示
+# 14.禁用显示密码提示
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display)
