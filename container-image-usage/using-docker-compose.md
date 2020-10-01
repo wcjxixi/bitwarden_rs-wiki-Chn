@@ -1,16 +1,16 @@
-# 4.使用Docker Compose
+# 4.使用 Docker Compose
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose)
 {% endhint %}
 
-Docker Compose是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望Bitwarden\_rs服务器和代理都将WebSocket请求重定向到正确的地方。
+Docker Compose 是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望 Bitwarden\_rs 服务器和代理都将 WebSocket 请求重定向到正确的地方。
 
-本指南基于[\#126 \(comment\)](https://github.com/dani-garcia/bitwarden_rs/issues/126#issuecomment-417872681)。[这里](https://github.com/sosandroid/docker-bitwarden_rs-caddy-synology)也有另一种基于Bitwarden\_RS和Caddy 2.0的解决方案
+本指南基于 [\#126 \(comment\)](https://github.com/dani-garcia/bitwarden_rs/issues/126#issuecomment-417872681)。[这里](https://github.com/sosandroid/docker-bitwarden_rs-caddy-synology)也有另一种基于 Bitwarden\_rs 和 Caddy 2.0 的解决方案
 
 使用以下内容创建`docker-compose.yml`文件：
 
-```yaml
+```bash
 # docker-compose.yml
 version: '3'
 
@@ -44,7 +44,7 @@ volumes:
 
 并创建相应的`Caddyfile`文件（不需要修改）：
 
-```yaml
+```bash
 # Caddyfile
 {$DOMAIN} {
     tls {$EMAIL}
@@ -78,7 +78,7 @@ volumes:
 }
 ```
 
-运行以下命令创建并启动容器。它为反向代理在两个容器之间创建私有网络，这样就只有caddy暴露在外面了。
+运行以下命令创建并启动容器。它为反向代理在两个容器之间创建私有网络，这样就只有 caddy 暴露在外面了。
 
 ```text
 docker-compose up -d
@@ -90,9 +90,9 @@ docker-compose up -d
 docker-compose down
 ```
 
-如果不需要WebSocket通知，则可以单独运行Bitwarden\_rs。如果你和我一样，在Raspberry Pi上使用bitwardenrs/server:raspberry镜像运行Bitwarden\_rs，请按我的示例操作。这是我的示例：
+如果不需要 WebSocket 通知，则可以单独运行 Bitwarden\_rs。如果你和我一样，在 Raspberry Pi 上使用 bitwardenrs/server:raspberry 镜像运行 Bitwarden\_rs，请按我的示例操作。这是我的示例：
 
-```yaml
+```bash
 # docker-compose.yml
 version: '3'
 
@@ -111,11 +111,11 @@ services:
    SIGNUPS_ALLOWED: 'true'
 ```
 
-即使服务器运行在位于NAT后面的家庭网络上，我也想使用Let's Encrypt证书。参考这里的说明[https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode](https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode)。
+即使服务器运行在位于 NAT 后面的家庭网络上，我也想使用 Let's Encrypt 证书。参考这里的说明 [https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode](https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode)。
 
-首先设置域名，并通过CloudFlare导出CF\_Key和CF\_Email或CF\_Token以及CF\_Account\_ID。
+首先设置域名，并通过 CloudFlare 导出 CF\_Key 和 CF\_Email 或 CF\_Token 以及 CF\_Account\_ID。
 
-然后颁发证书。参考[https://github.com/Neilpang/acme.sh/wiki/dnsapi](https://github.com/Neilpang/acme.sh/wiki/dnsapi)
+然后颁发证书。参考 [https://github.com/Neilpang/acme.sh/wiki/dnsapi](https://github.com/Neilpang/acme.sh/wiki/dnsapi)
 
 最后安装证书。
 
@@ -129,5 +129,5 @@ acme.sh --install-cert -d home.example.com --key-file /home/pi/ssl/key.pem --ful
 acme.sh --issue -d home.example.com --challenge-alias otherdomain.com --dns dns_cf --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
 ```
 
-我的域名的A记录指向docker-compose.yml文件最后一行的域名绑定的IP地址，这样就不会有关于证书的警告了。
+我的域名的 A 记录指向 docker-compose.yml 文件最后一行的域名绑定的 IP 地址，这样就不会有关于证书的警告了。
 

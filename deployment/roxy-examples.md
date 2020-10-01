@@ -4,9 +4,9 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Proxy-examples)
 {% endhint %}
 
-在本文档中，`<SERVER>`指用于访问bitwarden\_rs的IP或域名，如果proxy和bitwarden\_rs都在同一系统中运行，简单地使用`localhost`即可。默认情况下，代理端口`80`用于Web服务器，`3012`用于WebSocket服务器。建议将代理配置为侦听启用了HTTPS的`443`端口。
+在本文档中，`<SERVER>`指用于访问 bitwarden\_rs 的 IP 或域名，如果 proxy 和 bitwarden\_rs 都在同一系统中运行，简单地使用`localhost`即可。默认情况下，代理端口`80`用于 Web 服务器，`3012`用于 WebSocket 服务器。建议将代理配置为侦听启用了 HTTPS 的`443`端口。
 
-使用代理时，最好在代理级别而不是在应用程序级别配置HTTPS，这样也可以保护WebSockets连接。
+使用代理时，最好在代理级别而不是在应用程序级别配置 HTTPS，这样也可以保护 WebSockets 连接。
 
 ### 目录
 
@@ -21,9 +21,9 @@
 
 ### Caddy 1.x
 
-Caddy在某些情况下可以自动启用HTTPS，参考[此文档](https://caddyserver.com/v1/docs/automatic-https)。
+Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/v1/docs/automatic-https)。
 
-```php
+```bash
 :443 {
   tls ${SSLCERTIFICATE} ${SSLKEY}
   # or 'tls self_signed' to generate a self-signed certificate
@@ -48,9 +48,9 @@ Caddy在某些情况下可以自动启用HTTPS，参考[此文档](https://caddy
 
 ### Caddy 2.x
 
-同样，Caddy 2在某些情况下也可以自动启用HTTPS，参考[此文档](https://caddyserver.com/docs/automatic-https)。
+同样，Caddy 2 在某些情况下也可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/docs/automatic-https)。
 
-```php
+```bash
 # Caddyfile V2.0 config file
 :80 {
   #Caddy on port 80 in container to bitwarden_rs private instance
@@ -126,7 +126,7 @@ Caddy在某些情况下可以自动启用HTTPS，参考[此文档](https://caddy
 
 ### Nginx \(by shauder\)
 
-```php
+```bash
 server {
   listen 443 ssl http2;
   server_name vault.*;
@@ -175,9 +175,9 @@ server {
 
 ### Nginx \(by ypid\)
 
-使用DebOps配置nginx作为bitwarden\_rs的反向代理的清单示例。 我选择在URL中使用PSK以获得额外的安全性，从而不会将API公开给Internet上的每个人，因为客户端应用程序尚不支持客户端证书（我对其进行了测试）。 注意：使用subpath/PSK需要修补源代码并重新编译，请参考：[https：//github.com/dani-garcia/bitwarden\_rs/issues/241\#issuecomment-436376497](https://github.com/dani-garcia/bitwarden_rs/issues/241#issuecomment-436376497)。 /admin未经测试。 有关安全性子路径托管的一般讨论，请参阅：[https://github.com/debops/debops/issues/1233](https://github.com/debops/debops/issues/1233)
+使用 DebOps 配置 nginx 作为 bitwarden\_rs 的反向代理的清单示例。 我选择在 URL 中使用 PSK 以获得额外的安全性，从而不会将 API 公开给 Internet 上的每个人，因为客户端应用程序尚不支持客户端证书（我对其进行了测试）。 注意：使用 subpath/PSK 需要修补源代码并重新编译，请参考：[https：//github.com/dani-garcia/bitwarden\_rs/issues/241\#issuecomment-436376497](https://github.com/dani-garcia/bitwarden_rs/issues/241#issuecomment-436376497)。 /admin 未经测试。 有关安全性子路径托管的一般讨论，请参阅：[https://github.com/debops/debops/issues/1233](https://github.com/debops/debops/issues/1233)
 
-```php
+```bash
 bitwarden__fqdn: 'vault.example.org'
 
 nginx__upstreams:
@@ -231,7 +231,7 @@ nginx__servers:
 
 ### Apache \(by fbartels\)
 
-```php
+```bash
 <VirtualHost *:443>
     SSLEngine on
     ServerName bitwarden.$hostname.$domainname
@@ -257,13 +257,13 @@ nginx__servers:
 
 ### Apache in a sub-location \(by ss89\)
 
-确保在apache配置中的某个位置加载了websocket代理模块。 它看起来像这样：
+确保在 apache 配置中的某个位置加载了 websocket 代理模块。 它看起来像这样：
 
-```php
+```bash
 LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 ```
 
-```php
+```bash
 <VirtualHost *:443>
     SSLEngine on
     ServerName $hostname.$domainname
@@ -290,7 +290,7 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 
 ### Traefik v1 \(docker-compose example\)
 
-```php
+```bash
 labels:
     - traefik.enable=true
     - traefik.docker.network=traefik
@@ -303,9 +303,9 @@ labels:
 
 ### Traefik v2 \(docker-compose example by hwwilliams\)
 
-#### 将Traefik v1标签迁移到Traefik v2
+#### 将 Traefik v1 标签迁移到 Traefik v2
 
-```php
+```bash
 labels:
   - traefik.enable=true
   - traefik.docker.network=traefik
@@ -317,13 +317,13 @@ labels:
   - traefik.http.services.bitwarden-websocket.loadbalancer.server.port=3012
 ```
 
-#### 迁移的标签加上HTTP到HTTPS重定向
+#### 迁移的标签加上 HTTP 到 HTTPS 重定向
 
-这些标签假定Traefik中为端口80和443定义的入口点分别是“web”和“websecure”。
+这些标签假定 Traefik 中为端口 80 和 443 定义的入口点分别是“web”和“websecure”。
 
-这些标签还假定您已经在Traefik中定义了默认的证书解析器。
+这些标签还假定您已经在 Traefik 中定义了默认的证书解析器。
 
-```php
+```bash
 labels:
   - traefik.enable=true
   - traefik.docker.network=traefik

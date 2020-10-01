@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page)
 {% endhint %}
 
-**重要说明**：强烈建议在启用此功能之前激活HTTPS，以避免可能的[MITM](https://www.jianshu.com/p/a825de42ccbc)攻击。
+**重要说明**：强烈建议在启用此功能之前激活 HTTPS，以避免可能的 [MITM](https://www.jianshu.com/p/a825de42ccbc) 攻击。
 
 该页面允许服务器管理员查看所有注册用户并将其删除。即使禁用了注册，它也允许邀请新用户。
 
@@ -12,7 +12,7 @@
 
 要设置令牌，请使用`ADMIN_TOKEN`变量：
 
-```php
+```bash
 docker run -d --name bitwarden \
   -e ADMIN_TOKEN=some_random_token_as_per_above_explanation \
   -v /bw-data/:/data/ \
@@ -24,5 +24,5 @@ docker run -d --name bitwarden \
 
 首次在管理页面保存设置时，将自动在`DATA_FOLDER`中生成`config.json`文件。该文件中的值优先于环境值。
 
-**请注意：**更改`ADMIN_TOKEN`令牌值后，仍可以使用其旧的登录令牌[长达20分钟](https://github.com/dani-garcia/bitwarden_rs/blob/master/src/api/admin.rs#L87)来登录管理页面。
+**请注意：**更改`ADMIN_TOKEN`令牌值后，仍可以使用其旧的登录令牌[长达 20 分钟](https://github.com/dani-garcia/bitwarden_rs/blob/master/src/api/admin.rs#L87)来登录管理页面。
 

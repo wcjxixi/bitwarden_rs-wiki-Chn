@@ -21,5 +21,5 @@ docker run -d --name bitwarden \
 * `SIGNUPS_DOMAINS_WHITELIST=example.com` （单个域）
 * `SIGNUPS_DOMAINS_WHITELIST=example.com,example.net,example.org` （多个域）
 
-您仍然需要设置`SIGNUPS_ALLOWED=false`。另外，在[＃728](https://github.com/dani-garcia/bitwarden_rs/pull/728)查看注意事项。
+您仍然需要设置`SIGNUPS_ALLOWED=false`。另外，在[＃728](https://github.com/dani-garcia/bitwarden_rs/pull/728) 查看注意事项。
 

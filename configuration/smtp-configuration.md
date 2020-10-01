@@ -1,10 +1,10 @@
-# 13.配置SMTP
+# 13.配置 SMTP
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration)
 {% endhint %}
 
-您可以配置bitwarden\_rs以通过SMTP代理来发送电子邮件：
+您可以配置 bitwarden\_rs 以通过 SMTP 代理来发送电子邮件：
 
 ```php
 docker run -d --name bitwarden \
@@ -19,9 +19,9 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-当`SMTP_SSL`设置`true`为时（这是默认值），将仅接受TLSv1.1和TLSv1.2协议，并且`SMTP_PORT`默认为`587`。如果设置为`false`，`SMTP_PORT`则默认设置为`25`并将尝试加密（2020年3月12日之前的代码不会尝试加密）。这可能是非常不安全的，仅在您知道您在做什么时才使用此设置。要以显式模式运行SMTP，请将`SMTP_EXPLICIT_TLS`设置为`true`。
+当`SMTP_SSL`设置`true`为时（这是默认值），将仅接受 TLSv1.1 和 TLSv1.2 协议，并且`SMTP_PORT`默认为`587`。如果设置为`false`，`SMTP_PORT`则默认设置为`25`并将尝试加密（2020 年 3 月 12 日之前的代码不会尝试加密）。这可能是非常不安全的，仅在您知道您在做什么时才使用此设置。要以显式模式运行 SMTP，请将`SMTP_EXPLICIT_TLS`设置为`true`。
 
-请注意，如果启用了SMTP和邀请，邀请将通过电子邮件发送给新用户。您必须使用bitwarden\_rs实例的基础URL来设置`DOMAIN`配置项，以生成正确的邀请链接：
+请注意，如果启用了 SMTP 和邀请，邀请将通过电子邮件发送给新用户。您必须使用 bitwarden\_rs 实例的基础 URL 来设置`DOMAIN`配置项，以生成正确的邀请链接：
 
 ```php
 docker run -d --name bitwarden \
@@ -30,5 +30,5 @@ docker run -d --name bitwarden \
 ...
 ```
 
-用户邀请链接有效期为5天，此后需要重新发送邀请。
+用户邀请链接有效期为 5 天，此后需要重新发送邀请。
 

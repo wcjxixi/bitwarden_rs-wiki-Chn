@@ -4,14 +4,14 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-your-own-docker-image)
 {% endhint %}
 
-克隆库，然后从库的根目录运行以使用默认的SQLite后端进行构建：
+克隆库，然后从库的根目录运行以使用默认的 SQLite 后端进行构建：
 
 ```yaml
 # Build the docker image:
 docker build -t bitwarden_rs .
 ```
 
-要使用MySQL后端构建，请执行以下操作：
+要使用 MySQL 后端构建，请执行以下操作：
 
 ```yaml
 # Build the docker image:

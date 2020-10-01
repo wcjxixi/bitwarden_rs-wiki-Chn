@@ -1,16 +1,16 @@
-# 5.使用Podman
+# 5.使用 Podman
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Podman)
 {% endhint %}
 
-[Podman](https://podman.io/)是Docker的无守护程序替代方案，它与大部分Docker容器兼容。
+[Podman](https://podman.io/) 是 Docker 的无守护程序替代方案，它与大部分 Docker 容器兼容。
 
 ## 创建一个系统服务文件
 
-由于Podman的无守护程序架构，因此它比Docker更容易在systemd中运行。它带有一个便捷的generate命令，该命令可以生成systemd文件，[这篇文章](https://www.redhat.com/sysadmin/podman-shareable-systemd-services)详细介绍了它。
+由于 Podman 的无守护程序架构，因此它比 Docker 更容易在 systemd 中运行。它带有一个便捷的 generate 命令，该命令可以生成 systemd 文件，[这篇文章](https://www.redhat.com/sysadmin/podman-shareable-systemd-services)详细介绍了它。
 
-```yaml
+```bash
 $ podman run -d --name bitwarden -v /bw-data/:/data/:Z -e ROCKET_PORT=8080 -p 8080:8080 bitwardenrs/server:latest
 54502f309f3092d32b4c496ef3d099b270b2af7b5464e7cb4887bc16a4d38597
 $ podman generate systemd --name bitwarden
@@ -31,9 +31,9 @@ Type=forking
 PIDFile=/run/user/1000/overlay-containers/54502f309f3092d32b4c496ef3d099b270b2af7b5464e7cb4887bc16a4d38597/userdata/conmon.pid
 ```
 
-您可以提供一个`--files`标志来专用于特定文件，以将systemd服务文件输出到该文件。这样，我们可以将容器并作为任何常规服务文件来启用和启动。
+您可以提供一个`--files`标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们可以将容器并作为任何常规服务文件来启用和启动。
 
-```yaml
+```bash
 $ systemctl --user enable /etc/systemd/system/container-bitwarden.service
 $ systemctl --user start container-bitwarden.service
 ```
@@ -42,7 +42,7 @@ $ systemctl --user start container-bitwarden.service
 
 如果我们希望每次服务启动时都创建一个新容器，我们可以编辑服务文件以包含以下内容：
 
-```yaml
+```bash
 [Service]
 Restart=on-failure
 ExecStartPre=/usr/bin/rm -f /%t/%n-pid /%t/%n-cid
@@ -63,9 +63,9 @@ ROCKET_PORT=8080
 
 ## 故障排除
 
-### 调试systemd服务文件
+### 调试 systemd 服务文件
 
-如果主机出现故障或容器崩溃，则systemd服务文件应自动停止现有容器并将其重新启动。我们可以通过`journalctl --user -u container-bitwarden -t 100`来定位错误。
+如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。我们可以通过`journalctl --user -u container-bitwarden -t 100`来定位错误。
 
-在大多数情况下，我们可以通过简单地增加服务文件中的podman命令的超时来解决我们看到的错误。
+在大多数情况下，我们可以通过简单地增加服务文件中的 podman 命令的超时来解决我们看到的错误。
 
