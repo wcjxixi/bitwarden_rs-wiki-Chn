@@ -8,15 +8,15 @@
 
 要启用 WebSockets 通知，必须使用外部反向代理，并且必须执行以下配置操作：
 
-* 将`/notifications/hub`端点路由到 WebSocket 服务器，默认在`3012`端口，确保传递`Connection`和`Upgrade`头。（提示：可以使用`WEBSOCKET_PORT`变量来更改端口）
-* 将所有其他（包括`/notifications/hub/negotiate`）路由到标准 Rocket 服务器，默认在`80`端口。
-* 如果使用 Docker，则可能还需要使用`-p`标识来映射两个端口。
+* 将 `/notifications/hub` 端点路由到 WebSocket 服务器，默认在 `3012` 端口，确保传递 `Connection` 和 `Upgrade` 头。（提示：可以使用 `WEBSOCKET_PORT` 变量来更改端口）
+* 将所有其他（包括 `/notifications/hub/negotiate`）路由到标准 Rocket 服务器，默认在 `80` 端口。
+* 如果使用 Docker，则可能还需要使用 `-p` 标识来映射两个端口。
 
 可以在[代理示例](../deployment/roxy-examples.md)页面查看配置示例。
 
-然后，您需要通过将`WEBSOCKET_ENABLED`变量设置为`true`来在 bitwarden\_rs 端启用 WebSocket 协商：
+然后，您需要通过将 `WEBSOCKET_ENABLED` 变量设置为 `true` 来在 bitwarden\_rs 端启用 WebSocket 协商：
 
-```bash
+```python
 docker run -d --name bitwarden \
   -e WEBSOCKET_ENABLED=true \
   -v /bw-data/:/data/ \

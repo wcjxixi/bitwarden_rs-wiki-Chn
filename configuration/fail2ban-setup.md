@@ -24,11 +24,11 @@
 
 ### 预先说明
 
-* 以下示例使用`vi`指令编辑。您可以在[这里](https://pc.net/resources/commands/vi)查看它的基本使用方法。然而，您也可以使用您想用的任何文本编辑器。
+* 以下示例使用 `vi` 指令编辑。您可以在[这里](https://pc.net/resources/commands/vi)查看它的基本使用方法。然而，您也可以使用您想用的任何文本编辑器。
 * 从 1.5.0 版开始，Bitwarden\_rs 支持记录到文件。请参考这里设置：[日志](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging)[记录](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging)
 * 尝试使用错误的帐户登录到网页密码库，并检查日志文件中如下格式的记录项。
 
-```php
+```python
 [YYYY-MM-DD hh:mm:ss][bitwarden_rs::api::identity][ERROR] Username or password is incorrect. Try again. IP: XXX.XXX.XXX.XXX. Username: email@domain.com.
 ```
 
@@ -68,7 +68,7 @@ sudo -i
 
 2、创建持久性文件夹
 
-```php
+```python
 mkdir -p /volumeX/docker/fail2ban/action.d/
 mkdir -p /volumeX/docker/fail2ban/jail.d/
 mkdir -p /volumeX/docker/fail2ban/filter.d/
@@ -76,13 +76,13 @@ mkdir -p /volumeX/docker/fail2ban/filter.d/
 
 3、将 `REJECT` 替换为 `DROP` 块类型
 
-```php
+```python
 vi /volumeX/docker/fail2ban/action.d/iptables-common.local
 ```
 
 复制并粘帖以下内容
 
-```php
+```python
 [Init]
 blocktype = DROP
 [Init?family=inet6]
@@ -91,13 +91,13 @@ blocktype = DROP
 
 4、创建 docker-compose 文件
 
-```php
+```python
 vi /volumeX/docker/fail2ban/docker-compose.yml
 ```
 
 复制并粘帖以下内容
 
-```php
+```python
 version: '3'
 services:
 	fail2ban:
@@ -125,7 +125,7 @@ services:
 
 5、使用命令行启动容器
 
-```php
+```python
 cd /volumeX/docker/fail2ban
 docker-compose up -d
 ```
@@ -140,13 +140,13 @@ docker-compose up -d
 
 创建文件
 
-```php
+```python
 vi path_f2b/filter.d/bitwarden.local
 ```
 
 复制并粘帖以下内容
 
-```php
+```python
 [INCLUDES]
 before = common.conf
 
@@ -171,7 +171,7 @@ vi path_f2b/jail.d/bitwarden.local
 
 复制并粘帖以下内容
 
-```php
+```python
 [bitwarden]
 enabled = true
 port = 80,443,8081
@@ -205,13 +205,13 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 
 创建文件
 
-```php
+```python
 vi path_f2b/filter.d/bitwarden-admin.local
 ```
 
 复制并粘帖以下内容
 
-```php
+```python
 [INCLUDES]
 before = common.conf
 
@@ -224,13 +224,13 @@ ignoreregex =
 
 创建文件
 
-```php
+```python
 vi path_f2b/jail.d/bitwarden-admin.local
 ```
 
 复制并粘帖以下内容
 
-```php
+```python
 [bitwarden-admin]
 enabled = true
 port = 80,443
@@ -244,7 +244,7 @@ findtime = 14400
 
 注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，在使用 Docker 时，请执行以下操作：
 
-```php
+```python
 action = iptables-allports[name=bitwarden, chain=FORWARD]
 ```
 
@@ -268,9 +268,9 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 
 当您使用 SELinux 时，SELinux 可能会阻止 fail2ban 读取日志。如果是这样，请按照以下步骤操作： `sudo tail /var/log/audit/audit.log`。您应该会看到类似的内容（当然，实际的审核 ID 会因您的情况而不一样）：
 
-```php
+```python
 type=AVC msg=audit(1571777936.719:2193): avc:  denied  { search } for  pid=5853 comm="fail2ban-server" name="containers" dev="dm-0" ino=1144588 scontext=system_u:system_r:fail2ban_t:s0 tcontext=unconfined_u:object_r:container_var_lib_t:s0 tclass=dir permissive=0
 ```
 
-您可以使用`grep 'type=AVC msg=audit(1571777936.719:2193)' /var/log/audit/audit.log | audit2why`找出真正的原因。`audit2allow -a` 将为您提供有关如何创建模块并允许 fail2ban 访问日志的具体说明。按照这些步骤操作后就结束了！fail2ban 现在应该可以正常工作了。
+您可以使用`grep 'type=AVC msg=audit(1571777936.719:2193)' /var/log/audit/audit.log | audit2why`找出真正的原因。`audit2allow -a` 将为您提供有关如何创建模块并允许 fail2ban  访问日志的具体说明。按照这些步骤操作后就结束了！fail2ban 现在应该可以正常工作了。
 

@@ -14,7 +14,7 @@
 
 使用你喜欢的编辑器以 root 身份创建 `/etc/systemd/system/bitwarden.service` 文件并使用以下内容：
 
-```php
+```python
 [Unit]
 Description=Bitwarden
 After=docker.service
@@ -71,7 +71,7 @@ Key="Value"
 
 在您的单元文件中，在 `[Service]` 块中添加 `EnvironmentFile` 指令，该值是上面创建的文件的完整路径。例如：
 
-```php
+```python
 [Unit]
 Description=Bitwarden
 After=docker.service

@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Proxy-examples)
 {% endhint %}
 
-在本文档中，`<SERVER>`指用于访问 bitwarden\_rs 的 IP 或域名，如果 proxy 和 bitwarden\_rs 都在同一系统中运行，简单地使用`localhost`即可。默认情况下，代理端口`80`用于 Web 服务器，`3012`用于 WebSocket 服务器。建议将代理配置为侦听启用了 HTTPS 的`443`端口。
+在本文档中，`<SERVER>` 指用于访问 bitwarden\_rs 的 IP 或域名，如果 proxy 和 bitwarden\_rs 都在同一系统中运行，简单地使用 `localhost` 即可。默认情况下，代理端口 `80` 用于 Web 服务器，`3012` 用于 WebSocket 服务器。建议将代理配置为侦听启用了 HTTPS 的 `443` 端口。
 
 使用代理时，最好在代理级别而不是在应用程序级别配置 HTTPS，这样也可以保护 WebSockets 连接。
 
@@ -16,8 +16,8 @@
 * [Nginx](roxy-examples.md#nginx-by-ypid) \(by ypid\)
 * [Apache](roxy-examples.md#apache-by-fbartels) \(by fbartels\)
 * [Apache in a sub-location](roxy-examples.md#apache-in-a-sub-location-by-ss-89) \(by ss89\)
-* [Traefik v1](roxy-examples.md#traefik-v1-docker-compose-example) \(docker-compose example\)
-* [Traefik v2](roxy-examples.md#traefik-v2-docker-compose-example-by-hwwilliams) \(docker-compose example by hwwilliams\)
+* [Traefik v1](roxy-examples.md#traefik-v1-docker-compose-example) \(docker-compose 示例\)
+* [Traefik v2](roxy-examples.md#traefik-v2-docker-compose-example-by-hwwilliams) \(docker-compose 示例 by hwwilliams\)
 
 ### Caddy 1.x
 

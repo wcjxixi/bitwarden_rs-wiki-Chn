@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Updating-the-bitwarden-image)
 {% endhint %}
 
-更新非常简单，你只需确保保留了已装载的卷。如果您使用[此处](starting-a-container.md)示例中的挂载卷的方式，则只需使用`pull`拉取最新版的映像，使用`stop`和`rm`停止和移除当前容器，然后与之前相同的方式启动一个新容器：
+更新非常简单，你只需确保保留了已装载的卷。如果您使用[此处](starting-a-container.md)示例中的挂载卷的方式，则只需使用 `pull` 拉取最新版的映像，使用 `stop` 和 `rm` 停止和移除当前容器，然后与之前相同的方式启动一个新容器：
 
 ```bash
 # 拉取最新版本的镜像
@@ -64,7 +64,7 @@ docker images
 #
 ```
 
-`restart`命令将会依次停止容器、提取最新镜像、然后再次运行容器。`prune`命令将会移除目前较旧的容器（-f 表示不需要确认）。
+`restart` 命令将会依次停止容器、提取最新镜像、然后再次运行容器。`prune` 命令将会移除目前较旧的容器（-f 表示不需要确认）。
 
 如果需要，可以将它们放入 cronjob 中以计划任务自动运行（根据您的需要修改时间）：
 
@@ -75,5 +75,5 @@ $ sudo crontab -e
 0 3 * * * sudo /usr/bin/docker system prune -f
 ```
 
-如果`/usr/bin/docker`不是 docker 的正确路径，可以使用命令`which docker`查看它的实际路径。
+如果 `/usr/bin/docker` 不是 docker 的正确路径，可以使用命令 `which docker` 查看它的实际路径。
 

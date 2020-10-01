@@ -1,54 +1,54 @@
-# 20.在未启用WAL的情况下运行
+# 20.在未启用 WAL 的情况下运行
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-without-WAL-enabled)
 {% endhint %}
 
-默认情况下，`bitwarden_rs`在启动期间将尝试为数据库启用[WAL](https://sqlite.org/wal.html)。添加此功能可以提高性能，并且在某些情况下有助于避免请求失败。
+默认情况下，`bitwarden_rs` 在启动期间将尝试为数据库启用 [WAL](https://sqlite.org/wal.html)。添加此功能可以提高性能，并且在某些情况下有助于避免请求失败。
 
-### 关闭WAL的原因
+### 关闭 WAL 的原因
 
-一般而言，除非您相当确定需要关闭WAL，否则应将其保持为启用状态。但是，可能有一些情况需要将其关闭，例如：
+一般而言，除非您相当确定需要关闭 WAL，否则应将其保持为启用状态。但是，可能有一些情况需要将其关闭，例如：
 
-* 一些文件系统不支持WAL（对于网络文件系统尤其如此）。如果您使用的是这样的文件系统，该服务将无法启动并显示`Failed to turn on WAL`错误。
-* 该数据库要求sqlite的版本为`3.7.0`或更高，因此，出于某种原因（例如备份）您需要使用无法更新的低版本工具来直接访问数据库，则可能需要禁用WAL。
-* 您正在[使用MySQL后端](using-the-mysql-backend.md)。
+* 一些文件系统不支持 WAL（对于网络文件系统尤其如此）。如果您使用的是这样的文件系统，该服务将无法启动并显示 `Failed to turn on WAL` 错误。
+* 该数据库要求sqlite的版本为 `3.7.0` 或更高，因此，出于某种原因（例如备份）您需要使用无法更新的低版本工具来直接访问数据库，则可能需要禁用 WAL。
+* 您正在[使用](using-the-mysql-backend.md) [MySQL](using-the-mysql-backend.md) [后端](using-the-mysql-backend.md)。
 * [这里](https://sqlite.org/wal.html#advantages)描述的某个缺点也会受到影响。
 
-### 如何关闭WAL
+### 如何关闭 WAL
 
 #### 0、进行备份
 
 这些更改通常是安全的，可以顺利完成并且不会丢失数据，但是强烈建议在进行任何更改之前[备份您的数据](../other-information/backing-up-your-vault.md)。
 
-#### 1、在旧数据库上禁用WAL
+#### 1、在旧数据库上禁用 WAL
 
-如果您使用旧数据库，并且想启用WAL，则需要使用sqlite启用它：
+如果您使用旧数据库，并且想启用 WAL，则需要使用 sqlite 启用它：
 
 1）停止 `bitwarden_rs`
 
-2）找到您的[数据文件夹](changing-persistent-data-location.md)。除非您指定了其他名称，否则这里通常会有一个`db.sqlite3`文件。
+2）找到您的[数据文件夹](changing-persistent-data-location.md)。除非您指定了其他名称，否则这里通常会有一个 `db.sqlite3` 文件。
 
-3）使用sqlite打开文件：
+3）使用 sqlite 打开文件：
 
-```text
+```python
 sqlite3 db.sqlite3
 ```
 
-4）键入`PRAGMA journal_mode=delete;`以禁用WAL，并按Enter：
+4）键入 `PRAGMA journal_mode=delete;`以禁用 WAL，并按 Enter：
 
-```text
+```python
 sqlite> PRAGMA journal_mode=delete;
 delete
 ```
 
-5）键入`.quit`并按Enter 退出sqlite实用程序（注意前面的点）。
+5）键入 `.quit` 并按 Enter 退出 sqlite 实用程序（注意前面的点）。
 
-#### 2、在`bitwarden_rs`中禁用WAL 
+#### 2、在 `bitwarden_rs` 中禁用 WAL 
 
-要关闭WAL，你需要通过将`ENABLE_DB_WAL`变量的值设置为`true`来启动`bitwarden_rs`。
+要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `true` 来启动 `bitwarden_rs`。
 
-```text
+```python
 docker run -d --name bitwarden \
   -e ENABLE_DB_WAL=false \
   -v /bw-data/:/data/ \
@@ -56,15 +56,15 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-确保在启动前始终使用了此变量，否则一旦没有此变量将会再次启用WAL（如果发生这种情况，请从[第1步](running-without-wal-enabled.md#1-zai-jiu-shu-ju-ku-shang-jin-yong-wal)开始再次禁用它）。
+确保在启动前始终使用了此变量，否则一旦没有此变量将会再次启用 WAL（如果发生这种情况，请从[第](running-without-wal-enabled.md#1-zai-jiu-shu-ju-ku-shang-jin-yong-wal) [1](running-without-wal-enabled.md#1-zai-jiu-shu-ju-ku-shang-jin-yong-wal) [步](running-without-wal-enabled.md#1-zai-jiu-shu-ju-ku-shang-jin-yong-wal)开始再次禁用它）。
 
-### 如何开启WAL
+### 如何开启 WAL
 
-通常来说，只要您在未将`ENABLE_DB_WAL`变量的值设置为`false`的情况下启动`bitarden_rs`，服务器将自动为您启用WAL。您可以通过运行以下命令进行验证：
+通常来说，只要您在未将 `ENABLE_DB_WAL` 变量的值设置为 `false` 的情况下启动 `bitarden_rs`，服务器将自动为您启用 WAL。您可以通过运行以下命令进行验证：
 
-```text
+```python
 sqlite3 db.sqlite3 'PRAGMA journal_mode'
 ```
 
-`db.sqlite3`是`bitwarden_rs`所使用的数据库文件。此命令将返回当前使用的模式，在我们的例子中是`wal`。如果已禁用WAL，通常会返回`delete`报告，这是默认的。
+`db.sqlite3` 是 `bitwarden_rs` 所使用的数据库文件。此命令将返回当前使用的模式，在我们的例子中是 `wal`。如果已禁用 WAL，通常会返回 `delete` 报告，这是默认的。
 

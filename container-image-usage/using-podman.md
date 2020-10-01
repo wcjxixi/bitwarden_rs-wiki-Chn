@@ -31,7 +31,7 @@ Type=forking
 PIDFile=/run/user/1000/overlay-containers/54502f309f3092d32b4c496ef3d099b270b2af7b5464e7cb4887bc16a4d38597/userdata/conmon.pid
 ```
 
-您可以提供一个`--files`标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们可以将容器并作为任何常规服务文件来启用和启动。
+您可以提供一个 `--files` 标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们可以将容器并作为任何常规服务文件来启用和启动。
 
 ```bash
 $ systemctl --user enable /etc/systemd/system/container-bitwarden.service
@@ -53,13 +53,13 @@ Type=forking
 PIDFile=/%t/%n-pid
 ```
 
-环境文件`bitwarden.conf`可以包含所有的容器环境值，你需要增加如下参数：
+环境文件 `bitwarden.conf` 可以包含所有的容器环境值，你需要增加如下参数：
 
 ```text
 ROCKET_PORT=8080
 ```
 
-要使容器具有特定名称，如果进程未正确清理则需要添加`ExecStartPre=/usr/bin/podman rm -i -f bitwarden`。
+要使容器具有特定名称，如果进程未正确清理则需要添加 `ExecStartPre=/usr/bin/podman rm -i -f bitwarden`。
 
 ## 故障排除
 

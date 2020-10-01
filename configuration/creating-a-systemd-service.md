@@ -10,7 +10,7 @@
 
 要确保 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），需要一个 `.service` 文件。以下是一些可用的：
 
-```php
+```python
 [Unit]
 Description=Bitwarden Server (Rust Edition)
 Documentation=https://github.com/dani-garcia/bitwarden_rs
@@ -66,13 +66,13 @@ WantedBy=multi-user.target
 
 如果必须更改现有的 systemd 文件（您安装的软件包提供给您的），则可以使用下面的命令来添加更改：
 
-```php
+```python
 $ sudo systemctl edit bitwarden_rs.service
 ```
 
 请运行以下命令，以使 systemd 知道您的新文件或您所做的任何更改：
 
-```php
+```python
 $ sudo systemctl daemon-reload
 ```
 
@@ -80,7 +80,7 @@ $ sudo systemctl daemon-reload
 
 要启动此“服务”，请运行：
 
-```php
+```python
 $ sudo systemctl start bitwarden_rs.service
 ```
 
@@ -136,7 +136,7 @@ $ systemctl status bitwarden_rs.service
 
 在 RHEL 7（和 debian 8）中，使用的 systemd 不支持某些隔离选项（[\#445](https://github.com/dani-garcia/bitwarden_rs/issues/445)，[\#363](https://github.com/dani-garcia/bitwarden_rs/issues/363)）。这可能导致出现如下错误之一：
 
-```php
+```python
 Failed at step NAMESPACE spawning /home/bitwarden_rs/bitwarden_rs: Permission denied
 ```
 

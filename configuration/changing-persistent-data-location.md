@@ -6,9 +6,9 @@
 
 ### /data prefix:
 
-默认情况下，所有持久性数据都保存在`/data`下，您可以通过设置`DATA_FOLDER`环境变量来覆盖此路径：
+默认情况下，所有持久性数据都保存在 `/data` 下，您可以通过设置 `DATA_FOLDER` 环境变量来覆盖此路径：
 
-```php
+```python
 docker run -d --name bitwarden \
   -e DATA_FOLDER=/persistent \
   -v /bw-data/:/persistent/ \
@@ -20,9 +20,9 @@ docker run -d --name bitwarden \
 
 ### 数据库名称和位置
 
-默认值为`$DATA_FOLDER/db.sqlite3`，您可以使用`DATABASE_URL`变量专门为数据库更改路径：
+默认值为 `$DATA_FOLDER/db.sqlite3`，您可以使用 `DATABASE_URL` 变量专门为数据库更改路径：
 
-```php
+```python
 docker run -d --name bitwarden \
   -e DATABASE_URL=/database/bitwarden.sqlite3 \
   -v /bw-data/:/data/ \
@@ -35,9 +35,9 @@ docker run -d --name bitwarden \
 
 ### 附件位置
 
-默认值为`$DATA_FOLDER/attachments`，您可以使用`ATTACHMENTS_FOLDER`变量更改路径：
+默认值为 `$DATA_FOLDER/attachments`，您可以使用 `ATTACHMENTS_FOLDER` 变量更改路径：
 
-```php
+```python
 docker run -d --name bitwarden \
   -e ATTACHMENTS_FOLDER=/attachments \
   -v /bw-data/:/data/ \
@@ -50,9 +50,9 @@ docker run -d --name bitwarden \
 
 ### 图标缓存位置
 
-默认值为`$DATA_FOLDER/icon_cache`，您可以使用`ICON_CACHE_FOLDER`变量更改路径：
+默认值为 `$DATA_FOLDER/icon_cache`，您可以使用 `ICON_CACHE_FOLDER` 变量更改路径：
 
-```php
+```python
 docker run -d --name bitwarden \
   -e ICON_CACHE_FOLDER=/icon_cache \
   -v /bw-data/:/data/ \
@@ -61,5 +61,5 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-请注意，在上面的示例中，我们没有在本地挂载该卷，这意味着在升级时中将不会保留该卷，除非您用`--volumes-from`使用中间数据容器。这将影响性能，因为 bitwarden 在重新启动时必须重新下载图标。但由于图标不会被自动清除，因此可免于在缓存中保留过时的图标。
+请注意，在上面的示例中，我们没有在本地挂载该卷，这意味着在升级时中将不会保留该卷，除非您用 `--volumes-from` 使用中间数据容器。这将影响性能，因为 bitwarden 在重新启动时必须重新下载图标。但由于图标不会被自动清除，因此可免于在缓存中保留过时的图标。
 

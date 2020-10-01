@@ -6,11 +6,11 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Changing-the-number-of-workers)
 {% endhint %}
 
-当 bitwarden\_rs 运行时，默认它会产生`2 * <number of cpu cores>`个 worker 来处理请求。在某些系统上，这可能会由于 worker 数量太少，从而导致性能降低。docker 映像中默认为产生 10 个线程。您可以通过设置`ROCKET_WORKERS`变量来增加或减少 worker 数量以覆盖此默认设置。
+当 bitwarden\_rs 运行时，默认它会产生 `2 * <number of cpu cores>` 个 worker 来处理请求。在某些系统上，这可能会由于 worker 数量太少，从而导致性能降低。docker 映像中默认为产生 10 个线程。您可以通过设置`ROCKET_WORKERS`变量来增加或减少 worker 数量以覆盖此默认设置。
 
 在下面的示例中，我们从 20 个 worker 开始：
 
-```php
+```python
 docker run -d --name bitwarden \
   -e ROCKET_WORKERS=20 \
   -v /bw-data/:/data/ \
