@@ -64,7 +64,7 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-## 检查证书是否有效
+## 检查证书是否有效 <a id="check-if-certificate-is-valid"></a>
 
 当您的 bitwarden\_rs 服务器可供外界使用时，您可以使用 [https://comodosslstore.com/ssltools/ssl-checker.php](https://comodosslstore.com/ssltools/ssl-checker.php) 网站来检查 SSL 证书是否包含证书链。缺少证书链，Android 设备将无法连接。
 

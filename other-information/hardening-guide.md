@@ -4,39 +4,39 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Hardening-Guide)
 {% endhint %}
 
-## 应用程序配置
+## 应用程序配置 <a id="application-configuration"></a>
 
 下面的小节涵盖了 bitwarden\_rs 本身相关的强化。
 
-### 禁用注册和（可选）邀请
+### 禁用注册和（可选）邀请 <a id="disable-registration-and-optionally-invitations"></a>
 
 默认情况下，bitwarden\_rs 允许任何匿名用户在不首先被邀请的情况下在服务器上注册新帐户。这是在服务器上创建第一个用户所必需的，但建议您在管理面板中（如果启用了管理面板的话）或[使用环境变量](../configuration/disable-registration-of-new-users.md)将其禁用，以防止攻击者在 bitwarden\_rs 服务器上创建帐户。
 
 bitwarden\_rs 还允许注册用户邀请其他新用户在服务器上创建帐户并加入其组织。只要您信任用户，这不会带来直接风险，但是可以在管理面板或[环境变量](../configuration/disable-invitations.md)中将其禁用。
 
-### 禁用显示密码提示
+### 禁用显示密码提示 <a id="disable-password-hint-display"></a>
 
 bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的小型/本地部署，攻击者可能会滥用这些密码来促进针对服务器用户的猜测密码攻击。可以在管理面板中通过取消选中该 `Show password hints` 选项或使用[环境变量](../configuration/password-hint-display.md)来禁用它。
 
-## HTTPS/TLS 配置
+## HTTPS / TLS 配置 <a id="https-tls-configuration"></a>
 
 下面的小节涵盖了 HTTPS/TLS 相关的强化。
 
-### 严格 SNI
+### 严格 SNI <a id="strict-sni"></a>
 
 [SNI](https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8D%E7%A7%B0%E6%8C%87%E7%A4%BA) 是网络浏览器请求 HTTPS 服务器为特定网站（如 `bitwarden.example.com`）提供 SSL/TLS 证书的方式。假设`bitwarden.example.com` 的 IP 地址是 `1.2.3.4`。理想情况下，你希望你的实例只能通过 https://bitwarden.example.com 而不是 https://1.2.3.4 来进行访问。这是因为 IP 地址会因为各种原因被不断扫描，如果能通过这种方式检测到你的 bitwarden\_rs 实例，就会成为一个更明显的目标。例如，一个简单的 [Shodan 搜索](https://www.shodan.io/search?query=bitwarden)就会发现一些通过 IP 地址访问的 Bitwarden 实例。
 
-### 反向代理
+### 反向代理 <a id="reverse-proxying"></a>
 
 一般来说，你应该避免通过 bitwarden\_rs 内置的 [Rocket TLS 支持](../configuration/enabling-https.md)启用 HTTPS，特别是当你的实例是公开访问的时候。Rocket 本身列出了以下[警告](https://rocket.rs/v0.4/guide/configuration/#configuring-tls)：
 
 > Rocket's built-in TLS is not considered ready for production use. It is intended for development use only. （Rocket内置的TLS还不能用于生产。它只用于开发用途。）
 
-## Docker 配置
+## Docker 配置 <a id="docker-configuration"></a>
 
-下面的小节涵盖了 Docker 相关的强化
+下面的小节涵盖了 Docker 相关的强化。
 
-### 以非 root 用户运行
+### 以非 root 用户运行 <a id="run-as-a-non-root-user"></a>
 
 bitwarden\_rs Docker 镜像被配置为默认以 root 用户的身份运行容器进程。这允许 bitwarden\_rs 在没有权限问题的情况下读取/写入 [bind-mounted](https://docs.docker.com/storage/bind-mounts/) 到容器中的任何数据，即使这些数据是由另一个用户（例如，你在 Docker 主机上的用户账户）拥有的。默认配置在安全性和可用性之间取得了很好的平衡--在一个无权限的 Docker 容器中以 root 身份运行，本身就提供了合理的隔离度，同时也让那些不是非常精通如何在 Linux 上管理所有权/权限的用户更容易进行设置。然而，作为通用策略，从安全的角度来说，以所需的最低权限运行进程是更好的；对于用 Rust 等内存安全语言编写的程序来说，这一点就不那么重要了，但请注意，bitwarden\_rs 也使用了一些用 C 语言编写的库代码（例如 SQLite、OpenSSL、MySQL、PostgreSQL 等）。
 
@@ -68,13 +68,15 @@ services:
 
 由于这里修改的是 `ROCKET_PORT`，所以一定要更新你的反向代理配置，将 bitwarden\_rs 的流量代理到 8080 端口（或者你选择的任何更高的端口），而不是 80。
 
-### 挂载数据到容器中
+### 挂载数据到容器中 <a id="mounting-data-into-the-container"></a>
 
 一般来说，只有 bitwarden\_rs 正常运行所需要的数据才应该被挂载到 bitwarden\_rs 容器中（通常情况下，这只是你的数据目录，也许还有一个包含 SSL/TLS 证书和私钥的目录）。例如，不要挂载你的整个主目录，`/var/run/docker.sock` 等，除非你有特定的原因，并且知道你在做什么。
 
 另外，如果你不希望 bitwarden\_rs 修改你挂载的数据（例如，certs），可以通过在卷规范中添加 `:ro` 来[只读挂载它](https://docs.docker.com/storage/bind-mounts/#use-a-read-only-bind-mount)（例如，`docker run -v /home/username/bitwarden-ssl:/ssl:ro`）。
 
-## 杂项
+## 杂项 <a id="miscellaneous"></a>
+
+### 暴力破解 <a id="brute-force-mitigation"></a>
 
 当不使用双重身份验证时，（理论上）可以暴力破解用户密码，从而获得对其帐户的访问权限。缓解此问题的一种相对简单的方法是设置 fail2ban，设置后，将在过多的失败登录尝试后阻止访问者的 IP 地址。但是：在多个反向代理（例如 cloudflare）后面使用此功能时，应格外注意。请参阅：[Fail2Ban](https://github.com/dani-garcia/bitwarden_rs/wiki/Fail2Ban-Setup) [设置](https://github.com/dani-garcia/bitwarden_rs/wiki/Fail2Ban-Setup)。
 

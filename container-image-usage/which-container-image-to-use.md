@@ -16,11 +16,11 @@
 
 请注意，MySQL 和 PostgreSQL 镜像目前只支持 `amd64`，所以它们不是多架构的。如果有人出面解决交叉编译的问题，这些镜像也可以成为多架构的。
 
-## 镜像标签
+## 镜像标签 <a id="image-tags"></a>
 
 每个 Docker 镜像都有不同的标签，每个标签都代表了镜像的一些变体或属性（例如，特定版本）。
 
-### 通用标签
+### 通用标签 <a id="common-tags"></a>
 
 三钟镜像（SQLite、MySQL和PostgreSQL）都有以下标签：
 
@@ -28,7 +28,7 @@
 * `testing` -- 跟踪源码库的最新提交的版本。这个标签推荐给想要提前获取最新功能或增强功能的用户。测试版一般都很稳定，但不可避免，它偶尔也会出现一些问题。
 * `x.y.z` \(例如 `1.16.0`\) -- 代表一个特定的发布版本。
 
-### SQLite 特有标签 <a id="sqlite-te-you-de-biao-qian"></a>
+### SQLite 特有标签 <a id="sqlite-specific-tags"></a>
 
 SQLite 镜像（`bitwardenrs/server`）有以下附加标签：
 
@@ -38,7 +38,7 @@ SQLite 镜像（`bitwardenrs/server`）有以下附加标签：
 * `testing-arm32v6` -- 与 `testing` 相同，但明确表示为 `arm32v6` 镜像。
 * `x.y.z-arm32v6` \(例如 `1.16.0-arm32v6`\) -- 与 `latest-arm32v6` 类似，但它代表一个特定的发布版本。
 
-## 镜像更新
+## 镜像更新 <a id="image-updates"></a>
 
 偶尔，上游的 Bitwarden 项目（即 Bitwarden 公司）会对客户端做一些向后不兼容的改动，这就需要对服务器的实现做相应的改动。bitwarden\_rs 一般会及时推送新的版本来适应这些改动。
 
@@ -46,7 +46,7 @@ SQLite 镜像（`bitwardenrs/server`）有以下附加标签：
 
 web vault 是唯一的例外：由于它与 bitwarden\_rs 镜像捆绑在一起，web vault 的版本总是与 bitwarden\_rs 服务器的版本相匹配。如果你只把 web vault 用作客户端（可能性不大），那么你就不需要担心这些兼容性问题。
 
-## 历史标签
+## 历史标签 <a id="historical-tags"></a>
 
 在增加对多架构镜像支持之前，所有特定镜像都有其自己的特定标签。你仍然可以在 Docker Hub 中找到以下这些旧版本的 bitwarden\_rs，但不应再使用它们：
 
@@ -56,7 +56,7 @@ web vault 是唯一的例外：由于它与 bitwarden\_rs 镜像捆绑在一起�
 
 需要**注意**的是，你的设备上要求安装 arch64 发行版，例如，如果你在Raspberry Pi 3 上使用 Raspbian，因为 Raspbian 是一个 `armv7hf` 发行版，你仍然需要使用 `raspberry` 标签。
 
-## 已报告的兼容性表
+## 已报告的兼容性表 <a id="reported-compatibility-table"></a>
 
 如果您有在下表中尚未存在的硬件上运行镜像，请在此处添加您的详细信息。
 

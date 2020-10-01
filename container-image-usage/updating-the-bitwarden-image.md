@@ -44,7 +44,7 @@ docker rm bitwarden_data
 
 你也可以使用 Watchtower 这样的工具来自动化更新过程。Watchtower 可以定期检查 Docker 镜像的更新，拉取更新后的镜像，并使用更新后的镜像重新创建容器。
 
-## 使用 docker-compose 更新
+## 使用 docker-compose 更新 <a id="updating-when-using-docker-compose"></a>
 
 ```python
 docker-compose stop
@@ -52,7 +52,7 @@ docker-compose pull
 docker-compose start
 ```
 
-## 使用系统服务更新（在本例中为 Debian/Raspbian）
+## 使用系统服务更新（在本例中为 Debian/Raspbian） <a id="updating-when-using-systemd-service-in-this-case-debian-raspbian"></a>
 
 ```python
 sudo systemctl restart bitwarden.service

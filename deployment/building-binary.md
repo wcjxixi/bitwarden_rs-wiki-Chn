@@ -6,16 +6,16 @@
 
 如果您不想自己构建二进制文件，则可以查看 bitwarden\_rs 是否[已打包用于你的 Linux 发行版](third-party-packages.md)。
 
-## 依赖关系
+## 依赖 <a id="dependencies"></a>
 
 * `Rust nightly`（强烈建议使用 [rustup](https://rustup.rs/)）
 * `OpenSSL`（应该在路径中，通过系统的包管理器安装，也可以使用[预构建的二进制文件](https://wiki.openssl.org/index.php/Binaries)） 对于 Debian，您需要安装 `pkg-config` 和 `libssl-dev`
 * `NodeJS`（仅当编译 web-vault 时使用，通过系统的包管理器安装，使用[预构建的二进制文件](https://nodejs.org/en/download/)）或 [nodesource 二进制发行版](https://github.com/nodesource/distributions)。_备注：web-vault 当前使用程序包库（例如，node-sass &lt;v4.12），这需要 NodeJS v11_
 * 对于 Debian（Buster）上的 MySQL 后端，您需要安装 `libmariadb-dev-compat`和`libmariadb-dev`
 
-## 运行/编译
+## 运行/编译 <a id="run-compile"></a>
 
-### SQLite 后端
+### SQLite 后端 <a id="sqlite-backend"></a>
 
 ```python
 # Compile with sqlite backend and run
@@ -24,7 +24,7 @@ cargo run --features sqlite --release
 cargo build --features sqlite --release
 ```
 
-### MySQL 后端
+### MySQL 后端 <a id="mysql-backend"></a>
 
 ```python
 # Compile with mysql backend and run
@@ -33,7 +33,7 @@ cargo run --features mysql --release
 cargo build --features mysql --release
 ```
 
-### PostgreSQL 后端
+### PostgreSQL 后端 <a id="postgresql-backend"></a>
 
 ```python
 # Compile with postgresql backend and run
@@ -46,7 +46,7 @@ cargo build --features postgresql --release
 
 ~~_**注意**：一个先前的_~~[~~_话题_~~](https://github.com/rust-lang/rust/issues/62896)~~_表明由于Rust编译器和LLVM之间存在不兼容，导致编译可能会因段错误而失败。作为解决方法，可以使用较旧版本的编译器，例如_~~ __~~_`cargo +nightly-2019-08-27 build --features yourbackend --release`_~~
 
-### 安装 web-vault
+### 安装 web-vault <a id="install-the-web-vault"></a>
 
 可以从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/releases) 下载网页密码库的编译版本。
 
@@ -91,18 +91,18 @@ _**注意**：可能会要求您运行_ _`npm audit fix`_ _以修复漏洞。这
 * 如果与 `cargo run --release` 一起运行，则为 `bitwarden_rs/web-vault`。
 * 如果您直接运行已编译的二进制文件，则它位于二进制文件旁，在 `bitwarden_rs/target/release/web-vault` 中。
 
-## 配置
+## 配置 <a id="configuration"></a>
 
 可用的配置选项记录在默认的 `.env` 文件中，可以通过在该文件中取消注释所需选项或设置它们各自的环境变量来对其进行修改。有关可用的主要配置选项，请参见此 Wiki 的[配置](../configuration/)章节。
 
 注意：环境变量将覆盖 `.env` 文件中设置的值。
 
-## 有关部署的更多信息
+## 有关部署的更多信息 <a id="more-information-for-deployment"></a>
 
 * [配置反向代理](roxy-examples.md)
 * [通过 systemd 设置自动启动](../configuration/creating-a-systemd-service.md)
 
-## 如何为 SQLite 后端重建数据库模式（面向开发人员）
+## 如何为 SQLite 后端重建数据库模式（面向开发人员） <a id="how-to-recreate-database-schemas-for-the-sqlite-backend-for-developers"></a>
 
 使用 cargo 安装 diesel\_cli：
 
@@ -129,7 +129,7 @@ diesel migration redo
 # diesel print-schema > src/db/sqlite/schema.rs
 ```
 
-## 如何从 SQLite 后端迁移到 MySQL 后端（面向开发人员）
+## 如何从 SQLite 后端迁移到 MySQL 后端（面向开发人员） <a id="how-to-migrate-from-sqlite-backend-to-mysql-backend-for-developers"></a>
 
 如果要从 SQLite 迁移，请参考[使用 MySQL 后端](../configuration/using-the-mysql-backend.md)。
 

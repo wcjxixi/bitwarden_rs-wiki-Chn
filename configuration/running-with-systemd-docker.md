@@ -44,7 +44,7 @@ WantedBy=multi-user.target
 * `Type` 的值 `notify`：告诉 systemd 从已准备就绪的服务中获取通知。
 * `NotifyAccess` 的值 `all`：是由 `systemd-docker` 请求的。
 
-## 设置环境变量
+## 设置环境变量 <a id="setting-environment-variables"></a>
 
 可以通过两种方式在单元文件中直接指定环境变量：
 
@@ -81,7 +81,7 @@ TimeoutStartSec=0
 -snip-
 ```
 
-## 运行服务
+## 运行服务 <a id="running-the-service"></a>
 
 完成上述安装和配置后，请使用 `sudo systemctl daemon-reload` 命令重新加载systemd 。然后，使用 `sudo systemctl start bitwarden` 命令启动 Bitwarden 服务。
 

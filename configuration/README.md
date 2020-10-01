@@ -1,6 +1,6 @@
 # 配置
 
-* 📄 [概要](overview.md)
+* 📄 [概要](configuration-overview.md)
 * 📄 [禁用新用户注册](disable-registration-of-new-users.md)
 * 📄 [禁用邀请](disable-invitations.md)
 * 📄 [启用管理页面](enabling-admin-page.md)

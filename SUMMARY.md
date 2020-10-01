@@ -16,7 +16,7 @@
   * [4.部署示例](deployment/deployment-examples.md)
   * [5.代理示例](deployment/roxy-examples.md)
 * [配置](configuration/README.md)
-  * [1.概要](configuration/overview.md)
+  * [1.配置概要](configuration/configuration-overview.md)
   * [2.禁用新用户注册](configuration/disable-registration-of-new-users.md)
   * [3.禁用邀请](configuration/disable-invitations.md)
   * [4.启用管理页面](configuration/enabling-admin-page.md)

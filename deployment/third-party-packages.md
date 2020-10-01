@@ -32,7 +32,7 @@ RPM 库由 @MrMEEE 打包在这里：[https://copr.fedorainfracloud.org/coprs/mr
 
 软件包代码和问题跟踪器可以在这里找到 [https://git.cloudron.io/cloudron/bitwardenrs-app](https://git.cloudron.io/cloudron/bitwardenrs-app)。
 
-## 家庭助理
+## 家庭助理 <a id="home-assistant"></a>
 
 [家庭助理](https://www.home-assistant.io/)是一个开源的家庭自动化平台。在这里可找到 bitwarden\_rs 社区插件：[https://github.com/hassio-addons/addon-bitwarden](https://github.com/hassio-addons/addon-bitwarden。)。
 

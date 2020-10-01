@@ -28,7 +28,7 @@ Bitwarden 的安装针对谷歌云的"永远免费"的 f1-micro 计算实例进�
 
 在 raspberry pi 上为 bitwarden\_rs 进行 Ansible 部署。
 
-## 共享主机
+## 共享主机 <a id="shared-hosting"></a>
 
 * [https://github.com/jjlin/bitwardenrs-shared-hosting](https://github.com/jjlin/bitwardenrs-shared-hosting)
 

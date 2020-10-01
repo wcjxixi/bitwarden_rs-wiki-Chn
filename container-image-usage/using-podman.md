@@ -6,7 +6,7 @@
 
 [Podman](https://podman.io/) 是 Docker 的无守护程序替代方案，它与大部分 Docker 容器兼容。
 
-## 创建一个系统服务文件
+## 创建一个系统服务文件 <a id="creating-a-systemd-service-file"></a>
 
 由于 Podman 的无守护程序架构，因此它比 Docker 更容易在 systemd 中运行。它带有一个便捷的 generate 命令，该命令可以生成 systemd 文件，[这篇文章](https://www.redhat.com/sysadmin/podman-shareable-systemd-services)详细介绍了它。
 
@@ -38,7 +38,7 @@ $ systemctl --user enable /etc/systemd/system/container-bitwarden.service
 $ systemctl --user start container-bitwarden.service
 ```
 
-### 每次重启时创建新容器
+### 每次重启时创建新容器 <a id="new-container-every-restart"></a>
 
 如果我们希望每次服务启动时都创建一个新容器，我们可以编辑服务文件以包含以下内容：
 
@@ -61,9 +61,9 @@ ROCKET_PORT=8080
 
 要使容器具有特定名称，如果进程未正确清理则需要添加 `ExecStartPre=/usr/bin/podman rm -i -f bitwarden`。
 
-## 故障排除
+## 故障排除 <a id="troubleshooting"></a>
 
-### 调试 systemd 服务文件
+### 调试 systemd 服务文件 <a id="debugging-systemd-service-file"></a>
 
 如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。我们可以通过`journalctl --user -u container-bitwarden -t 100`来定位错误。
 

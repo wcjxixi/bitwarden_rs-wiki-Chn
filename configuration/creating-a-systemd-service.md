@@ -6,7 +6,7 @@
 
 这里的文档要求您已经[编译了](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [bitwarden\_rs](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [二进制文件](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary)。如果生成了 docker 映像，则需要查看[使用](running-with-systemd-docker.md) [systemd-docker](running-with-systemd-docker.md) [运行](running-with-systemd-docker.md)。
 
-## 设置
+## 设置 <a id="setup"></a>
 
 要确保 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），需要一个 `.service` 文件。以下是一些可用的：
 
@@ -76,7 +76,7 @@ $ sudo systemctl edit bitwarden_rs.service
 $ sudo systemctl daemon-reload
 ```
 
-## 用法
+## 用法 <a id="usage"></a>
 
 要启动此“服务”，请运行：
 
@@ -92,7 +92,7 @@ $ sudo systemctl enable bitwarden_rs.service
 
 同样的，你可以使用 `stop`，`restart` 和 `disable`。
 
-### 更新 bitwarden\_rs
+### 更新 bitwarden\_rs <a id="updating-bitwarden_rs"></a>
 
 编译新版本的 bitwarden\_rs 之后，您可以复制已编译的（新）二进制文件并替换现有的（旧）二进制文件，然后重新启动服务：
 
@@ -100,7 +100,7 @@ $ sudo systemctl enable bitwarden_rs.service
 $ sudo systemctl restart bitwarden_rs.service
 ```
 
-### 卸载 bitwarden\_rs
+### 卸载 bitwarden\_rs <a id="uninstalling-bitwarden_rs"></a>
 
 在执行其他操作之前，应停止并禁用该服务：
 
@@ -116,7 +116,7 @@ $ sudo systemctl disable --now bitwarden_rs.service
 $ sudo systemctl daemon-reload
 ```
 
-### 查看日志和状态
+### 查看日志和状态 <a id="logging-and-status-view"></a>
 
 如果要查看日志记录输出，请运行：
 
@@ -130,9 +130,9 @@ $ journalctl -u bitwarden_rs.service
 $ systemctl status bitwarden_rs.service
 ```
 
-## 故障排除
+## 故障排除 <a id="troubleshooting"></a>
 
-### 旧版 systemd 的沙盒选项
+### 旧版 systemd 的沙盒选项 <a id="sandboxing-options-with-older-systemd-versions"></a>
 
 在 RHEL 7（和 debian 8）中，使用的 systemd 不支持某些隔离选项（[\#445](https://github.com/dani-garcia/bitwarden_rs/issues/445)，[\#363](https://github.com/dani-garcia/bitwarden_rs/issues/363)）。这可能导致出现如下错误之一：
 
@@ -160,7 +160,7 @@ $ systemctl --version
 $ sudo systemctl daemon-reload
 ```
 
-## 更多信息
+## 更多信息 <a id="more-information"></a>
 
 有关 .service 文件的更多信息，请参阅 [systemd.service](https://www.freedesktop.org/software/systemd/man/systemd.service.html)（用于安全性配置）和 [systemd.exec](https://www.freedesktop.org/software/systemd/man/systemd.exec.html) 手册页。
 
