@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-HTTPS)
 {% endhint %}
 
-要对 `bitwarden_rs` 本身启用 HTTPS，请按照以下说明设置 `ROCKET_TLS` 环境变量。但是，由于 Rocket 的 TLS 支持相对不成熟，因此除非您确实需要最小化依赖关系，否则通常最好使用更成熟的[反向代理](https://github.com/dani-garcia/bitwarden_rs/wiki/Proxy-examples)方式。
+要对 `bitwarden_rs` 本身启用 HTTPS，请按照以下说明设置 `ROCKET_TLS` 环境变量。但是，由于 Rocket 的 TLS 支持相对不成熟，因此除非您确实需要最小化依赖关系，否则通常最好使用更成熟的[反向代理](../deployment/roxy-examples.md)方式。
 
 该选项的值必须遵循以下格式：
 
@@ -25,6 +25,8 @@ ROCKET_TLS={certs="/path/to/certs.pem",key="/path/to/key.pem"}
   > `[ERROR] environment variable ROCKET_TLS={certs="/ssl/ecdsa.crt",key="/ssl/ecdsa.key"} could not be parsed`
 
   （环境变量本身的格式没有错误；这是因为 Rocket 无法解析证书/密钥内容。）
+
+* 如果在 Docker 下运行，请记住，bitwarden\_rs 在容器内部运行时将解析 `ROCKET_TLS` 值，所以请确保 `certs` 和 `key` 路径是容器内部呈现的样子（可能与 Docker 主机系统上的路径不同）。
 
 ```python
 docker run -d --name bitwarden \
@@ -62,7 +64,7 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-#### 检查证书是否有效
+## 检查证书是否有效
 
 当您的 bitwarden\_rs 服务器可供外界使用时，您可以使用 [https://comodosslstore.com/ssltools/ssl-checker.php](https://comodosslstore.com/ssltools/ssl-checker.php) 网站来检查 SSL 证书是否包含证书链。缺少证书链，Android 设备将无法连接。
 

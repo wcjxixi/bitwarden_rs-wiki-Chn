@@ -8,7 +8,7 @@ Docker Compose 是一个用于定义和配置多容器应用程序的工具。�
 
 本指南基于 [\#126 \(comment\)](https://github.com/dani-garcia/bitwarden_rs/issues/126#issuecomment-417872681)。[这里](https://github.com/sosandroid/docker-bitwarden_rs-caddy-synology)也有另一种基于 Bitwarden\_rs 和 Caddy 2.0 的解决方案。
 
-使用以下内容创建 `docker-compose.yml` 文件：
+基于以下内容创建 `docker-compose.yml` 文件：
 
 ```python
 # docker-compose.yml

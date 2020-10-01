@@ -22,7 +22,7 @@ docker run -d --name bitwarden \
 
 此后，管理页面将在 `/admin` 子目录中可用。
 
-首次在管理页面保存设置时，将自动在 `DATA_FOLDER` 中生成 `config.json` 文件。该文件中的值优先于环境值。
+首次在管理页面保存设置时，将自动在 `DATA_FOLDER` 中生成 `config.json` 文件。该文件中的值优先于环境变量值。
 
-**请注意：**更改 `ADMIN_TOKEN` 令牌值后，仍可以使用其旧的登录令牌[长达 20 分钟](https://github.com/dani-garcia/bitwarden_rs/blob/master/src/api/admin.rs#L87)来登录管理页面。
+**请注意：**更改 `ADMIN_TOKEN` 后，当前已登录管理页面的人仍可以使用旧的登录令牌[长达 20 分钟时间](https://github.com/dani-garcia/bitwarden_rs/blob/master/src/api/admin.rs#L87)。
 

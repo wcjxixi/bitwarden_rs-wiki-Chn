@@ -8,7 +8,7 @@
 
 使用代理时，最好在代理级别而不是在应用程序级别配置 HTTPS，这样也可以保护 WebSockets 连接。
 
-### 目录
+## 目录
 
 * [Caddy 1.x](roxy-examples.md#caddy-1-x)
 * [Caddy 2.x](roxy-examples.md#caddy-2-x)
@@ -19,7 +19,7 @@
 * [Traefik v1](roxy-examples.md#traefik-v1-docker-compose-example) \(docker-compose 示例\)
 * [Traefik v2](roxy-examples.md#traefik-v2-docker-compose-example-by-hwwilliams) \(docker-compose 示例 by hwwilliams\)
 
-### Caddy 1.x
+## Caddy 1.x
 
 Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/v1/docs/automatic-https)。
 
@@ -46,7 +46,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 }
 ```
 
-### Caddy 2.x
+## Caddy 2.x
 
 同样，Caddy 2 在某些情况下也可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/docs/automatic-https)。
 
@@ -124,7 +124,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 #}
 ```
 
-### Nginx \(by shauder\)
+## Nginx \(by shauder\)
 
 ```python
 server {
@@ -173,7 +173,7 @@ server {
 }
 ```
 
-### Nginx \(by ypid\)
+## Nginx \(by ypid\)
 
 使用 DebOps 配置 nginx 作为 bitwarden\_rs 的反向代理的清单示例。 我选择在 URL 中使用 PSK 以获得额外的安全性，从而不会将 API 公开给 Internet 上的每个人，因为客户端应用程序尚不支持客户端证书（我对其进行了测试）。 注意：使用 subpath/PSK 需要修补源代码并重新编译，请参考：[https://github.com/dani-garcia/bitwarden\_rs/issues/241\#issuecomment-436376497](https://github.com/dani-garcia/bitwarden_rs/issues/241#issuecomment-436376497)。 /admin 未经测试。 有关安全性子路径托管的一般讨论，请参阅：[https://github.com/debops/debops/issues/1233](https://github.com/debops/debops/issues/1233)
 
@@ -229,7 +229,7 @@ nginx__servers:
           deny all;
 ```
 
-### Apache \(by fbartels\)
+## Apache \(by fbartels\)
 
 ```bash
 <VirtualHost *:443>
@@ -255,7 +255,7 @@ nginx__servers:
 </VirtualHost>
 ```
 
-### Apache in a sub-location \(by ss89\)
+## Apache in a sub-location \(by ss89\)
 
 确保在 apache 配置中的某个位置加载了 websocket 代理模块。 它看起来像这样：
 
@@ -288,7 +288,7 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 </VirtualHost>
 ```
 
-### Traefik v1 \(docker-compose 示例\)
+## Traefik v1 \(docker-compose 示例\)
 
 ```bash
 labels:
@@ -301,9 +301,9 @@ labels:
     - traefik.hub.protocol=ws
 ```
 
-### Traefik v2 \(docker-compose 示例 by hwwilliams\)
+## Traefik v2 \(docker-compose 示例 by hwwilliams\)
 
-#### 将 Traefik v1 标签迁移到 Traefik v2
+### 将 Traefik v1 标签迁移到 Traefik v2
 
 ```bash
 labels:
@@ -317,7 +317,7 @@ labels:
   - traefik.http.services.bitwarden-websocket.loadbalancer.server.port=3012
 ```
 
-#### 迁移的标签加上 HTTP 到 HTTPS 重定向
+### 迁移的标签加上 HTTP 到 HTTPS 重定向
 
 这些标签假定 Traefik 中为端口 80 和 443 定义的入口点分别是“web”和“websecure”。
 

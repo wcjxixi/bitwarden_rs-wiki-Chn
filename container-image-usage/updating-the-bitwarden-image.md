@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Updating-the-bitwarden-image)
 {% endhint %}
 
-更新非常简单，你只需确保保留了已装载的卷。如果您使用[此处](starting-a-container.md)示例中的挂载卷的方式，则只需使用 `pull` 拉取最新版的映像，使用 `stop` 和 `rm` 停止和移除当前容器，然后与之前相同的方式启动一个新容器：
+更新非常简单，你只需确保保留了已装载的卷。如果您使用[此处](starting-a-container.md)示例中的 bind-mounted 路径（绑定挂载路径）的方式，则只需使用 `pull` 拉取最新版的映像，使用 `stop` 和 `rm` 停止和移除当前容器，然后与之前相同的方式启动一个新容器：
 
 ```python
 # 拉取最新版本的镜像
@@ -42,7 +42,17 @@ docker rm bitwarden_data
 # 您可以保留数据容器以用于将来的更新，这样的话，可以跳过最后一步。
 ```
 
-### 使用系统服务进行更新（在本例中为 Debian/Raspbian）
+你也可以使用 Watchtower 这样的工具来自动化更新过程。Watchtower 可以定期检查 Docker 镜像的更新，拉取更新后的镜像，并使用更新后的镜像重新创建容器。
+
+## 使用 docker-compose 更新
+
+```python
+docker-compose stop
+docker-compose pull
+docker-compose start
+```
+
+## 使用系统服务更新（在本例中为 Debian/Raspbian）
 
 ```python
 sudo systemctl restart bitwarden.service

@@ -14,12 +14,22 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-注意：虽然用户不能自己注册，但仍然可以由已经注册的用户邀请注册。如果您还想禁用邀请，请参阅[禁用邀请](disable-invitations.md)。
+## 禁用组织邀请
 
-您还可以禁用注册功能，但某些域的电子邮件地址除外。 例如：
+即使 `SIGNUPS_ALLOWED=false`，作为组织所有者或管理员的现有用户仍然可以邀请新用户。如果你也想禁用这个功能，请参阅[禁用邀请](disable-invitations.md)。
+
+## 限制某些电子邮件域注册
+
+您可以通过设置 `SIGNUPS_DOMAINS_WHITELIST` 来限制某些域的电子邮件地址的注册。示例：
 
 * `SIGNUPS_DOMAINS_WHITELIST=example.com` （单个域）
 * `SIGNUPS_DOMAINS_WHITELIST=example.com,example.net,example.org` （多个域）
 
-您仍然需要设置 `SIGNUPS_ALLOWED=false`。另外，在[＃728](https://github.com/dani-garcia/bitwarden_rs/pull/728) 查看注意事项。
+如果设置了 `SIGNUPS_DOMAINS_WHITELIST`，`SIGNUPS_ALLOWED=false`的值将被忽略。
+
+你可能还想设置 `SIGNUPS_VERIFY=true`，以要求新注册的用户在成功登录前进行电子邮件验证。这将防止有人用一个拥有正确域名的假电子邮件地址注册。
+
+## 通过管理页面发出邀请
+
+bitwarden\_rs 管理员可以通过[管理页面](enabling-admin-page.md)邀请任何人，不受以上限制。
 

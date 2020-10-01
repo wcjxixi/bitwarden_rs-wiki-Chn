@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Changing-persistent-data-location)
 {% endhint %}
 
-### /data prefix:
+## /data prefix:
 
 默认情况下，所有持久性数据都保存在 `/data` 下，您可以通过设置 `DATA_FOLDER` 环境变量来覆盖此路径：
 
@@ -18,7 +18,7 @@ docker run -d --name bitwarden \
 
 请注意，您需要相应地调整您的卷的挂载。
 
-### 数据库名称和位置
+## 数据库名称和位置
 
 默认值为 `$DATA_FOLDER/db.sqlite3`，您可以使用 `DATABASE_URL` 变量专门为数据库更改路径：
 
@@ -33,7 +33,7 @@ docker run -d --name bitwarden \
 
 请注意，如果数据库和其他持久性数据在不同的位置，记得为他们装载卷。
 
-### 附件位置
+## 附件位置
 
 默认值为 `$DATA_FOLDER/attachments`，您可以使用 `ATTACHMENTS_FOLDER` 变量更改路径：
 
@@ -48,7 +48,7 @@ docker run -d --name bitwarden \
 
 请注意，如果附件和其他持久性数据在不同的位置，记得为他们装载卷。
 
-### 图标缓存位置
+## 图标缓存位置
 
 默认值为 `$DATA_FOLDER/icon_cache`，您可以使用 `ICON_CACHE_FOLDER` 变量更改路径：
 

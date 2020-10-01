@@ -11,10 +11,29 @@
 docker build -t bitwarden_rs .
 ```
 
-要使用 MySQL 后端构建，请执行以下操作：
+要使用 MySQL 后端构建，运行：
 
 ```python
 # Build the docker image:
 docker build -t bitwarden_rs --build-arg DB=mysql .
+```
+
+要使用 Postgresql 后端构建，运行：
+
+```python
+# Build the docker image:
+docker build -t bitwarden_rs --build-arg DB=postgresql .
+```
+
+在 docker-compose.yml 中它看起来像这样：
+
+```python
+  bitwarden:
+    # image: bitwardenrs/server-postgresql:latest
+    image: bitwarden_rs
+    build: 
+      context: bitwarden_rs
+      args: 
+        DB: postgresql
 ```
 

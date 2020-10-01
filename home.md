@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki)
 {% endhint %}
 
-这是用 Rust 编写的 Bitwarden 服务器 API 实现，与上游（官方）Bitwarden 客户端兼容。与运行上游资源密集型服务可能不理想相比，非常适合自托管的部署。
+bitwarden\_rs 是用 Rust 编写的 Bitwarden 服务器 API 实现，与上游（官方）Bitwarden 客户端兼容。与运行上游资源密集型服务可能不理想相比，非常适合自托管的部署。
 
 ### 特性
 

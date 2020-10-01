@@ -40,3 +40,35 @@ docker run -d --name bitwarden -v /bw-data/:/data/ -p 192.168.0.2:80:80 bitwarde
 docker start bitwarden
 ```
 
+## 自定义容器启动 <a id="customizing-container-startup"></a>
+
+如果你想在容器启动时运行自定义启动脚本，你可以将 `/etc/bitwarden_rs.sh` 作为单个脚本和/或将 `/etc/bitwarden_rs.d` 作为脚本目录挂载到容器中。对于后一种情况，只有扩展名为 .sh 的文件才会运行，所以其他扩展名的文件（例如，data/config 文件）则可以驻留在同一个目录中。\(具体工作方式请参见 [start.sh](https://github.com/dani-garcia/bitwarden_rs/blob/master/docker/start.sh)\)。
+
+自定义启动脚本对于修补 web vault 文件或安装额外的包、CA证书等非常有用，因为可以让您不必构建和维护您自己的 Docker 镜像。
+
+### 示例 <a id="example"></a>
+
+假设你的脚本名为 `init.sh`，包含以下内容：
+
+```python
+echo "starting up"
+```
+
+您可以像这样在启动时运行脚本：
+
+```python
+docker run -d --name bitwarden -v $(pwd)/init.sh:/etc/bitwarden_rs.sh <other docker args...> bitwardenrs/server:latest
+```
+
+如果你运行 `docker logs bitwarden`，现在你应该能看到 `starting up` 作为输出的第一行。
+
+请注意，每次容器启动时都会运行初始化脚本（而不仅仅是第一次），所以这些脚本通常应该是幂等的（即，你可以多次运行这些脚本而不会出现不良/异常）。如果你的脚本天然没有此属性，你可以这样做：
+
+```python
+if [ ! -e /.init ]; then
+  touch /.init
+
+  # run your init steps...
+fi
+```
+

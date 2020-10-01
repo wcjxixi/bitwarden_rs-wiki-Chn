@@ -6,7 +6,7 @@
 
 安装 Fail2ban 将阻止攻击者暴力破解您的密码库登录。如果您的实例公开可用，这一点尤其重要。
 
-### 目录
+## 目录
 
 * [预先说明](fail2ban-setup.md#yu-xian-shuo-ming)
 * [安装](fail2ban-setup.md#an-zhuang)
@@ -22,7 +22,7 @@
 * [测试 Fail2Ban](fail2ban-setup.md#ce-shi-fail-2-ban)
 * [SELinux 中的问题](fail2ban-setup.md#selinux-zhong-de-wen-ti)
 
-### 预先说明
+## 预先说明
 
 * 以下示例使用 `vi` 指令编辑。您可以在[这里](https://pc.net/resources/commands/vi)查看它的基本使用方法。然而，您也可以使用您想用的任何文本编辑器。
 * 从 1.5.0 版开始，Bitwarden\_rs 支持记录到文件。请参考这里设置：[日志](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging)[记录](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging)
@@ -32,15 +32,15 @@
 [YYYY-MM-DD hh:mm:ss][bitwarden_rs::api::identity][ERROR] Username or password is incorrect. Try again. IP: XXX.XXX.XXX.XXX. Username: email@domain.com.
 ```
 
-### 安装
+## 安装
 
-#### Debian / Ubuntu / Raspian
+### Debian / Ubuntu / Raspian
 
 ```text
 sudo apt-get install fail2ban -y
 ```
 
-#### Fedora / Centos
+### Fedora / Centos
 
 需要 EPEL 库（CentOS 7）
 
@@ -49,7 +49,7 @@ sudo yum install epel-release
 sudo yum install fail2ban -y
 ```
 
-#### 群晖 DSM
+### 群晖 DSM
 
 使用 Synology 的话，由于各种原因需要做更多的工作。完整的解决方案发布在[这里](https://github.com/sosandroid/docker-fail2ban-synology)。主要问题是：
 
@@ -132,11 +132,11 @@ docker-compose up -d
 
 您现在应该看到该容器在 Synolog 的 Docker GUI 中运行了。在配置筛选器和 jail 后，您必须重新加载。
 
-### 为网页密码库设置
+## 为 Web Vault 设置
 
 按照惯例，`path_f2b` 表示 Fail2ban 工作所需的路径。这取决于您的系统。例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
 
-#### 筛选
+### 筛选
 
 创建文件
 
@@ -159,7 +159,7 @@ ignoreregex =
 `fail2ban.filter [5291]: ERROR No 'host' group in '^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$'`  
 请在 `bitwarden.local` 中使用 `<HOST>` ，而不是 `<ADDR>`。
 
-#### Jail
+### Jail
 
 \[**译者注**\]：[Jail](https://www.freebsd.org/doc/zh_CN/books/arch-handbook/jail.html) [是什么](https://www.freebsd.org/doc/zh_CN/books/arch-handbook/jail.html)
 
@@ -197,11 +197,11 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 
 随意更改您认为合适的选项。
 
-### 为管理页面设置
+## 为管理页面设置
 
 如果通过设置 `ADMIN_TOKEN` 环境变量启用了管理控制台，则可以使用 Fail2Ban 防止攻击者暴力破解您的管理令牌。该过程与网络密码库相同。
 
-#### 筛选
+### 筛选
 
 创建文件
 
@@ -220,7 +220,7 @@ failregex = ^.*Invalid admin token\. IP: <ADDR>.*$
 ignoreregex =
 ```
 
-#### Jail
+### Jail
 
 创建文件
 
@@ -248,7 +248,7 @@ findtime = 14400
 action = iptables-allports[name=bitwarden, chain=FORWARD]
 ```
 
-### 测试 Fail2Ban
+## 测试 Fail2Ban
 
 现在，尝试使用任何电子邮件登录 Bitwarden（不必是有效电子邮件，只需是电子邮件格式即可）。如果它可以正常工作并且您的 IP 被阻止了，运行以下命令来取消 IP 阻止：
 
@@ -264,7 +264,7 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 
 如果您使用的是 podman 而不是 docker，则无法通过 `-e "TZ=<timezone>"` 设置时区。可以按照以下指南解决此问题（使用 alpine 镜像时）：[https://wiki.alpinelinux.org/wiki/Setting\_the\_timezone](https://wiki.alpinelinux.org/wiki/Setting_the_timezone)。
 
-### SELinux 中的问题
+## SELinux 中的问题
 
 当您使用 SELinux 时，SELinux 可能会阻止 fail2ban 读取日志。如果是这样，请按照以下步骤操作： `sudo tail /var/log/audit/audit.log`。您应该会看到类似的内容（当然，实际的审核 ID 会因您的情况而不一样）：
 

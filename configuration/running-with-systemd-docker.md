@@ -1,18 +1,16 @@
-# 19.使用 systemd-docker 运行
-
-### ！！！设置环境变量上面一段翻译很不完整！！！
+# 19.使用 systemd docker 运行
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-with-systemd-docker)
 {% endhint %}
 
-若你喜欢，以下介绍内容还可以用 systemd 管理 Docker 容器的生命周期。
+若你喜欢，这里的内容允许您使用 systemd 管理 Docker 容器的生命周期。
 
-首先，使用系统包管理器安装 `systemd-docker` 包。这是一个包装程序，可以让 docker 与 systemd 更完美地集成。
+首先，使用系统包管理器安装 `systemd-docker` 包。这是一个用于改进 docker 与 systemd 集成的封装器。。
 
-有关完整介绍和配置选项，请参见 [GitHub](https://github.com/ibuildthecloud/systemd-docker) [知识库](https://github.com/ibuildthecloud/systemd-docker)。
+有关完整介绍和配置选项，请参阅 [GitHub](https://github.com/ibuildthecloud/systemd-docker) [库](https://github.com/ibuildthecloud/systemd-docker)。
 
-使用你喜欢的编辑器以 root 身份创建 `/etc/systemd/system/bitwarden.service` 文件并使用以下内容：
+以 root 身份，使用你喜欢的编辑器用以下内容创建 `/etc/systemd/system/bitwarden.service` 文件：
 
 ```python
 [Unit]
@@ -37,20 +35,20 @@ NotifyAccess=all
 WantedBy=multi-user.target
 ```
 
-根据需要调整以上示例。特别要注意 `-p` 和 `-v` 选项，因为它们控制容器和主机之间的端口和卷绑定。
+根据需要调整上述示例。特别要注意 `-p` 和 `-v` 选项，因为它们控制着容器和主机之间的端口和卷绑定。
 
-对上述选项的解释：
+对上述不自明选项的解释：
 
-* `TimeoutStartSec` 的值 0：等待默认启动时间后，停止 systemd 失败。这要求 `ExecStartPre` 中的 `docker pull` 需要一段时间来完成。
+* `TimeoutStartSec` 的值 0：等待默认启动时间后，认为服务已经失败，停止 systemd。这是要求的，因为 `ExecStartPre` 中的 `docker pull` 命令需要一段时间来完成。
 * `ExecStartPre`：在运行之前拉取 docker 标签。
-* `Type` 的值 `notify`：告诉 systemd，它期望从已准备就绪的服务中获取通知。
+* `Type` 的值 `notify`：告诉 systemd 从已准备就绪的服务中获取通知。
 * `NotifyAccess` 的值 `all`：是由 `systemd-docker` 请求的。
 
-### 设置环境变量
+## 设置环境变量
 
 可以通过两种方式在单元文件中直接指定环境变量：
 
-* 在`[Service]`块中使用 `Environment` 指令。
+* 在 `[Service]` 块中使用 `Environment` 指令。
 * 使用 `docker` 的 `-e` 选项。此时，您可以省略上面示例中显示的 `--env` 选项。
 
 要验证是否正确设置了环境变量，请检查 `systemctl show bitwarden.service`  的输出中是否存在 `Environment` 行。
@@ -83,7 +81,7 @@ TimeoutStartSec=0
 -snip-
 ```
 
-### 运行服务
+## 运行服务
 
 完成上述安装和配置后，请使用 `sudo systemctl daemon-reload` 命令重新加载systemd 。然后，使用 `sudo systemctl start bitwarden` 命令启动 Bitwarden 服务。
 
