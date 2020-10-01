@@ -6,14 +6,14 @@
 
 克隆库，然后从库的根目录运行以使用默认的 SQLite 后端进行构建：
 
-```yaml
+```python
 # Build the docker image:
 docker build -t bitwarden_rs .
 ```
 
 要使用 MySQL 后端构建，请执行以下操作：
 
-```yaml
+```python
 # Build the docker image:
 docker build -t bitwarden_rs --build-arg DB=mysql .
 ```

@@ -17,7 +17,7 @@
 
 #### SQLite 后端
 
-```php
+```python
 # Compile with sqlite backend and run
 cargo run --features sqlite --release
 # or just compile with sqlite (binary located in target/release/bitwarden_rs)
@@ -26,7 +26,7 @@ cargo build --features sqlite --release
 
 #### MySQL 后端
 
-```php
+```python
 # Compile with mysql backend and run
 cargo run --features mysql --release
 # or just compile with mysql (binary located in target/release/bitwarden_rs)
@@ -35,7 +35,7 @@ cargo build --features mysql --release
 
 #### PostgreSQL 后端
 
-```php
+```python
 # Compile with postgresql backend and run
 cargo run --features postgresql --release
 # or just compile with postgresql (binary located in target/release/bitwarden_rs)
@@ -56,7 +56,7 @@ _**注意**：构建密码库需要约 1.5GB 的 RAM。在具有 1GB 或更小�
 
 1、通过 [bitwarden/web](https://github.com/bitwarden/web) 克隆 git 库，并查看最新的发行标签（例如 v2.1.1）：
 
-```bash
+```python
 # 克隆库
 git clone https://github.com/bitwarden/web.git web-vault
 cd web-vault
@@ -71,14 +71,14 @@ git checkout "$(git tag --sort=v:refname | tail -n1)"
 
 3、应用补丁：
 
-```php
+```python
 # 在'web-vault'目录中运行命令
 git apply vX.Y.Z.patch
 ```
 
 4、然后，构建密码库：
 
-```yaml
+```python
 npm run sub:init
 npm install
 npm run dist
@@ -106,7 +106,7 @@ _**注意**：可能会要求您运行`npm audit fix`以修复漏洞。这将自
 
 使用 cargo 安装 diesel\_cli：
 
-```text
+```python
 cargo install diesel_cli --no-default-features --features sqlite-bundled
 ```
 
@@ -114,7 +114,7 @@ cargo install diesel_cli --no-default-features --features sqlite-bundled
 
 如果要修改模式，请使用以下命令创建新迁移：
 
-```text
+```python
 diesel migration generate <name>
 ```
 
@@ -122,7 +122,7 @@ diesel migration generate <name>
 
 应用迁移并保存生成的模式，如下所示：
 
-```php
+```python
 diesel migration redo
 
 # This step should be done automatically when using diesel-cli > 1.3.0

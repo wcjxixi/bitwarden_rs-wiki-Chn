@@ -10,7 +10,7 @@ Docker Compose 是一个用于定义和配置多容器应用程序的工具。�
 
 使用以下内容创建 `docker-compose.yml` 文件：
 
-```bash
+```python
 # docker-compose.yml
 version: '3'
 
@@ -44,7 +44,7 @@ volumes:
 
 并创建相应的 `Caddyfile` 文件（不需要修改）：
 
-```bash
+```python
 # Caddyfile
 {$DOMAIN} {
     tls {$EMAIL}
@@ -92,7 +92,7 @@ docker-compose down
 
 如果不需要 WebSocket 通知，则可以单独运行 Bitwarden\_rs。如果你和我一样，在 Raspberry Pi 上使用 bitwardenrs/server:raspberry 镜像运行 Bitwarden\_rs，请按我的示例操作。这是我的示例：
 
-```bash
+```python
 # docker-compose.yml
 version: '3'
 
@@ -119,13 +119,13 @@ services:
 
 最后安装证书。
 
-```text
+```python
 acme.sh --install-cert -d home.example.com --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
 ```
 
 或简单地使用
 
-```text
+```python
 acme.sh --issue -d home.example.com --challenge-alias otherdomain.com --dns dns_cf --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
 ```
 

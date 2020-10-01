@@ -36,11 +36,11 @@ Bitwarden 的安装针对谷歌云的"永远免费"的 f1-micro 计算实例进�
 
 ### NixOS \(by tklitschi\)
 
-这里有一个 NixOS 上的 bitwarden 配置例子。它不是很复杂，有后台选项，有您想使用的数据库类型，Backupdir为一个专用的备份systemdserive，选项启用它和配置选项。对于配置选项，你只需从.env模板中以nix语法传递.env变量。请参阅[代理示例](roxy-examples.md)了解 nixos-nginx 的配置示例。
+这里有一个 NixOS 上的 bitwarden 配置例子。它不是很复杂，有后台选项，有您想使用的数据库类型，Backupdir为一个专用的备份 systemdserive，选项启用它和配置选项。对于配置选项，你只需从.env模板中以nix语法传递.env变量。请参阅[代理示例](roxy-examples.md)了解 nixos-nginx 的配置示例。
 
 配置示例：
 
-```bash
+```python
 {pkgs,...}:
 {
   services.bitwarden_rs = {
@@ -80,5 +80,5 @@ Bitwarden 的安装针对谷歌云的"永远免费"的 f1-micro 计算实例进�
 }
 ```
 
-如果你有任何关于这部分的问题，请随时联系我。我在@litschi:litschi.xyz上的矩阵和litschi上的IRC\(hackint和freenode\)或简单地在bitwarden\_rs matrix.org chanel中询问。
+如果你有任何关于这部分的问题，请随时联系我。我在 @litschi:litschi.xyz 上的矩阵和 litschi 上的 IRC（hackint 和 freenode）或简单地在 bitwarden\_rs matrix.org chanel 中询问。
 

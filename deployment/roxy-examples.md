@@ -23,7 +23,7 @@
 
 Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/v1/docs/automatic-https)。
 
-```bash
+```python
 :443 {
   tls ${SSLCERTIFICATE} ${SSLKEY}
   # or 'tls self_signed' to generate a self-signed certificate
@@ -50,7 +50,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 
 同样，Caddy 2 在某些情况下也可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/docs/automatic-https)。
 
-```bash
+```python
 # Caddyfile V2.0 config file
 :80 {
   #Caddy on port 80 in container to bitwarden_rs private instance
@@ -126,7 +126,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 
 ### Nginx \(by shauder\)
 
-```bash
+```python
 server {
   listen 443 ssl http2;
   server_name vault.*;
@@ -175,7 +175,7 @@ server {
 
 ### Nginx \(by ypid\)
 
-使用 DebOps 配置 nginx 作为 bitwarden\_rs 的反向代理的清单示例。 我选择在 URL 中使用 PSK 以获得额外的安全性，从而不会将 API 公开给 Internet 上的每个人，因为客户端应用程序尚不支持客户端证书（我对其进行了测试）。 注意：使用 subpath/PSK 需要修补源代码并重新编译，请参考：[https：//github.com/dani-garcia/bitwarden\_rs/issues/241\#issuecomment-436376497](https://github.com/dani-garcia/bitwarden_rs/issues/241#issuecomment-436376497)。 /admin 未经测试。 有关安全性子路径托管的一般讨论，请参阅：[https://github.com/debops/debops/issues/1233](https://github.com/debops/debops/issues/1233)
+使用 DebOps 配置 nginx 作为 bitwarden\_rs 的反向代理的清单示例。 我选择在 URL 中使用 PSK 以获得额外的安全性，从而不会将 API 公开给 Internet 上的每个人，因为客户端应用程序尚不支持客户端证书（我对其进行了测试）。 注意：使用 subpath/PSK 需要修补源代码并重新编译，请参考：[https://github.com/dani-garcia/bitwarden\_rs/issues/241\#issuecomment-436376497](https://github.com/dani-garcia/bitwarden_rs/issues/241#issuecomment-436376497)。 /admin 未经测试。 有关安全性子路径托管的一般讨论，请参阅：[https://github.com/debops/debops/issues/1233](https://github.com/debops/debops/issues/1233)
 
 ```bash
 bitwarden__fqdn: 'vault.example.org'
@@ -288,7 +288,7 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 </VirtualHost>
 ```
 
-### Traefik v1 \(docker-compose example\)
+### Traefik v1 \(docker-compose 示例\)
 
 ```bash
 labels:
@@ -301,7 +301,7 @@ labels:
     - traefik.hub.protocol=ws
 ```
 
-### Traefik v2 \(docker-compose example by hwwilliams\)
+### Traefik v2 \(docker-compose 示例 by hwwilliams\)
 
 #### 将 Traefik v1 标签迁移到 Traefik v2
 
