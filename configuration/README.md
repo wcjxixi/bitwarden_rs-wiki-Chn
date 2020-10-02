@@ -13,7 +13,7 @@
 * 📄 [更改 API 请求大小限制](changing-the-api-request-size-limit.md)
 * 📄 [更改 worker 数量](changing-the-number-of-workers.md)
 * 📄 [配置 SMTP](smtp-configuration.md)
-* 📄 [显示密码提示](password-hint-display.md)
+* 📄 [禁用显示密码提示](password-hint-display.md)
 * 📄 [禁用或覆盖 Vault 接口托管](disabling-or-overriding-the-vault-interface-hosting.md)
 * 📄 [日志记录](logging.md)
 * 📄 [设置 Fail2Ban](fail2ban-setup.md)

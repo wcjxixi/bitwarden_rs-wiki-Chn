@@ -43,7 +43,7 @@
 * [其他信息](other-information/README.md)
   * [1.从 Keepass 或 KeepassX 导入数据](other-information/importing-data-from-keepass-or-keepassx.md)
   * [2.备份密码库](other-information/backing-up-your-vault.md)
-  * [3.私有 CA 和自签名证书兼容 Chrome](other-information/using-a-private-ca-and-making-ssl-certs-work-with-chrome.md)
+  * [3.使私有 CA 和自签名证书兼容 Chrome](other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)
   * [4.与上游 API 实现的区别](other-information/differences-from-the-upstream-api-implementation.md)
   * [5.支持上游发展](other-information/supporting-upstream-development.md)
   * [6.增强指南](other-information/hardening-guide.md)
