@@ -55,7 +55,7 @@ docker run -d --name bitwarden \
 
 因此，从 bitwarden 容器中这样使用：
 
-```bash
+```python
 docker run -d --name bitwarden \
   -e ROCKET_TLS='{certs="/ssl/live/mydomain/fullchain.pem",key="/ssl/live/mydomain/privkey.pem"}' \
   -v /etc/letsencrypt/:/ssl/ \

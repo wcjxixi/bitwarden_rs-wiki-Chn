@@ -26,7 +26,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 ```python
 :443 {
   tls ${SSLCERTIFICATE} ${SSLKEY}
-  # or 'tls self_signed' to generate a self-signed certificate
+  # 或使用 'tls self_signed' 生成自签名证书
   gzip
 
   # The negotiation endpoint is also proxied to Rocket
@@ -34,12 +34,12 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
     transparent
   }
 
-  # Notifications redirected to the websockets server
+  # Notifications 重定向到 websockets server
   proxy /notifications/hub <SERVER>:3012 {
     websocket
   }
 
-  # Proxy the Root directory to Rocket
+  # 将 Root 目录代理到 Rocket
   proxy / <SERVER>:80 {
     transparent
   }
@@ -51,7 +51,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 同样，Caddy 2 在某些情况下也可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/docs/automatic-https)。
 
 ```python
-# Caddyfile V2.0 config file
+# Caddyfile V2.0 配置文件
 :80 {
   #Caddy on port 80 in container to bitwarden_rs private instance
   #Use it if Caddy behind another reverse proxy such as the one embedded on Synology
@@ -177,7 +177,7 @@ server {
 
 使用 DebOps 配置 nginx 作为 bitwarden\_rs 的反向代理的清单示例。 我选择在 URL 中使用 PSK 以获得额外的安全性，从而不会将 API 公开给 Internet 上的每个人，因为客户端应用程序尚不支持客户端证书（我对其进行了测试）。 注意：使用 subpath/PSK 需要修补源代码并重新编译，请参考：[https://github.com/dani-garcia/bitwarden\_rs/issues/241\#issuecomment-436376497](https://github.com/dani-garcia/bitwarden_rs/issues/241#issuecomment-436376497)。 /admin 未经测试。 有关安全性子路径托管的一般讨论，请参阅：[https://github.com/debops/debops/issues/1233](https://github.com/debops/debops/issues/1233)
 
-```bash
+```python
 bitwarden__fqdn: 'vault.example.org'
 
 nginx__upstreams:
@@ -231,7 +231,7 @@ nginx__servers:
 
 ## Apache \(by fbartels\)
 
-```bash
+```python
 <VirtualHost *:443>
     SSLEngine on
     ServerName bitwarden.$hostname.$domainname
@@ -259,11 +259,11 @@ nginx__servers:
 
 确保在 apache 配置中的某个位置加载了 websocket 代理模块。 它看起来像这样：
 
-```bash
+```python
 LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 ```
 
-```bash
+```python
 <VirtualHost *:443>
     SSLEngine on
     ServerName $hostname.$domainname
@@ -290,7 +290,7 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 
 ## Traefik v1 \(docker-compose 示例\)
 
-```bash
+```python
 labels:
     - traefik.enable=true
     - traefik.docker.network=traefik
@@ -305,7 +305,7 @@ labels:
 
 ### 将 Traefik v1 标签迁移到 Traefik v2 <a id="traefik-v-1-labels-migrated-to-traefik-v2"></a>
 
-```bash
+```python
 labels:
   - traefik.enable=true
   - traefik.docker.network=traefik
@@ -323,7 +323,7 @@ labels:
 
 这些标签还假定您已经在 Traefik 中定义了默认的证书解析器。
 
-```bash
+```python
 labels:
   - traefik.enable=true
   - traefik.docker.network=traefik

@@ -36,7 +36,7 @@
 
 ### Debian / Ubuntu / Raspian
 
-```text
+```python
 sudo apt-get install fail2ban -y
 ```
 
@@ -44,7 +44,7 @@ sudo apt-get install fail2ban -y
 
 需要 EPEL 库（CentOS 7）
 
-```text
+```python
 sudo yum install epel-release
 sudo yum install fail2ban -y
 ```
@@ -62,7 +62,7 @@ sudo yum install fail2ban -y
 
 1、获取 root 权限
 
-```text
+```python
 sudo -i
 ```
 

@@ -80,13 +80,13 @@ volumes:
 
 运行以下命令创建并启动容器。它为反向代理在两个容器之间创建私有网络，这样就只有 caddy 暴露在外面了。
 
-```text
+```python
 docker-compose up -d
 ```
 
 停止并销毁容器。
 
-```text
+```python
 docker-compose down
 ```
 

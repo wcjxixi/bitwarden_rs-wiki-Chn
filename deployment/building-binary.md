@@ -18,27 +18,27 @@
 ### SQLite 后端 <a id="sqlite-backend"></a>
 
 ```python
-# Compile with sqlite backend and run
+# 使用 sqlite 后端编译并运行
 cargo run --features sqlite --release
-# or just compile with sqlite (binary located in target/release/bitwarden_rs)
+# 或仅使用 sqlite 编译(binary located in target/release/bitwarden_rs)
 cargo build --features sqlite --release
 ```
 
 ### MySQL 后端 <a id="mysql-backend"></a>
 
 ```python
-# Compile with mysql backend and run
+# 使用 mysql 后端编译并运行
 cargo run --features mysql --release
-# or just compile with mysql (binary located in target/release/bitwarden_rs)
+# 或仅使用 mysql 编译(binary located in target/release/bitwarden_rs)
 cargo build --features mysql --release
 ```
 
 ### PostgreSQL 后端 <a id="postgresql-backend"></a>
 
 ```python
-# Compile with postgresql backend and run
+# 使用 postgresql 后端编译并运行
 cargo run --features postgresql --release
-# or just compile with postgresql (binary located in target/release/bitwarden_rs)
+# 或仅使用 postgresql 编译(binary located in target/release/bitwarden_rs)
 cargo build --features postgresql --release
 ```
 
@@ -125,7 +125,7 @@ diesel migration generate <name>
 ```python
 diesel migration redo
 
-# This step should be done automatically when using diesel-cli > 1.3.0
+# 但使用 diesel-cli > 1.3.0 时，此步骤会自动完成
 # diesel print-schema > src/db/sqlite/schema.rs
 ```
 

@@ -12,7 +12,7 @@
 
 要设置令牌，请使用 `ADMIN_TOKEN` 变量：
 
-```bash
+```python
 docker run -d --name bitwarden \
   -e ADMIN_TOKEN=some_random_token_as_per_above_explanation \
   -v /bw-data/:/data/ \

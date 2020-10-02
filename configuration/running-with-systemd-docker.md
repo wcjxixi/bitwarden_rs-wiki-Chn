@@ -57,7 +57,7 @@ WantedBy=multi-user.target
 
 Systemd 可以获取以下格式的文件：
 
-```text
+```python
 Key="Value"
 ```
 
