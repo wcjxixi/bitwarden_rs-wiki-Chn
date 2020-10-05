@@ -57,7 +57,7 @@ docker-compose start
 ```python
 sudo systemctl restart bitwarden.service
 sudo docker system prune -f
-# 警告！这将删除已停止或未使用的容器，例如与bitwarden_rs不关联的容器
+# 警告！这将删除已停止或未使用的容器，例如与 bitwarden_rs 不关联的容器
 # 请仔细查看哪个容器是你需要的
 
 docker ps -a
@@ -68,7 +68,7 @@ docker ps -a
 #        - all networks not used by at least one container
 #        - all dangling images
 #        - all dangling build cache
-# 使用以下命令列出所有Docker镜像
+# 使用以下命令列出所有 Docker 镜像
 docker images
 # 这里你将看到所有未使用的镜像
 #
