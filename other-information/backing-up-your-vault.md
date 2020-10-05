@@ -13,7 +13,7 @@ mkdir $DATA_FOLDER/db-backup
 sqlite3 /$DATA_FOLDER/db.sqlite3 ".backup '/$DATA_FOLDER/db-backup/backup.sqlite3'"
 ```
 
-可以通过 CRON 计划任务每天运行此命令，但是请注意，这会每次覆盖相同的 `backup.sqlite3` 文件。因此，该备份文件应通过使用附加时间戳的 CRON 计划任务命令或其他备份应用程序（如 Duplicati）通过增量备份保存。要恢复，只需用 `backup.sqlite3` 覆盖为 `db.sqlite3` 即可（当 bitwarden\_rs 停止时）。
+可以通过 CRON 计划任务每天运行此命令，但是请注意，每次都会覆盖相同的 `backup.sqlite3` 文件。因此，该备份文件应通过使用附加时间戳的 CRON 计划任务命令或其他备份应用程序（如 Duplicati）通过增量备份保存。要恢复，只需用 `backup.sqlite3` 覆盖为 `db.sqlite3` 即可（当 bitwarden\_rs 停止时）。
 
 运行以上命令要求在 docker 主机系统上安装 sqlite3。您可以通过以下命令使用 sqlite3 docker 容器实现相同的结果。
 
