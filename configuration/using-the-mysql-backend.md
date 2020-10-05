@@ -6,7 +6,7 @@
 
 要使用 MySQL 后端，请首先确保您在[启用了](../deployment/building-binary.md#mysql-hou-duan) [MySQL](../deployment/building-binary.md#mysql-hou-duan) [功能](../deployment/building-binary.md#mysql-hou-duan)情况下构建二进制文件。
 
-要运行二进制文件或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`），并将 `ENABLE_DB_WAL` 设置为 false（即  `ENABLE_DB_WAL='false'`）。
+要运行二进制文件或容器，请确保 `DATABASE_URL` 环境变量已设置（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`），并将 `ENABLE_DB_WAL` 设置为 false，即  `ENABLE_DB_WAL='false'`。
 
 **连接字符串语法：**
 

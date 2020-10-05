@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Syncing-users-from-LDAP)
 {% endhint %}
 
-LDAP 集成使用小型服务来执行，该小型服务用于查询 LDAP 并邀请用户加入您的 Bitwarden 实例。该服务的名称被非正式地命名为 [bitwarden\_rs\_ldap](https://github.com/ViViDboarder/bitwarden_rs_ldap)。
+LDAP集成使用小型服务来执行，该小型服务用于查询 LDAP 并邀请用户加入您的 Bitwarden 实例。该服务的名称被非正式地命名为 [bitwarden\_rs\_ldap](https://github.com/ViViDboarder/bitwarden_rs_ldap)。
 
 它尚未以二进制形式分发，但是有可用的 Docker 映像 [vividboarder/bitwarden\_rs\_ldap](https://hub.docker.com/r/vividboarder/bitwarden_rs_ldap)。
 
