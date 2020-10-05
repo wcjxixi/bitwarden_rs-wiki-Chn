@@ -54,7 +54,7 @@ cargo build --features postgresql --release
 
 _**注意**：构建密码库需要约 1.5GB 的 RAM。在具有 1GB 或更小容量的 RaspberryPI 之类的系统上，请_[_启用交换功能_](https://www.tecmint.com/create-a-linux-swap-file/)_或在功能更强大的计算机上构建，然后从那里复制目录。仅构建时需要大量内存，而运行带密码库的 bitwarden\_rs 仅需要约 10MB 的 RAM。_
 
-1、通过 [bitwarden/web](https://github.com/bitwarden/web) 克隆 git 库，并查看最新的发行标签（例如 v2.1.1）：
+1、通过 [bitwarden/web](https://github.com/bitwarden/web) 克隆 git 库，并检查最新的发行标签（例如 v2.1.1）：
 
 ```python
 # 克隆库
@@ -64,10 +64,10 @@ cd web-vault
 git checkout "$(git tag --sort=v:refname | tail -n1)"
 ```
 
-2、从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/tree/master/patches) 下载补丁文件，选择要使用的版本，并将其复制到`web-vault`文件夹。这里假设网页密码库版本为 `vX.Y.Z`：
+2、从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/tree/master/patches) 下载补丁文件并将其复制到 `web-vault` 文件夹。选择要使用的版本，假设网页密码库版本为 `vX.Y.Z`：
 
-* 如果有版本为 `vX.Y.Z` 的补丁，请使用该补丁
-* 否则，选择最大版本仍小于 `vX.Y.Z`的补丁
+* 如果有版本为 `vX.Y.Z` 的补丁，则使用该它
+* 否则，选择最大版本仍小于 `vX.Y.Z` 的那一个
 
 3、应用补丁：
 
@@ -76,7 +76,7 @@ git checkout "$(git tag --sort=v:refname | tail -n1)"
 git apply vX.Y.Z.patch
 ```
 
-4、然后，构建 Vault：
+4、然后，构建密码库：
 
 ```python
 npm run sub:init
@@ -89,11 +89,11 @@ _**注意**：可能会要求您运行_ _`npm audit fix`_ _以修复漏洞。这
 5、最后将 `build` 文件夹的内容复制到目标文件夹中：
 
 * 如果与 `cargo run --release` 一起运行，则为 `bitwarden_rs/web-vault`。
-* 如果您直接运行已编译的二进制文件，则它位于二进制文件旁，在 `bitwarden_rs/target/release/web-vault` 中。
+* 如果直接运行已编译的二进制，则它位于二进制旁，在 `bitwarden_rs/target/release/web-vault` 中。
 
 ## 配置 <a id="configuration"></a>
 
-可用的配置选项记录在默认的 `.env` 文件中，可以通过在该文件中取消注释所需选项或设置它们各自的环境变量来对其进行修改。有关可用的主要配置选项，请参见此 Wiki 的[配置](../configuration/)章节。
+可用的配置选项记录在默认的 `.env` 文件中，可以通过在该文件中取消注释所需的选项或设置它们各自的环境变量来对其进行修改。有关可用的主要配置选项，请参见[配置](../configuration/)章节。
 
 注意：环境变量将覆盖 `.env` 文件中设置的值。
 
@@ -110,7 +110,7 @@ _**注意**：可能会要求您运行_ _`npm audit fix`_ _以修复漏洞。这
 cargo install diesel_cli --no-default-features --features sqlite-bundled
 ```
 
-确保 `.env` 文件中包含正确的数据库路径。
+确保在 `.env` 文件中包含正确的数据库路径。
 
 如果要修改模式，请使用以下命令创建新迁移：
 
@@ -118,14 +118,14 @@ cargo install diesel_cli --no-default-features --features sqlite-bundled
 diesel migration generate <name>
 ```
 
-修改 `*.sql` 文件，确保在 `down.sql` 文件中还原所有更改。
+修改 `*.sql` 文件，确保在 `down.sql` 文件中还原了所有更改。
 
 应用迁移并保存生成的模式，如下所示：
 
 ```python
 diesel migration redo
 
-# 但使用 diesel-cli > 1.3.0 时，此步骤会自动完成
+# 当使用 diesel-cli > 1.3.0 时，此步骤会自动完成
 # diesel print-schema > src/db/sqlite/schema.rs
 ```
 
