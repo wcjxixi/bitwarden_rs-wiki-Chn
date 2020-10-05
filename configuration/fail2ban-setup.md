@@ -1,10 +1,10 @@
-# 17.设置 Fail2Ban
+# 17.Fail2Ban 设置
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Fail2Ban-Setup)
 {% endhint %}
 
-安装 Fail2ban 将阻止攻击者暴力破解您的密码库登录。如果您的实例公开可用，这一点尤其重要。
+设置 Fail2ban 将阻止攻击者暴力破解您的密码库登录。如果您的实例是公开的，这一点尤其重要。
 
 ## 目录 <a id="table-of-contents"></a>
 
@@ -58,7 +58,7 @@ sudo yum install fail2ban -y
 3. Docker GUI 不允许某些高级设置
 4. 修改系统配置不符合升级要求
 
-因此，我们将在 Docker 容器中使用 Fail2ban。[Crazy-max/docker-fail2ban](https://github.com/crazy-max/docker-fail2ban) 提供了一个很好的解决方案，Synology 的 docker GUI 将被忽略。通过 SSH 的命令行，执行以下步骤。按照惯例， `volumeX` 要适配您的 Synology 配置。
+因此，我们将在 Docker 容器中使用 Fail2ban。[Crazy-max/docker-fail2ban](https://github.com/crazy-max/docker-fail2ban) 提供了一个很好的解决方案，Synology 的 docker GUI 将被忽略。通过 SSH 的命令行，执行以下步骤。按照惯例，`volumeX` 要适配您的 Synology 配置。
 
 1、获取 root 权限
 
@@ -86,7 +86,7 @@ vi /volumeX/docker/fail2ban/action.d/iptables-common.local
 [Init]
 blocktype = DROP
 [Init?family=inet6]
-	blocktype = DROP
+blocktype = DROP
 ```
 
 4、创建 docker-compose 文件
@@ -134,7 +134,7 @@ docker-compose up -d
 
 ## 为 Web Vault 设置 <a id="setup-for-web-vault"></a>
 
-按照惯例，`path_f2b` 表示 Fail2ban 工作所需的路径。这取决于您的系统。例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
+按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统。例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
 
 ### 筛选 <a id="filter"></a>
 
@@ -155,9 +155,17 @@ failregex = ^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. User
 ignoreregex =
 ```
 
-如果在 `fail2ban.log` 中出现以下错误消息（CentOS 的 7 的 fail2ban v0.9.7）  
+**提示：**如果在 `fail2ban.log` 中出现以下错误消息（CentOS 7，fail2ban v0.9.7）  
 `fail2ban.filter [5291]: ERROR No 'host' group in '^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$'`  
 请在 `bitwarden.local` 中使用 `<HOST>` ，而不是 `<ADDR>`。
+
+**提示：**如果你在 `bitwarden.log` 中看到 127.0.0.1 是登录失败的 IP 地址，那么你可能您正在使用反向代理，而 fail2ban 不能正常工作：
+
+```python
+[YYYY-MM-DD hh:mm:ss][bitwarden_rs::api::identity][ERROR] Username or password is incorrect. Try again. IP: 127.0.0.1. Username: email@example.com.
+```
+
+要解决这个问题，需要通过 X-Real-IP 头将真实的远程地址转发给 bitwarden\_rs。如何操作呢？根据你使用的代理服务器不同而不同。例如，在 Caddy 2.x 中，当你定义反向代理时，同时定义 `header_up X-Real-IP {remote_host}`。更多信息请参阅[代理示例](../deployment/roxy-examples.md)。
 
 ### Jail
 

@@ -6,7 +6,7 @@
 
 ## /data 前缀 <a id="data-prefix"></a>
 
-默认情况下，所有持久性数据都保存在 `/data` 下，您可以通过设置 `DATA_FOLDER` 环境变量来覆盖此路径：
+默认情况下，所有持久性数据都保存在 `/data` 下，您可以通过设置环境变量 `DATA_FOLDER` 来覆盖此路径：
 
 ```python
 docker run -d --name bitwarden \
@@ -16,7 +16,7 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-请注意，您需要相应地调整您的卷的挂载。
+请注意，您需要相应地调整您的卷挂载。
 
 ## 数据库名称和位置 <a id="database-name-and-location"></a>
 
@@ -46,7 +46,7 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-请注意，如果附件和其他持久性数据在不同的位置，记得为他们装载卷。
+请注意，如果附件和其他持久性数据在不同的位置，记得为他们挂载卷。
 
 ## 图标缓存位置 <a id="icons-cache"></a>
 
@@ -61,5 +61,5 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-请注意，在上面的示例中，我们没有在本地挂载该卷，这意味着在升级时中将不会保留该卷，除非您用 `--volumes-from` 使用中间数据容器。这将影响性能，因为 bitwarden 在重新启动时必须重新下载图标。但由于图标不会被自动清除，因此可免于在缓存中保留过时的图标。
+请注意，在上面的示例中，我们没有在本地挂载该卷，这意味着在升级过程中将不会保留该卷，除非您用 `--volumes-from` 使用中间数据容器。这会影响性能，因为 bitwarden 在重新启动时必须重新下载图标。但由于图标不会被自动清除，因此可免于在缓存中保留过时的图标。
 

@@ -10,7 +10,7 @@
 
 * [https://github.com/dadatuputi/bitwarden\_gcloud](https://github.com/dadatuputi/bitwarden_gcloud)
 
-针对谷歌云的“永远免费”的 f1-micro 计算实例进行了优化的 Bitwarden 安装。
+Bitwarden 的安装针对谷歌云的"永远免费"的 f1-micro 计算实例进行了优化。
 
 ## Kubernetes
 
@@ -36,7 +36,7 @@
 
 ## NixOS \(by tklitschi\)
 
-这里是一个针对 NixOS 上的 bitwarden 配置的示例。它不是很复杂，有您想使用的数据库类型的后端选项、用于系统服务专用备份的备份目录、启用它的选项以及配置选项。对于配置选项，你只需以 nix 语法[从 .env模板中](https://github.com/dani-garcia/bitwarden_rs/blob/1.13.1/.env.template)传递 .env 变量。请参阅[代理示例](roxy-examples.md)以了解 nixos-nginx 的示例配置。
+这里有一个 NixOS 上的 bitwarden 配置示例。它不是很复杂，有您想使用的数据库类型的后端选项、用于系统服务专用备份的备份目录、启用它的选项以及配置选项。对于配置选项，你只需以 nix 语法[从 .env模板中](https://github.com/dani-garcia/bitwarden_rs/blob/1.13.1/.env.template)传递 .env 变量。请参阅[代理示例](roxy-examples.md)以了解 nixos-nginx 的示例配置。
 
 配置示例：
 

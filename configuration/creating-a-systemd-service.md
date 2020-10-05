@@ -1,14 +1,14 @@
-# 18.创建为系统服务
+# 18.创建系统服务
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Setup-as-a-systemd-service)
 {% endhint %}
 
-这里的文档要求您已经[编译了](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [bitwarden\_rs](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [二进制文件](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary)。如果生成了 docker 映像，则需要查看[使用](running-with-systemd-docker.md) [systemd-docker](running-with-systemd-docker.md) [运行](running-with-systemd-docker.md)。
+这里的说明要求您已经[编译了](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [bitwarden\_rs](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [二进制](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary)。如果您已经生成 docker 镜像，则需要查看[使用](running-with-systemd-docker.md) [systemd-docker](running-with-systemd-docker.md) [运行](running-with-systemd-docker.md)。
 
 ## 设置 <a id="setup"></a>
 
-要确保 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），需要一个 `.service` 文件。以下是一些可用的：
+要使 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），需要一个 `.service` 文件。以下是一些可用的起点：
 
 ```python
 [Unit]
@@ -108,9 +108,9 @@ $ sudo systemctl restart bitwarden_rs.service
 $ sudo systemctl disable --now bitwarden_rs.service
 ```
 
-然后，您可以删除 `.env` 二进制文件、web-vault 文件夹（如果已安装）和用户数据（如果需要）。请记住，还要删除专门创建的用户、组和防火墙规则（如果需要）和 systemd 文件。
+然后，您可以删除二进制、`.env` 文件、web-vault 文件夹（如果已安装）和用户数据（如果需要）。请记住，还要删除专门创建的用户、群组和防火墙规则（如果需要）和 systemd 文件。
 
-删除 systemd 文件后，您应该通过以下方式使 systemd 意识到这一点：
+删除 systemd 文件后，您应该通过下面的方式使 systemd 意识到这一点：
 
 ```php
 $ sudo systemctl daemon-reload

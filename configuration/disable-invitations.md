@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations)
 {% endhint %}
 
-即使禁用了注册功能，组织管理员或所有者也可以邀请用户加入组织。受邀请后，他们也可以使用受邀请的电子邮件来注册，即使 `SIGNUPS_ALLOWED` 已设置为`false`。您可以通过将 `INVITATIONS_ALLOWED` 环境变量设置为 `false` 来完全禁用此功能：
+即使禁用了注册功能，组织管理员或所有者也可以邀请用户加入组织。受邀请后，他们也可以使用受邀请的电子邮件来注册，即使 `SIGNUPS_ALLOWED` 已设置为`false`。您可以通过将环境变量 `INVITATIONS_ALLOWED` 设置为 `false` 来完全禁用此功能：
 
 ```php
 docker run -d --name bitwarden \
