@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting)
 {% endhint %}
 
-为方便起见，bitwarden\_rs 映像还将托管网页密码库界面的静态文件。您可以通过设置 `WEB_VAULT_ENABLED` 变量来完全禁用静态文件托管。
+为方便起见，bitwarden\_rs 映像还将托管网页密码库界面的静态文件。您可以通过设置 WEB\_VAULT\_ENABLED 变量来完全禁用此静态文件的托管。
 
 ```python
 docker run -d --name bitwarden \
@@ -14,7 +14,7 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-或者，您可以覆盖密码库文件并提供自己的静态文件来进行托管。您可以通过在容器中挂载你自己的文件路径（而不是 `/web-vault` 目录）来实现。只需确保此目录中至少包含 `index.html` 文件即可。
+或者，您可以覆盖密码库文件并提供自己的静态文件来进行托管。您可以通过加载你自己的文件路径来实现（这些文件必须在容器中的 `/web-vault` 目录之外）。只要确保此目录中至少包含 `index.html` 文件即可。
 
 ```python
 docker run -d --name bitwarden \

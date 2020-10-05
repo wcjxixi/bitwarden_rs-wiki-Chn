@@ -8,7 +8,7 @@
 
 Bitwarden 可以导入来自许多[应用程序](https://help.bitwarden.com/article/import-data/)的数据。
 
-当前的导入器仅允许您选择导入文件的格式，而不能告诉您是如何将数据转换为 Bitwarden 的。
+当前的导入器让您仅选择导入文件的格式即可，而不用去管它是如何将数据转换为 Bitwarden 的。
 
 ## Keepass 与 KeepassX 不同的导入结果 <a id="different-import-results-for-keepass-and-keepassx"></a>
 
@@ -30,7 +30,7 @@ Bitwarden 可以导入来自许多[应用程序](https://help.bitwarden.com/arti
   * Group2Sub2
 * Group2
 
-### 通过 Keepass（CSV）导入 <a id="import-via-keepass-csv"></a>
+### 通过 Keepass（CSV）导入后 <a id="import-via-keepass-csv"></a>
 
 **所有者** = 组织
 
@@ -41,9 +41,9 @@ Bitwarden 可以导入来自许多[应用程序](https://help.bitwarden.com/arti
   * Group2Sub2
 * Group2
 
-### 通过 Keepass（XML）导入 <a id="import-via-keepass-xml"></a>
+### 通过 Keepass（XML）导入后 <a id="import-via-keepass-xml"></a>
 
-**所有者** = 登录的用户
+**所有者** = 已登录的用户
 
 **文件夹为:**
 
@@ -53,8 +53,8 @@ Bitwarden 可以导入来自许多[应用程序](https://help.bitwarden.com/arti
     * Group2Sub2
   * Group2
 
-注意1：您可能必须手动创建主文件夹，否则导入后会将 MyVault/Group1 和 MyVault/Group1 显示为文件夹（因为没有上级的 MyVault 文件夹）。创建文件夹 MyVault 后才会在 MMI 中显示子文件夹。（\[**译者注**\]：Bitwarden 文件夹规则：[官方](https://help.bitwarden.com/article/folders/)，[中文版](https://bitwardenhelp.ppgg.in/categories/features/organizing-your-vault-with-folders)）
+注意1：您必须手动创建主文件夹，否则导入后会将 MyVault/Group1 和 MyVault/Group2 显示为文件夹（因为没有上级的 MyVault 文件夹）。创建 MyVault 文件夹后才会在 MMI 中显示子文件夹。（\[**译者注**\]：Bitwarden 文件夹规则：[官方](https://help.bitwarden.com/article/folders/)，[中文版](https://bitwardenhelp.ppgg.in/categories/features/organizing-your-vault-with-folders)）
 
-注意2：在导入 Bitwarden 之前，您也可以编辑文件夹以删除主文件夹“MyVault”，或编辑导出的 CSV 文件并删除每个条目中的“MyVault/”字符串。  
+注意2：在导入 Bitwarden 之前，您可以编辑文件夹以删除主文件夹“MyVault”，或编辑导出的 CSV 文件并删除每个条目中的“MyVault/”字符串。  
 
 
