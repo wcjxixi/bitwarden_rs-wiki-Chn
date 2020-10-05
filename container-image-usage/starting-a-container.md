@@ -4,18 +4,18 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Starting-a-Container)
 {% endhint %}
 
-请注意，`docker run` 命令的名字略有误导性，因为它不仅会创建一个容器，它还会启动此容器。当在仅停止容器而不删除容器后使用 `docker run` 命令时，会导致发生冲突。为了一个简单的开始，请接着往下看。
+请注意，`docker run` 命令的名字略有误导性，因为它不仅会创建一个容器，它还会启动容器。当在仅停止容器而不删除容器后使用 `docker run` 命令时，会导致发生冲突。为了一个简单的开始，请接着往下看。
 
 ## 创建容器 <a id="creating-the-container"></a>
 
 持久性数据存储在容器内的 /data 下，因此使用 Docker 进行持久性部署的唯一要求是在路径上挂载持久性卷：
 
 ```python
-# 使用 Docker:
+# 使用Docker:
 docker run -d --name bitwarden -v /bw-data/:/data/ -p 80:80 bitwardenrs/server:latest
-# 使用 Podman as non-root:
+# 使用Podman as non-root:
 podman run -d --name bitwarden -v /bw-data/:/data/:Z -e ROCKET_PORT=8080 -p 8080:8080 bitwardenrs/server:latest
-# 使用 Podman as root:
+# 使用Podman as root:
 sudo podman run -d --name bitwarden -v bw-data:/data/:Z -p 80:80 bitwardenrs/server:latest
 ```
 
@@ -28,7 +28,7 @@ sudo podman run -d --name bitwarden -v bw-data:/data/:Z -p 80:80 bitwardenrs/ser
 如果您的 docker/bitwarden\_rs 运行在具有固定 IP 的设备上，则可以将主机端口绑定到该 IP 地址，从而避免将主机端口暴露到网络上。如下所示，将 IP 地址（例如 192.168.0.2）添加到主机端口和容器端口前面：
 
 ```python
-# 使用 Docker:
+# using Docker:
 docker run -d --name bitwarden -v /bw-data/:/data/ -p 192.168.0.2:80:80 bitwardenrs/server:latest
 ```
 
@@ -68,7 +68,7 @@ docker run -d --name bitwarden -v $(pwd)/init.sh:/etc/bitwarden_rs.sh <other doc
 if [ ! -e /.init ]; then
   touch /.init
 
-  # 运行您的初始化步骤...
+  # run your init steps...
 fi
 ```
 

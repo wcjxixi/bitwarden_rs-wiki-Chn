@@ -6,7 +6,7 @@
 
 [Podman](https://podman.io/) 是 Docker 的无守护程序替代方案，它与大部分 Docker 容器兼容。
 
-## 创建一个 systemd 服务文件 <a id="creating-a-systemd-service-file"></a>
+## 创建一个系统服务文件 <a id="creating-a-systemd-service-file"></a>
 
 由于 Podman 的无守护程序架构，因此它比 Docker 更容易在 systemd 中运行。它带有一个便捷的 generate 命令，该命令可以生成 systemd 文件，[这篇文章](https://www.redhat.com/sysadmin/podman-shareable-systemd-services)详细介绍了它。
 
@@ -31,14 +31,14 @@ Type=forking
 PIDFile=/run/user/1000/overlay-containers/54502f309f3092d32b4c496ef3d099b270b2af7b5464e7cb4887bc16a4d38597/userdata/conmon.pid
 ```
 
-您可以提供一个 `--files` 标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们就可以将容器作为任何常规服务文件来启用和启动。
+您可以提供一个 `--files` 标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们可以将容器并作为任何常规服务文件来启用和启动。
 
 ```python
 $ systemctl --user enable /etc/systemd/system/container-bitwarden.service
 $ systemctl --user start container-bitwarden.service
 ```
 
-### 每次重启时新建容器 <a id="new-container-every-restart"></a>
+### 每次重启时创建新容器 <a id="new-container-every-restart"></a>
 
 如果我们希望每次服务启动时都创建一个新容器，我们可以编辑服务文件以包含以下内容：
 
@@ -53,19 +53,19 @@ Type=forking
 PIDFile=/%t/%n-pid
 ```
 
-环境文件 `bitwarden.conf` 可以包含容器的所有环境值，你需要增加如下参数：
+环境文件 `bitwarden.conf` 可以包含所有的容器环境值，你需要增加如下参数：
 
 ```python
 ROCKET_PORT=8080
 ```
 
-如果您希望容器拥有特定名称，则需要添加 `ExecStartPre=/usr/bin/podman rm -i -f bitwarden`，如果进程未被正确清理的话。注意，此方式当前无法与具有 `User=` 选项的用户一起正常工作（见  [https://github.com/containers/podman/issues/5572](%20https://github.com/containers/podman/issues/5572)）。
+要使容器具有特定名称，如果进程未正确清理则需要添加 `ExecStartPre=/usr/bin/podman rm -i -f bitwarden`。
 
 ## 故障排除 <a id="troubleshooting"></a>
 
 ### 调试 systemd 服务文件 <a id="debugging-systemd-service-file"></a>
 
-如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。我们可以通过 `journalctl --user -u container-bitwarden -t 100` 来定位错误。
+如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。我们可以通过`journalctl --user -u container-bitwarden -t 100`来定位错误。
 
 在大多数情况下，我们可以通过简单地增加服务文件中的 podman 命令的超时来解决我们看到的错误。
 
