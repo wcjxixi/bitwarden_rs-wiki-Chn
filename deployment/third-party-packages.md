@@ -8,7 +8,7 @@
 
 ## Arch Linux
 
-Bitwarden\_rs 已打包用于 Archlinux，感谢 @mqus。这里是可用的 [AUR 包](https://aur.archlinux.org/packages/bitwarden_rs)（带[网页密码库界面](https://aur.archlinux.org/packages/bitwarden_rs-vault/)）。
+Bitwarden\_rs 已打包用于 Archlinux，感谢 @mqus。这里是可用的 [AUR 包](https://aur.archlinux.org/packages/bitwarden_rs)（可选带[网页密码库界面](https://aur.archlinux.org/packages/bitwarden_rs-vault/)）。
 
 ## Debian
 
@@ -16,21 +16,21 @@ Bitwarden\_rs 已打包用于 Archlinux，感谢 @mqus。这里是可用的 [AUR
 
 ## CentOS7/RHEL7
 
-RPM 库由 @MrMEEE 打包在这里：[https://copr.fedorainfracloud.org/coprs/mrmeee/bitwarden\_rs/](https://copr.fedorainfracloud.org/coprs/mrmeee/bitwarden_rs/)...附加包里同样包含 Web 界面。
+RPM 库由 @MrMEEE 打包在这里：[https://copr.fedorainfracloud.org/coprs/mrmeee/bitwarden\_rs/](https://copr.fedorainfracloud.org/coprs/mrmeee/bitwarden_rs/)...在附加包里同样包含有 Web 界面。
 
 安装说明：[https://github.com/MrMEEE/bitwarden\_rs\_rpm/blob/master/README.md](https://github.com/MrMEEE/bitwarden_rs_rpm/blob/master/README.md)
 
-任何 RPM 话题可以提交到这里：[https://github.com/MrMEEE/bitwarden\_rs\_rpm/i](%20https://github.com/MrMEEE/bitwarden_rs_rpm/issues)[ssues](https://github.com/MrMEEE/bitwarden_rs_rpm/issues)
+任何 RPM 话题可以提交到这里：[https://github.com/MrMEEE/bitwarden\_rs\_rpm/issues](https://github.com/MrMEEE/bitwarden_rs_rpm/issues)
 
 ## Nix \(OS\)
 
-在 Nix 中，Bitwarden\_rs 被打包为 4 个包（一个用于 mysql、sqlite 和 postgresql，一个用于 vault）。对于 NixOS 来说，也有一个模块\(services.bitwarden\_rs\)，所以 bitwarden\_rs 也可以用 NixOS 的声明方式来配置。
+在 Nix 中，Bitwarden\_rs 被打包为 4 个包（一个用于 mysql、sqlite 以及 postgresql，一个用于 vault）。对于 NixOS 来说，有一个 services.bitwarden\_rs 模块，所以 bitwarden\_rs 也可以用 NixOS 的声明方式来配置。
 
 ## Cloudron
 
 [Cloudron](https://cloudron.io/) 是一个帮助你在服务器上运行 Web 应用的平台。使用 Cloudron，你可以从 [App Library](https://cloudron.io/store/com.github.bitwardenrs.html) 中轻松地安装自定义域名的 Bitwarden\_rs。该应用包与上游 Web 密码库捆绑在一起，安装后不需要任何进一步的配置即可开始使用。Cloudron 团队会保持发行版跟踪并提供自动更新。
 
-软件包代码和问题跟踪器可以在这里找到 [https://git.cloudron.io/cloudron/bitwardenrs-app](https://git.cloudron.io/cloudron/bitwardenrs-app)。
+软件包代码和问话题跟踪器可以在这里找到 [https://git.cloudron.io/cloudron/bitwardenrs-app](https://git.cloudron.io/cloudron/bitwardenrs-app)。
 
 ## 家庭助理 <a id="home-assistant"></a>
 
