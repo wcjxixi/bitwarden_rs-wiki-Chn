@@ -11,7 +11,7 @@
 * `Rust nightly`（强烈建议使用 [rustup](https://rustup.rs/)）
 * `OpenSSL`（应在路径中是可用的，通过系统的包管理器安装，或使用[预构建的二进制](https://wiki.openssl.org/index.php/Binaries)）。对于 Debian，需要安装 `pkg-config` 和 `libssl-dev`
 * `NodeJS`（仅当编译 web-vault 时使用，通过系统的包管理器安装，使用[预构建的二进制](https://nodejs.org/en/download/)）或 [nodesource 二进制发行版](https://github.com/nodesource/distributions)。_备注：web-vault 当前使用的基本程序包（例如，node-sass &lt; v4.12），要求 NodeJS v11_
-* 对于 Debian（Buster）上的 MySQL 后端，您需要安装 `libmariadb-dev-compat`和`libmariadb-dev`
+* 对于 Debian（Buster）上的 MySQL 后端，您需要安装 `libmariadb-dev-compat` 和 `libmariadb-dev`
 
 ## 运行/编译 <a id="run-compile"></a>
 
@@ -50,21 +50,21 @@ cargo build --features postgresql --release
 
 可以从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/releases) 下载网页密码库的编译版本。
 
-如果您希望手动编译它，请按照如下步骤操作：
+如果您希望手动编译它，请遵循如下步骤：
 
 _**注意**：构建密码库需要约 1.5GB 的 RAM。在具有 1GB 或更小容量的 RaspberryPI 之类的系统上，请_[_启用交换功能_](https://www.tecmint.com/create-a-linux-swap-file/)_或在功能更强大的计算机上构建，然后从那里复制目录。仅构建时需要大量内存，而运行带密码库的 bitwarden\_rs 仅需要约 10MB 的 RAM。_
 
-1、通过 [bitwarden/web](https://github.com/bitwarden/web) 克隆 git 库，并检查最新的发行标签（例如 v2.1.1）：
+1、克隆 [bitwarden/web](https://github.com/bitwarden/web) git 库，并检查最新的发行标签（例如 v2.1.1）：
 
 ```python
 # 克隆库
 git clone https://github.com/bitwarden/web.git web-vault
 cd web-vault
-# 查看最新的发布标签
+# 切换到最新的标签
 git checkout "$(git tag --sort=v:refname | tail -n1)"
 ```
 
-2、从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/tree/master/patches) 下载补丁文件并将其复制到 `web-vault` 文件夹。选择要使用的版本，假设网页密码库版本为 `vX.Y.Z`：
+2、从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/tree/master/patches) 下载补丁文件并将其复制到 `web-vault` 文件夹。选择要使用的版本（假设网页密码库版本为 `vX.Y.Z`）：
 
 * 如果有版本为 `vX.Y.Z` 的补丁，则使用该版本
 * 否则，选择小于 `vX.Y.Z` 的最大的那一个版本
@@ -89,7 +89,7 @@ _**注意**：可能会要求您运行_ _`npm audit fix`_ _以修复漏洞。这
 5、最后将 `build` 文件夹的内容复制到目标文件夹中：
 
 * 如果与 `cargo run --release` 一起运行，则为 `bitwarden_rs/web-vault`。
-* 如果直接运行已编译的二进制，则它位于二进制旁，在 `bitwarden_rs/target/release/web-vault` 中。
+* 如果直接运行已编译的二进制，则它位于二进制旁的 `bitwarden_rs/target/release/web-vault` 中。
 
 ## 配置 <a id="configuration"></a>
 
@@ -99,7 +99,7 @@ _**注意**：可能会要求您运行_ _`npm audit fix`_ _以修复漏洞。这
 
 ## 有关部署的更多信息 <a id="more-information-for-deployment"></a>
 
-* [配置反向代理](roxy-examples.md)
+* [配置反向代理](proxy-examples.md)
 * [通过 systemd 设置自动启动](../configuration/creating-a-systemd-service.md)
 
 ## 如何为 SQLite 后端重建数据库模式（面向开发人员） <a id="how-to-recreate-database-schemas-for-the-sqlite-backend-for-developers"></a>

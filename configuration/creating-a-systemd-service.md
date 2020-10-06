@@ -1,14 +1,14 @@
-# 18.创建为系统服务
+# 18.创建系统服务
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Setup-as-a-systemd-service)
 {% endhint %}
 
-这里的文档要求您已经[编译了](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [bitwarden\_rs](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary) [二进制文件](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary)。如果生成了 docker 映像，则需要查看[使用](running-with-systemd-docker.md) [systemd-docker](running-with-systemd-docker.md) [运行](running-with-systemd-docker.md)。
+这部分的内容要求您已经[编译了 bitwarden\_rs 二进制](../deployment/building-binary.md)。如果您生成了 docker 镜像，则需要查看[使用 systemd-docker 运行](running-with-systemd-docker.md)。
 
 ## 设置 <a id="setup"></a>
 
-要确保 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），需要一个 `.service` 文件。以下是一些可用的：
+要使 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），需要一个 `.service` 文件。以下是一个可行的起点：
 
 ```python
 [Unit]
@@ -62,15 +62,15 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 WantedBy=multi-user.target
 ```
 
-更改所有路径以匹配您的安装（`WorkingDirectory` 与 `ReadWriteDirectory` 应相同），将 `bitwarden_rs.service` 文件命名并将其放入 `/etc/systemd/system`。
+更改以上所有路径以匹配您的安装（`WorkingDirectory` 与 `ReadWriteDirectory` 应相同），将此文件命名为 `bitwarden_rs.service` 并将其放入 `/etc/systemd/system` 中。
 
-如果必须更改现有的 systemd 文件（您安装的软件包提供给您的），则可以使用下面的命令来添加更改：
+如果必须更改现有（而不是像上面那样新建）的 systemd 文件（您安装的软件包提供给您的），可以使用下面的命令来添加更改：
 
 ```python
 $ sudo systemctl edit bitwarden_rs.service
 ```
 
-请运行以下命令，以使 systemd 知道您的新文件或您所做的任何更改：
+请运行以下命令，以让 systemd 知道您的新文件或您所做的任何更改：
 
 ```python
 $ sudo systemctl daemon-reload
@@ -90,7 +90,7 @@ $ sudo systemctl start bitwarden_rs.service
 $ sudo systemctl enable bitwarden_rs.service
 ```
 
-同样的，你可以使用 `stop`，`restart` 和 `disable`。
+同理，你可以使用 `stop`、`restart` 和 `disable` 来停止、重启或禁用此服务。
 
 ### 更新 bitwarden\_rs <a id="updating-bitwarden_rs"></a>
 
@@ -108,9 +108,9 @@ $ sudo systemctl restart bitwarden_rs.service
 $ sudo systemctl disable --now bitwarden_rs.service
 ```
 
-然后，您可以删除 `.env` 二进制文件、web-vault 文件夹（如果已安装）和用户数据（如果需要）。请记住，还要删除专门创建的用户、组和防火墙规则（如果需要）和 systemd 文件。
+然后，您可以删除二进制、`.env` 文件、web-vault 文件夹（如果已安装）以及用户数据（如果需要）。请记住，还要删除专门创建的用户、群组和防火墙规则（如果需要）和 systemd 文件。
 
-删除 systemd 文件后，您应该通过以下方式使 systemd 意识到这一点：
+删除 systemd 文件后，您应该通过下面的方式使 systemd 知道到这一点：
 
 ```php
 $ sudo systemctl daemon-reload
@@ -118,13 +118,13 @@ $ sudo systemctl daemon-reload
 
 ### 查看日志和状态 <a id="logging-and-status-view"></a>
 
-如果要查看日志记录输出，请运行：
+如果要查看日志输出，请运行：
 
 ```php
 $ journalctl -u bitwarden_rs.service
 ```
 
-或查看更简洁的服务状态，请运行：
+或查看此服务的更简洁的状态，请运行：
 
 ```php
 $ systemctl status bitwarden_rs.service
@@ -146,7 +146,7 @@ Failed at step NAMESPACE spawning /home/bitwarden_rs/bitwarden_rs: Permission de
 Failed to parse protect system value
 ```
 
-要解决这一点，你可以将含有  `PrivateTmp`、`PrivateDevices`、`ProtectHome`、`ProtectSystem` 和 `ReadWriteDirectories` 的部分或全部行前面放置\#符号来注释掉。尽管将所有这些注释掉可能会起作用，但不建议这样做，因为这些都是很好的安全措施。要查看您的 systemd 支持哪些选项，请运行以下命令来查看输出：
+要解决这一点，你可以将含有  `PrivateTmp`、`PrivateDevices`、`ProtectHome`、`ProtectSystem` 和 `ReadWriteDirectories` 的部分或全部行前面放置 \# 符号来将其注释掉。尽管将所有这些注释掉可能会起作用，但不建议这样做，因为这些都是很好的安全措施。要查看您的 systemd 支持哪些选项，请运行以下命令来查看输出：
 
 ```php
 $ systemctl --version
@@ -162,5 +162,5 @@ $ sudo systemctl daemon-reload
 
 ## 更多信息 <a id="more-information"></a>
 
-有关 .service 文件的更多信息，请参阅 [systemd.service](https://www.freedesktop.org/software/systemd/man/systemd.service.html)（用于安全性配置）和 [systemd.exec](https://www.freedesktop.org/software/systemd/man/systemd.exec.html) 手册页。
+有关 .service 文件的更多信息，请参阅 [systemd.service](https://www.freedesktop.org/software/systemd/man/systemd.service.html) 和 [systemd.exec](https://www.freedesktop.org/software/systemd/man/systemd.exec.html)（用于安全性配置）手册页。
 

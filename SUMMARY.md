@@ -14,7 +14,7 @@
   * [2.构建二进制](deployment/building-binary.md)
   * [3.第三方软件包](deployment/third-party-packages.md)
   * [4.部署示例](deployment/deployment-examples.md)
-  * [5.代理示例](deployment/roxy-examples.md)
+  * [5.代理示例](deployment/proxy-examples.md)
 * [配置](configuration/README.md)
   * [1.配置概要](configuration/configuration-overview.md)
   * [2.禁用新用户注册](configuration/disable-registration-of-new-users.md)
