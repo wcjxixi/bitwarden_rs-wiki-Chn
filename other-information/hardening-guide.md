@@ -30,7 +30,7 @@ bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的
 
 一般来说，你应该避免通过 bitwarden\_rs 内置的 [Rocket TLS 支持](../configuration/enabling-https.md)启用 HTTPS，特别是当你的实例是公开访问的时候。Rocket 本身列出了以下[警告](https://rocket.rs/v0.4/guide/configuration/#configuring-tls)：
 
-> Rocket's built-in TLS is not considered ready for production use. It is intended for development use only. （Rocket内置的TLS还不能用于生产。它只用于开发用途。）
+> Rocket's built-in TLS is not considered ready for production use. It is intended for development use only. （Rocket 内置的 TLS 还不能用于生产。它只用于开发用途。）
 
 ## Docker 配置 <a id="docker-configuration"></a>
 
@@ -70,7 +70,7 @@ services:
 
 ### 挂载数据到容器中 <a id="mounting-data-into-the-container"></a>
 
-一般来说，只有 bitwarden\_rs 正常运行所需要的数据才应该被挂载到 bitwarden\_rs 容器中（通常情况下，这只是你的数据目录，也许还有一个包含 SSL/TLS 证书和私钥的目录）。例如，不要挂载你的整个主目录，`/var/run/docker.sock` 等，除非你有特定的原因，并且知道你在做什么。
+一般来说，只有 bitwarden\_rs 正常运行所需要的数据才应该被挂载到 bitwarden\_rs 容器中（通常情况下，这只是你的数据目录，也许还有一个包含 SSL/TLS 证书和私钥的目录）。不要挂载你的整个主目录，例如，`/var/run/docker.sock` 等，除非你有特定的原因，并且知道你在做什么。
 
 另外，如果你不希望 bitwarden\_rs 修改你挂载的数据（例如，certs），可以通过在卷规范中添加 `:ro` 来[只读挂载它](https://docs.docker.com/storage/bind-mounts/#use-a-read-only-bind-mount)（例如，`docker run -v /home/username/bitwarden-ssl:/ssl:ro`）。
 

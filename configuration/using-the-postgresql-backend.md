@@ -24,7 +24,7 @@ DATABASE_URL=postgresql://[[user]:[password]@]host[:port][/database]
 
 **从**  **SQLite** **迁移到 PostgreSQL**
 
-从 SQLite 迁移到 PostgreSQL 的简单方法是存在的，但请注意，你在使用时要**自担风险，并且强烈建议你备份你的安装和数据**！这**没有得到支持**，也没有经过强有力的测试。
+从 SQLite 迁移到 PostgreSQL 的简单方法是存在的，但请注意，**使用此方法风险自负，并且强烈建议备份您的安装和数据**！这**没有得到支持**，也没有经过强有力的测试。
 
 1、为 bitwarden\_rs 创建一个新的（空）数据库： 
 
