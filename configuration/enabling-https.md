@@ -15,7 +15,7 @@ ROCKET_TLS={certs="/path/to/certs.pem",key="/path/to/key.pem"}
 路径：
 
 * certs：PEM 格式的证书链的路径
-* key：证书中用于认证的PEM 格式的私钥文件的路径
+* key：PEM 格式的证书中用于认证的私钥文件的路径
 
 说明：
 
@@ -37,7 +37,7 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-您需要挂载 ssl 文件夹（使用 -v 参数），同时需要转发适当的端口（使用 -p 参数），通常是用于 HTTPS 连接的端口 443。如果您选择的端口号不是 443，例如 3456，请记住在连接到服务时明确提供该端口号，例如：`https://bitwarden.local:3456`。
+您需要挂载 ssl 文件夹（使用 -v 参数），同时需要转发适当的端口（使用 -p 参数），通常是用于 HTTPS 连接的 443 端口。如果您选择的端口号不是 443，例如 3456，请记住在连接到服务时明确提供该端口号，例如：`https://bitwarden.local:3456`。
 
 有关如何在本地系统上设置和使用私有 CA 的更多信息，请参阅此 [WiKi 页面](https://github.com/dani-garcia/bitwarden_rs/wiki/Private-CA-and-self-signed-certs-that-work-with-Chrome)。如果遵循该指南，您的 ROCKET\_TLS 行看起来应该像这样：`-e ROCKET_TLS='{certs="/ssl/bitwarden.crt",key="/ssl/bitwarden.key"}' \`
 
