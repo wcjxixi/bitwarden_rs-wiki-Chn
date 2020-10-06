@@ -39,7 +39,7 @@ CREATE USER bitwarden_rs WITH ENCRYPTED PASSWORD 'yourpassword';
 GRANT all privileges ON database bitwarden_rs TO bitwarden_rs;
 ```
 
-3、配置 bitwarden\_rs 并启动它，以便 diesel 可以运行迁移并正确设置模式。除此之外不要做别的。
+3、配置 bitwarden\_rs 并启动它，以便 [diesel](http://diesel.rs/) 可以运行迁移并正确设置模式。除此之外不要做别的。
 
 4、停止 bitwarden\_rs。
 
