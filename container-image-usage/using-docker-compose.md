@@ -21,8 +21,8 @@ services:
     volumes:
       - ./bw-data:/data
     environment:
-      WEBSOCKET_ENABLED: 'true' # 请求使用websockets
-      SIGNUPS_ALLOWED: 'true'   # 设置为false表示禁用注册
+      WEBSOCKET_ENABLED: 'true' # 请求使用 websockets
+      SIGNUPS_ALLOWED: 'true'   # 设置为 false 表示禁用注册
 
   caddy:
     image: abiosoft/caddy
@@ -31,12 +31,12 @@ services:
       - ./Caddyfile:/etc/Caddyfile:ro
       - caddycerts:/root/.caddy
     ports:
-      - 80:80 # Let's Encrypt需要使用此端口
+      - 80:80 # Let's Encrypt 需要使用此端口
       - 443:443
     environment:
-      ACME_AGREE: 'true'              # 同意Let's Encrypt用户协议
-      DOMAIN: 'bitwarden.example.org' # 修改为您自己的! 用于自动生成Let's Encrypt SSL
-      EMAIL: 'bitwarden@example.org'  # 修改为您自己的! 可选。提供给Let's Encrypt
+      ACME_AGREE: 'true'              # 同意 Let's Encrypt 用户协议
+      DOMAIN: 'bitwarden.example.org' # 修改为您自己的! 用于自动生成 Let's Encrypt SSL
+      EMAIL: 'bitwarden@example.org'  # 修改为您自己的! 可选。提供给 Let's Encrypt
 
 volumes:
   caddycerts:
@@ -51,9 +51,9 @@ volumes:
     gzip
 
     header / {
-        # 启用HTTP Strict Transport Security (HSTS)
+        # 启用 HTTP Strict Transport Security (HSTS)
         Strict-Transport-Security "max-age=31536000;"
-        # 启用cross-site filter (XSS) 并告诉浏览器对检测到的攻击进行阻止
+        # 启用 cross-site filter (XSS) 并告诉浏览器对检测到的攻击进行阻止
         X-XSS-Protection "1; mode=block"
         # 禁止在框架内渲染站点 (clickjacking protection)
         X-Frame-Options "DENY"
@@ -61,17 +61,17 @@ volumes:
         #X-Robots-Tag "none"
     }
 
-    # 将negotiation endpoint代理到Rocket
+    # 将 negotiation endpoint 代理到 Rocket
     proxy /notifications/hub/negotiate bitwarden:80 {
         transparent
     }
 
-    # Notifications重定向到websockets服务器
+    # Notifications 重定向到 websockets 服务器
     proxy /notifications/hub bitwarden:3012 {
         websocket
     }
 
-    # 将root目录代理到Rocket
+    # 将 root 目录代理到 Rocket
     proxy / bitwarden:80 {
         transparent
     }
@@ -111,9 +111,9 @@ services:
    SIGNUPS_ALLOWED: 'true'
 ```
 
-即使服务器运行在位于 NAT 后面的家庭网络上，我也想使用 Let's Encrypt 证书。参考这里的说明 [https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode](https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode)。
+即使服务器运行在位于 NAT 后面的家庭网络上，我也想使用 Let's Encrypt 证书。我参考了这里的说明 [https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode](https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode)。
 
-首先设置域名，并通过 CloudFlare 导出 CF\_Key 和 CF\_Email 或 CF\_Token 以及 CF\_Account\_ID。
+首先设置域名的 CNAME 记录，并通过 CloudFlare 导出 CF\_Key 和 CF\_Email 或 CF\_Token  和 CF\_Account\_ID。
 
 然后颁发证书。参考 [https://github.com/Neilpang/acme.sh/wiki/dnsap](https://github.com/Neilpang/acme.sh/wiki/dnsapi)。
 
@@ -129,5 +129,5 @@ acme.sh --install-cert -d home.example.com --key-file /home/pi/ssl/key.pem --ful
 acme.sh --issue -d home.example.com --challenge-alias otherdomain.com --dns dns_cf --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
 ```
 
-我的域名的 A 记录指向 docker-compose.yml 文件最后一行的域名绑定的 IP 地址，这样就不会有关于证书的警告了。
+我的域名的 A 记录指向 docker-compose.yml 文件最后一行绑定的 IP 地址，这样就不会有关于证书的警告了。
 
