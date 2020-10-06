@@ -11,12 +11,12 @@
 一般而言，除非您相当确定需要关闭 WAL，否则应将其保持为启用状态。但是，可能有一些情况需要将其关闭，比如：
 
 * 某些文件系统不支持 WAL（对于网络文件系统尤其如此）。如果您使用的是这样的文件系统，该服务将无法启动并显示 `Failed to turn on WAL` 错误。
-* 数据库要求 sqlite 的版本为 `3.7.0` 或更高，因此，出于某种原因（例如备份）您需要使用无法更新的低版本工具来直接访问数据库，则可能需要禁用 WAL。
+* （要启用 WAL）数据库要求 sqlite 的版本为 `3.7.0` 或更高，因此，出于某种原因（例如备份）您需要使用无法更新的低版本工具来直接访问数据库，此时也需要禁用 WAL。
 * 您正在[使用](using-the-mysql-backend.md) [MySQL](using-the-mysql-backend.md) [后端](using-the-mysql-backend.md)。
-* 您正在使用 PostgreSQL 后端。
+* 您正在[使用 PostgreSQL 后端](using-the-postgresql-backend.md)。
 * [这里](https://sqlite.org/wal.html#advantages)描述的某个缺点也会受到影响。
 
-## 如何关闭 WAL <a id="how-to-turn-wal-off"></a>
+## 关闭 WAL 的步骤 <a id="how-to-turn-wal-off"></a>
 
 ### 0、执行备份 <a id="0-make-backup"></a>
 
