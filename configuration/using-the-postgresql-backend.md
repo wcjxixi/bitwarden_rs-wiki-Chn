@@ -22,9 +22,9 @@ DATABASE_URL=postgresql://[[user]:[password]@]host[:port][/database]
 
 完整的代码列表可以在 [Wikipedia 的百分号编码页面](https://zh.wikipedia.org/wiki/%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81)上找到。
 
-**从** **MySQL** **迁移到 PostgreSQL**
+**从**  **SQLite** **迁移到 PostgreSQL**
 
-从MySQL迁移到PostgreSQL到MySQL的简单方法是存在的，但请注意，你在使用时要自担风险，强烈建议你备份你的安装和数据! 这是不支持的，也没有经过强大的测试。
+从MySQL迁移到PostgreSQL到MySQL的简单方法是存在的，但请注意，你在使用时要自担风险，强烈建议你备份你的安装和数据！这是不支持的，也没有经过足够的测试。
 
 1、为 bitwarden\_rs 创建一个新的（空）数据库： 
 
@@ -39,7 +39,7 @@ CREATE USER bitwarden_rs WITH ENCRYPTED PASSWORD 'yourpassword';
 GRANT all privileges ON database bitwarden_rs TO bitwarden_rs;
 ```
 
-3、配置 bitwarden\_rs 并启动它，以便 diesel 可以运行迁移并正确设置模式。不要做别的。
+3、配置 bitwarden\_rs 并启动它，以便 diesel 可以运行迁移并正确设置模式。除此之外不要做别的。
 
 4、停止 bitwarden\_rs。
 
