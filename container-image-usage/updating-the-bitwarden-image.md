@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Updating-the-bitwarden-image)
 {% endhint %}
 
-更新非常简单，你只需确保保留了已装载的卷。如果您使用[此处](starting-a-container.md)示例中的 bind-mounted 路径（绑定挂载路径）的方式，则只需使用 `pull` 拉取最新版的映像，使用 `stop` 和 `rm` 停止和移除当前容器，然后与之前相同的方式启动一个新容器：
+更新非常简单，你只需确保保留了已挂载的卷。如果您使用[此处](starting-a-container.md)示例中的 bind-mounted 路径（绑定挂载路径）的方式，则只需使用 `pull` 拉取最新版的映像，使用 `stop` 和 `rm` 停止和移除当前容器，然后与之前相同的方式启动一个新容器即可：
 
 ```python
 # 拉取最新版本的镜像
@@ -42,7 +42,7 @@ docker rm bitwarden_data
 # 您可以保留数据容器以用于将来的更新，这样的话，可以跳过最后一步。
 ```
 
-你也可以使用 Watchtower 这样的工具来自动化更新过程。Watchtower 可以定期检查 Docker 镜像的更新，拉取更新后的镜像，并使用更新后的镜像重新创建容器。
+你也可以使用 [Watchtower](https://containrrr.dev/watchtower/) 这样的工具来自动化更新过程。Watchtower 可以定期检查 Docker 镜像的更新，拉取更新后的镜像，并使用更新后的镜像重新创建容器。
 
 ## 使用 docker-compose 更新 <a id="updating-when-using-docker-compose"></a>
 
@@ -57,7 +57,7 @@ docker-compose start
 ```python
 sudo systemctl restart bitwarden.service
 sudo docker system prune -f
-# 警告！这将删除已停止或未使用的容器，例如与bitwarden_rs不关联的容器
+# 警告！这将删除已停止或未使用的容器，例如与 bitwarden_rs 不关联的容器
 # 请仔细查看哪个容器是你需要的
 
 docker ps -a
@@ -68,7 +68,7 @@ docker ps -a
 #        - all networks not used by at least one container
 #        - all dangling images
 #        - all dangling build cache
-# 使用以下命令列出所有Docker镜像
+# 使用以下命令列出所有 Docker 镜像
 docker images
 # 这里你将看到所有未使用的镜像
 #
