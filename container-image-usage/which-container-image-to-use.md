@@ -1,4 +1,4 @@
-# 1.容器镜像的选择
+# 1.镜像的选择
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Which-container-image-to-use)
@@ -25,7 +25,7 @@
 三种镜像（SQLite、MySQL 和 PostgreSQL）都有以下标签：
 
 * `latest` --  跟踪最新发布的版本（即带有版本号的标签）。推荐大多数用户使用这个标签，因为它通常是最稳定的。
-* `testing` -- 跟踪源代码库的最新提交的版本。这个标签推荐给想要提前获取最新功能或增强功能的用户。测试版一般都很稳定，但不可避免，它偶尔也会出现一些问题。
+* `testing` -- 跟踪源代码库的最新提交的版本。这个标签推荐给想要提前获取最新功能或增强功能的用户。测试版一般都很稳定，但不可避免它偶尔也会出现一些问题。
 * `x.y.z` \(例如 `1.16.0`\) -- 代表一个特定的发布版本。
 
 ### SQLite 特有标签 <a id="sqlite-specific-tags"></a>
@@ -34,7 +34,7 @@ SQLite 镜像（`bitwardenrs/server`）有以下附加标签：
 
 * `alpine` -- 功能上与 `latest` 相同，但它是基于 Alpine 而非 Debian，因此镜像更小。 `latest` 与 `alpine` 主要是一个偏好问题，但请注意 `alpine` 标签目前只支持 `amd64` 架构。
 * `x.y.z-alpine` \(例如 `1.16.0-alpine`\) -- 与 `alpine` 类似，但它代表一个特定的发布版本。
-* `latest-arm32v6` -- 与 `latest` 相同，但明确表示为 `arm32v6` 镜像。目前，对于使用 Armv6 板卡（如 Raspberry Pi 1 和 Zero）的用户来说，需要这样做。否则，Docker 将尝试拉取 `arm32v7` 镜像，这将无法工作（见 [moby/moby\#41017](https://github.com/moby/moby/issues/41017)）。
+* `latest-arm32v6` -- 与 `latest` 相同，但明确表示为 `arm32v6` 镜像。目前，对于使用 Armv6 板卡（如 Raspberry Pi 1 和 Zero）的用户来说，需要使用此标签。否则，Docker 会尝试拉取 `arm32v7` 镜像，这将无法工作（见 [moby/moby\#41017](https://github.com/moby/moby/issues/41017)）。
 * `testing-arm32v6` -- 与 `testing` 相同，但明确表示为 `arm32v6` 镜像。
 * `x.y.z-arm32v6` \(例如 `1.16.0-arm32v6`\) -- 与 `latest-arm32v6` 类似，但它代表一个特定的发布版本。
 
@@ -44,26 +44,26 @@ SQLite 镜像（`bitwardenrs/server`）有以下附加标签：
 
 然而，由于上游控制着客户端的发布，而移动应用和浏览器扩展通常会自己自动更新，因此，对于 bitwarden\_rs 用户来说，保持更新为最新的 bitwarden\_rs 版本非常重要。否则，不兼容的客户端和服务器版本可能会导致突然中断或异常。
 
-web vault 是唯一的例外：由于它与 bitwarden\_rs 镜像捆绑在一起，web vault 的版本总是与 bitwarden\_rs 服务器的版本相匹配。如果你只把 web vault 用作客户端（可能性不大），那么你就不需要担心这些兼容性问题。
+网页密码库是唯一的例外：由于它与 bitwarden\_rs 镜像捆绑在一起，网页密码库的版本总是与 bitwarden\_rs 服务器的版本相匹配。如果你只把网页密码库用作客户端（可能性不大），那么你就不需要担心这些兼容性问题。
 
 ## 历史标签 <a id="historical-tags"></a>
 
-在增加对多架构镜像支持之前，所有特定镜像都有其自己的特定标签。你仍然可以在 Docker Hub 中找到以下这些旧版本的 bitwarden\_rs，但不应再使用它们：
+在增加对多架构镜像支持之前，所有特定镜像都有其自己的特定标签。你仍然可以在 Docker Hub 中找到这些旧版本的 bitwarden\_rs，但不应再使用它们：
 
-* `raspberry` - Armv7hf 镜像可以运行在 Raspberry Pi 2 或更新版本上，也可以运行在任何其他兼容的板子上。这个镜像不能在 Raspberry Pi 1 或 Raspberry Pi Zero 上运行，因为他们使用 armv6 CPU。
+* `raspberry` - Armv7hf 镜像可以运行在 Raspberry Pi 2 或更新的版本上，也可以运行在任何其他兼容的板子上。这个镜像不能在 Raspberry Pi 1 或 Raspberry Pi Zero 上运行，因为他们使用 armv6 CPU。
 * `armv6` - 运行在 Raspberry Pi 1 和 Raspberry Pi Zero 上的 Armv6 镜像。
 * `aarch64` - Aarch64 镜像，可以运行在 ARMv8 设备上，如 Raspberry Pi 3 或其他基于 ARMv8 的设备。
 
-需要**注意**的是，你的设备上要求安装 arch64 发行版，例如，如果你在Raspberry Pi 3 上使用 Raspbian，因为 Raspbian 是一个 `armv7hf` 发行版，你仍然需要使用 `raspberry` 标签。
+需要**注意**的是，如果你在 Raspberry Pi 3 上使用 Raspbian，设备会要求安装 `aarch64` 发行版，但因为 Raspbian 是一个 `armv7hf` 发行版，你仍然需要使用 `raspberry` 标签。
 
 ## 已报告的兼容性表 <a id="reported-compatibility-table"></a>
 
-如果您有在下表中尚未存在的硬件上运行镜像，请在此处添加您的详细信息。
+如果您在下表中尚未存在的硬件上运行镜像，请在此处添加您的详细信息。
 
 | 使用的硬件 | OS | 报告的 Docker  架构 | 使用的镜像 | 状态 | 备注 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 常规 64bit 服务器 | Ubuntu 18.04 | x86\_64 | `bitwardenrs/server` | OK |  |
-| O-Droid HC2 | Armbian | arm7l \(arm32\) | `registry.lollipopcloud.solutions/arm32v7/bitwarden` \(see notes\) | OK | 从上游资源建立的非官方镜像；`bitwardenrs/server:raspberry` 是官方的等效镜像 |
+| O-Droid HC2 | Armbian | arm7l \(arm32\) | `registry.lollipopcloud.solutions/arm32v7/bitwarden` \(see notes\) | OK | 从上游资源建立的非官方镜像；`bitwardenrs/server:raspberry`  是官方的等效镜像 |
 | Raspberry Pi Zero W | Raspbian \(4.14.98+\) | linux/arm \(armv6l\) | `bitwardenrs/server:armv6` | OK |  |
 | Raspberry Pi Zero W | Raspbian \(4.19.66+\) | linux/arm \(armv6l\) | `bitwardenrs/server:latest` \(Multiarch\) | OK | 只有在使用 docker 实验性功能 "docker pull --platform=linux/arm/v6"时，才能使用。否则会选择错误的镜像\([https://github.com/dani-garcia/bitwarden\_rs/issues/1064](https://github.com/dani-garcia/bitwarden_rs/issues/1064)\) |
 | Raspberry Pi 1 B | Raspbian \(4.19.97+\) | linux/arm \(armv6l\) | `bitwardenrs/server:armv6` | OK |  |
