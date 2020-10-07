@@ -1,4 +1,4 @@
-# 18.设置为系统服务
+# 18.创建系统服务
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Setup-as-a-systemd-service)
@@ -14,10 +14,11 @@
 [Unit]
 Description=Bitwarden Server (Rust Edition)
 Documentation=https://github.com/dani-garcia/bitwarden_rs
-# 如果你使用 mariadb、mysql 或 postgresql 数据库， 
-# 你必须像下面这样添加它们，并去掉前面的 "#" 以取消注释。
-# 这将确保你的数据库服务器在 bitwarden_rs 之前启动("After")，
-# 并且在启动 bitwarden_rs 之前成功启动("Requires")。
+# If you use a database like mariadb,mysql or postgresql, 
+# you have to add them like the following and uncomment them 
+# by removing the `# ` before it. This makes sure that your 
+# database server is started before bitwarden_rs ("After") and has 
+# started successfully before starting bitwarden_rs ("Requires").
 
 # Only sqlite
 After=network.target
@@ -36,25 +37,25 @@ After=network.target
 
 
 [Service]
-# 设置 bitwarden_rs 用户/组。此用户/组对工作目录(见下文)允许有读写权限
+# The user/group bitwarden_rs is run under. the working directory (see below) should allow write and read access to this user/group
 User=bitwarden_rs
 Group=bitwarden_rs
-# 用作配置作用的 .env 文件的位置
+# The location of the .env file for configuration
 EnvironmentFile=/etc/bitwarden_rs.env
-# 已编译的二进制的位置
+# The location of the compiled binary
 ExecStart=/usr/bin/bitwarden_rs
-# 设置合理的连接和进程限制
+# Set reasonable connection and process limits
 LimitNOFILE=1048576
 LimitNPROC=64
-# 将 bitwarden_rs 与系统的其他部分隔离开
+# Isolate bitwarden_rs from the rest of the system
 PrivateTmp=true
 PrivateDevices=true
 ProtectHome=true
 ProtectSystem=strict
-# 仅允许对以下目录进行写入，并将其设置为工作目录(用户和密码数据存储在这里)
+# Only allow writes to the following directory and set it to the working directory (user and password data are stored here)
 WorkingDirectory=/var/lib/bitwarden_rs
 ReadWriteDirectories=/var/lib/bitwarden_rs
-# 允许 bitwarden_rs 绑定 0-1024 范围内的端口
+# Allow bitwarden_rs to bind ports in the range of 0-1024
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
@@ -101,7 +102,7 @@ $ sudo systemctl restart bitwarden_rs.service
 
 ### 卸载 bitwarden\_rs <a id="uninstalling-bitwarden_rs"></a>
 
-在执行其他操作之前，应先停止并禁用该服务：
+在执行其他操作之前，应停止并禁用该服务：
 
 ```php
 $ sudo systemctl disable --now bitwarden_rs.service
@@ -109,7 +110,7 @@ $ sudo systemctl disable --now bitwarden_rs.service
 
 然后，您可以删除二进制、`.env` 文件、web-vault 文件夹（如果已安装）以及用户数据（如果需要）。请记住，还要删除专门创建的用户、群组和防火墙规则（如果需要）和 systemd 文件。
 
-删除 systemd 文件后，您应该通过下面的方式使 systemd 意识到这一点：
+删除 systemd 文件后，您应该通过下面的方式使 systemd 知道到这一点：
 
 ```php
 $ sudo systemctl daemon-reload

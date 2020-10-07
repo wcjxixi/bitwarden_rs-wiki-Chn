@@ -13,7 +13,7 @@
   * [Debian / Ubuntu / Raspian](fail2ban-setup.md#debian-ubuntu-raspian)
   * [Fedora / Centos](fail2ban-setup.md#fedora-centos)
   * [群晖 DSM](fail2ban-setup.md#synology-dsm)
-* [为网页密码库设置](fail2ban-setup.md#setup-for-web-vault)
+* [为 web vault 设置](fail2ban-setup.md#setup-for-web-vault)
   * [筛选](fail2ban-setup.md#filter)
   * [Jail](fail2ban-setup.md#jail)
 * [为管理页面设置](fail2ban-setup.md#setup-for-admin-page)
@@ -132,9 +132,9 @@ docker-compose up -d
 
 您现在应该看到该容器在 Synolog 的 Docker GUI 中运行了。在配置筛选器和 jail 后，您必须重新加载。
 
-## 为网页密码库设置 <a id="setup-for-web-vault"></a>
+## 为 Web Vault 设置 <a id="setup-for-web-vault"></a>
 
-按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统，例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
+按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统。例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
 
 ### 筛选 <a id="filter"></a>
 
@@ -198,16 +198,16 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 ```
 
 **注意**：  
-如果在 Docker 容器之前使用了反向代理，请不要做此操作。如果使用了 apache2 或 nginx 之类的代理，请使用代理的端口而不要使用 chain = FORWARD。仅当在**无**代理的 Docker 时使用！
+如果在 Docker 容器之前使用反向代理，请不要做此操作。仅当在使用**无**代理的 Docker 时，如果使用了 apache2 或 nginx 之类的代理，请使用代理的端口而不要使用 chain = FORWARD！
 
 **上面注意中的注意**：  
-在使用 caddy 作为反向代理的 Docker（CentOS 7）上运行时，上面的说法是不正确的。当用 caddy 作为反向代理时，可以使用 chain = FORWARD 。
+在使用 caddy 作为反向代理的 Docker（CentOS 7）上运行时，上面的说法是不正确的。当用 caddy 作为反向代理时，是可以使用 chain = FORWARD 的。
 
 随意更改您认为合适的选项。
 
 ## 为管理页面设置 <a id="setup-for-admin-page"></a>
 
-如果您通过设置 `ADMIN_TOKEN` 环境变量启用了管理控制台，则可以使用 Fail2Ban 来阻止攻击者暴力破解您的管理令牌。该过程与网页密码库相同。
+如果您通过设置 `ADMIN_TOKEN` 环境变量启用了管理控制台，则可以使用 Fail2Ban 来阻止攻击者暴力破解您的管理令牌。该过程与网络密码库相同。
 
 ### 筛选 <a id="filter"></a>
 
