@@ -28,7 +28,7 @@ bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的
 
 ### 反向代理 <a id="reverse-proxying"></a>
 
-一般来说，你应该避免通过 bitwarden\_rs 内置的 [Rocket TLS 支持](../configuration/enabling-https.md)启用 HTTPS，特别是当你的实例是公开访问的时候。Rocket 本身列出了以下[警告](https://rocket.rs/v0.4/guide/configuration/#configuring-tls)：
+一般来说，你应该避免通过 bitwarden\_rs 内置的 [Rocket TLS 支持](../configuration/enabling-https.md)启用 HTTPS，特别是当你的实例是公开访问的时候。Rocket 本身列出了如下[警告](https://rocket.rs/v0.4/guide/configuration/#configuring-tls)：
 
 > Rocket's built-in TLS is not considered ready for production use. It is intended for development use only. （Rocket 内置的 TLS 还不能用于生产。它只用于开发用途。）
 
