@@ -44,7 +44,7 @@ docker start bitwarden
 
 如果你想在容器启动时运行自定义启动脚本，你可以将 `/etc/bitwarden_rs.sh` 作为单个脚本和/或将 `/etc/bitwarden_rs.d` 作为脚本目录挂载到容器中。对于后一种情况，只有扩展名为 .sh 的文件才会运行，所以其他扩展名的文件（例如，data/config 文件）则可以驻留在同一个目录中。\(具体工作方式请参见 [start.sh](https://github.com/dani-garcia/bitwarden_rs/blob/master/docker/start.sh)\)。
 
-自定义启动脚本对于修补网页密码库文件或安装额外的包、CA证书等非常有用，因为可以让您不必构建和维护您自己的 Docker 镜像。
+自定义启动脚本对于修补 web vault 文件或安装额外的包、CA证书等非常有用，因为可以让您不必构建和维护您自己的 Docker 镜像。
 
 ### 示例 <a id="example"></a>
 

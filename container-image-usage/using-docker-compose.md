@@ -53,15 +53,15 @@ volumes:
     header / {
         # 启用 HTTP Strict Transport Security (HSTS)
         Strict-Transport-Security "max-age=31536000;"
-        # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
+        # 启用 cross-site filter (XSS) 并告诉浏览器对检测到的攻击进行阻止
         X-XSS-Protection "1; mode=block"
         # 禁止在框架内渲染站点 (clickjacking protection)
         X-Frame-Options "DENY"
-        # 防止搜索引擎收录 (可选)
+        # 阻止搜索引擎编制索引 (可选)
         #X-Robots-Tag "none"
     }
 
-    # 协商端点也被代理到 Rocket
+    # 将 negotiation endpoint 代理到 Rocket
     proxy /notifications/hub/negotiate bitwarden:80 {
         transparent
     }
@@ -113,7 +113,7 @@ services:
 
 即使服务器运行在位于 NAT 后面的家庭网络上，我也想使用 Let's Encrypt 证书。我参考了这里的说明 [https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode](https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode)。
 
-首先设置域名的 CNAME 记录，并通过 CloudFlare 导出 CF\_Key 和 CF\_Email 或  CF\_Token 和 CF\_Account\_ID。
+首先设置域名的 CNAME 记录，并通过 CloudFlare 导出 CF\_Key 和 CF\_Email 或 CF\_Token  和 CF\_Account\_ID。
 
 然后颁发证书。参考 [https://github.com/Neilpang/acme.sh/wiki/dnsap](https://github.com/Neilpang/acme.sh/wiki/dnsapi)。
 
@@ -129,5 +129,5 @@ acme.sh --install-cert -d home.example.com --key-file /home/pi/ssl/key.pem --ful
 acme.sh --issue -d home.example.com --challenge-alias otherdomain.com --dns dns_cf --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
 ```
 
-我的域名的 A 记录指向 docker-compose.yml 文件最后一行绑定的 IP 地址，这样就不会出现证书相关的警告了。
+我的域名的 A 记录指向 docker-compose.yml 文件最后一行绑定的 IP 地址，这样就不会有关于证书的警告了。
 
