@@ -4,9 +4,9 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MySQL-Backend)
 {% endhint %}
 
-要使用 MySQL 后端，你可以使用[官方的 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以在[启用了 MySQL 的情况下](../deployment/building-binary.md#mysql-backend)构建你自己的二进制。由于交叉编译问题，官方的 Docker 镜像目前只适用于 x86\_64 平台，所以如果使用其他平台，你需要构建自己的二进制或使用第三方的二进制或 Docker 镜像。
+要使用 MySQL 后端，你可以使用[官方的 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以[使用 MySQL](../deployment/building-binary.md#mysql-backend) 构建你自己的二进制。由于交叉编译问题，官方的 Docker 镜像目前只适用于 x86\_64 平台，所以如果使用其他平台，你需要构建自己的二进制或使用第三方的二进制或 Docker 镜像。
 
-要运行二进制或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`），并将 `ENABLE_DB_WAL` 设置为 false（即 `ENABLE_DB_WAL='false'`）。
+要运行二进制或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`），并将 `ENABLE_DB_WAL` 设置为 `false`（即 `ENABLE_DB_WAL='false'`）。
 
 **连接字符串语法：**
 

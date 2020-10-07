@@ -53,15 +53,15 @@ volumes:
     header / {
         # 启用 HTTP Strict Transport Security (HSTS)
         Strict-Transport-Security "max-age=31536000;"
-        # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
+        # 启用 cross-site filter (XSS) 并告诉浏览器对检测到的攻击进行阻止
         X-XSS-Protection "1; mode=block"
         # 禁止在框架内渲染站点 (clickjacking protection)
         X-Frame-Options "DENY"
-        # 防止搜索引擎收录 (可选)
+        # 阻止搜索引擎编制索引 (可选)
         #X-Robots-Tag "none"
     }
 
-    # 协商端点也被代理到 Rocket
+    # 将 negotiation endpoint 代理到 Rocket
     proxy /notifications/hub/negotiate bitwarden:80 {
         transparent
     }

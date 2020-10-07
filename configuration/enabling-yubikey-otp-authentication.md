@@ -10,7 +10,7 @@
 
 备注：
 
-* 为了生成 API 密钥或在 OTP 服务器上使用 YubiKey，必须对其进行注册。在 [YubiKey 个性化工具](https://www.yubico.com/products/services-software/personalization-tools/use/)中配置好你的密钥后，您可以在[此处](https://upload.yubico.com/)注册默认服务器。
+* 为了生成 API 密钥或在 OTP 服务器上使用 YubiKey，必须对其进行注册。在 [YubiKey 个性化工具](https://www.yubico.com/products/services-software/personalization-tools/use/)中配置好你的密钥后，您可以使用默认服务器在[此处](https://upload.yubico.com/)注册。
 * 由于上游的问题，服务器版本为 1.6.0 或更低的 aarch64 不支持 Yubikey 功能（请参阅 [＃262](https://github.com/dani-garcia/bitwarden_rs/issues/262)）。
 
 ```python
