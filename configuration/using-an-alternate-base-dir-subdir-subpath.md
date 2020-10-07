@@ -6,13 +6,13 @@
 
 通常，Bitwarden 被限制驻留在子域的根目录中，比如`https://bitwarden.example.com`。
 
-此限制源自后端和网页密码库，他们尚未被设计为容纳备用基本目录（请参阅 [bitwarden/server\#277](https://github.com/bitwarden/server/issues/277)）。实际上，移动端/桌面端应用程序和浏览器扩展都可以使用带路径的基本 URL。
+此限制源自后端和网页密码库，他们尚未被设计为容纳备用基本目录（请参阅 [bitwarden/server\#277](https://github.com/bitwarden/server/issues/277)）。实际上，移动端/桌面端应用程序和浏览器扩展都可以使用带路径的基础 URL。
 
-随着对 bitwarden\_rs 的更改（[PR\#868](https://github.com/dani-garcia/bitwarden_rs/pull/868)（后端）和 [PR\#11](https://github.com/dani-garcia/bw_web_builds/pull/11)（网页密码库）），您现在已经可以使用备用基本目录配置功能齐全的实例了。
+随着对 bitwarden\_rs 的更改（[PR\#868](https://github.com/dani-garcia/bitwarden_rs/pull/868)（后端）和 [PR\#11](https://github.com/dani-garcia/bw_web_builds/pull/11)（网页密码库）），您现在已经可以在备用基本目录中配置功能齐全的实例了。
 
 ## 配置 <a id="configuration"></a>
 
-只需将您的域名 URL 简单配置为包括基本目录即可。例如，假设您想使用 `https://bitwarden.example.com/base-dir` 访问您的实例。（提示，您也可以根据需要使用多级目录，例如 `https://bitwarden.example.com/multi/level/base/dir`）
+只需将您的域 URL 简单配置为包括基本目录即可。例如，假设您想使用 `https://bitwarden.example.com/base-dir` 访问您的实例。（提示，您也可以根据需要使用多级目录，例如 `https://bitwarden.example.com/multi/level/base/dir`）
 
 1、停止 bitwarden\_rs。
 
@@ -51,5 +51,5 @@ location /my-base-path-2/ {
 
 ## 反向代理 <a id="reverse-proxying"></a>
 
-既然 bitwarden\_rs API 路由已设置为期望的基本目录，如果您将 bitwarden\_rs 放置在反向代理后面，请确保将您的代理配置为将请求路径传递到 bitwarden\_rs。假如反向代理在 `localhost:8080` 上监听您的 bitwarden\_rs，来自 `https://bitwarden.example.com/base-dir/api/sync` 的请求到达了您的反向代理，则该请求必须转发到 `http://localhost:8080/base-dir/api/sync`，而不是 `http://localhost:8080/api/sync`。
+如果将 bitwarden\_rs 放在反向代理后面，请确保将您的代理配置为将请求路径传递到 bitwarden\_rs，因为 bitwarden\_rs API 路由已设置为使用基本目录。这样，假如反向代理在 `localhost:8080` 上监听您的 bitwarden\_rs，来自 `https://bitwarden.example.com/base-dir/api/sync` 的请求到达了您的反向代理，则该请求将转发到 `http://localhost:8080/base-dir/api/sync`，而不是 `http://localhost:8080/api/sync`。
 
