@@ -4,13 +4,13 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary)
 {% endhint %}
 
-如果您不想自己构建二进制，可以看看是否有[已打包用于您的 Linux 发行版](third-party-packages.md)的 bitwarden\_rs。
+如果您不想自己构建二进制，则可以查看 bitwarden\_rs 是否[已打包用于你的 Linux 发行版](third-party-packages.md)。
 
 ## 依赖 <a id="dependencies"></a>
 
 * `Rust nightly`（强烈建议使用 [rustup](https://rustup.rs/)）
 * `OpenSSL`（应在路径中是可用的，通过系统的包管理器安装，或使用[预构建的二进制](https://wiki.openssl.org/index.php/Binaries)）。对于 Debian，需要安装 `pkg-config` 和 `libssl-dev`
-* `NodeJS`（仅当编译网页密码库时使用，通过系统的包管理器安装，或使用[预构建的二进制](https://nodejs.org/en/download/)）或 [nodesource 二进制发行版](https://github.com/nodesource/distributions)。_备注：web-vault 当前使用的基本程序包（例如，node-sass &lt; v4.12），要求 NodeJS v11_
+* `NodeJS`（仅当编译 web-vault 时使用，通过系统的包管理器安装，使用[预构建的二进制](https://nodejs.org/en/download/)）或 [nodesource 二进制发行版](https://github.com/nodesource/distributions)。_备注：web-vault 当前使用的基本程序包（例如，node-sass &lt; v4.12），要求 NodeJS v11_
 * 对于 Debian（Buster）上的 MySQL 后端，您需要安装 `libmariadb-dev-compat` 和 `libmariadb-dev`
 
 ## 运行/编译 <a id="run-compile"></a>
@@ -20,7 +20,7 @@
 ```python
 # 使用 sqlite 后端编译并运行
 cargo run --features sqlite --release
-# 或仅使用 sqlite 编译(二进制位于 target/release/bitwarden_rs)
+# 或仅使用 sqlite 编译(binary located in target/release/bitwarden_rs)
 cargo build --features sqlite --release
 ```
 
@@ -29,7 +29,7 @@ cargo build --features sqlite --release
 ```python
 # 使用 mysql 后端编译并运行
 cargo run --features mysql --release
-# 或仅使用 mysql 编译(二进制位于 target/release/bitwarden_rs)
+# 或仅使用 mysql 编译(binary located in target/release/bitwarden_rs)
 cargo build --features mysql --release
 ```
 
@@ -38,15 +38,15 @@ cargo build --features mysql --release
 ```python
 # 使用 postgresql 后端编译并运行
 cargo run --features postgresql --release
-# 或仅使用 postgresql 编译(二进制位于 target/release/bitwarden_rs)
+# 或仅使用 postgresql 编译(binary located in target/release/bitwarden_rs)
 cargo build --features postgresql --release
 ```
 
-运行后，通过 [http://localhost:8000](http://localhost:8000/) 访问服务器。
+运行后，可从通过 [http://localhost:8000](http://localhost:8000/) 访问服务器。
 
 ~~_**注意**：一个先前的_~~[~~_话题_~~](https://github.com/rust-lang/rust/issues/62896)~~_表明由于Rust编译器和LLVM之间存在不兼容，导致编译可能会因段错误而失败。作为解决方法，可以使用较旧版本的编译器，例如_~~ __~~_`cargo +nightly-2019-08-27 build --features yourbackend --release`_~~
 
-### 安装网页密码库 <a id="install-the-web-vault"></a>
+### 安装 web-vault <a id="install-the-web-vault"></a>
 
 可以从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/releases) 下载网页密码库的编译版本。
 
