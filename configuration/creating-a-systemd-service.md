@@ -1,4 +1,4 @@
-# 18.创建系统服务
+# 18.设置为系统服务
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Setup-as-a-systemd-service)
@@ -14,11 +14,10 @@
 [Unit]
 Description=Bitwarden Server (Rust Edition)
 Documentation=https://github.com/dani-garcia/bitwarden_rs
-# If you use a database like mariadb,mysql or postgresql, 
-# you have to add them like the following and uncomment them 
-# by removing the `# ` before it. This makes sure that your 
-# database server is started before bitwarden_rs ("After") and has 
-# started successfully before starting bitwarden_rs ("Requires").
+# 如果你使用 mariadb、mysql 或 postgresql 数据库， 
+# 你必须像下面这样添加它们，并去掉前面的 "#" 以取消注释。
+# 这将确保你的数据库服务器在 bitwarden_rs 之前启动("After")，
+# 并且在启动 bitwarden_rs 之前成功启动("Requires")。
 
 # Only sqlite
 After=network.target
@@ -37,25 +36,25 @@ After=network.target
 
 
 [Service]
-# The user/group bitwarden_rs is run under. the working directory (see below) should allow write and read access to this user/group
+# 设置 bitwarden_rs 用户/组。此用户/组对工作目录(见下文)允许有读写权限
 User=bitwarden_rs
 Group=bitwarden_rs
-# The location of the .env file for configuration
+# 用作配置作用的 .env 文件的位置
 EnvironmentFile=/etc/bitwarden_rs.env
-# The location of the compiled binary
+# 已编译的二进制的位置
 ExecStart=/usr/bin/bitwarden_rs
-# Set reasonable connection and process limits
+# 设置合理的连接和进程限制
 LimitNOFILE=1048576
 LimitNPROC=64
-# Isolate bitwarden_rs from the rest of the system
+# 将 bitwarden_rs 与系统的其他部分隔离开
 PrivateTmp=true
 PrivateDevices=true
 ProtectHome=true
 ProtectSystem=strict
-# Only allow writes to the following directory and set it to the working directory (user and password data are stored here)
+# 仅允许对以下目录进行写入，并将其设置为工作目录(用户和密码数据存储在这里)
 WorkingDirectory=/var/lib/bitwarden_rs
 ReadWriteDirectories=/var/lib/bitwarden_rs
-# Allow bitwarden_rs to bind ports in the range of 0-1024
+# 允许 bitwarden_rs 绑定 0-1024 范围内的端口
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
@@ -102,7 +101,7 @@ $ sudo systemctl restart bitwarden_rs.service
 
 ### 卸载 bitwarden\_rs <a id="uninstalling-bitwarden_rs"></a>
 
-在执行其他操作之前，应停止并禁用该服务：
+在执行其他操作之前，应先停止并禁用该服务：
 
 ```php
 $ sudo systemctl disable --now bitwarden_rs.service
@@ -110,7 +109,7 @@ $ sudo systemctl disable --now bitwarden_rs.service
 
 然后，您可以删除二进制、`.env` 文件、web-vault 文件夹（如果已安装）以及用户数据（如果需要）。请记住，还要删除专门创建的用户、群组和防火墙规则（如果需要）和 systemd 文件。
 
-删除 systemd 文件后，您应该通过下面的方式使 systemd 知道到这一点：
+删除 systemd 文件后，您应该通过下面的方式使 systemd 意识到这一点：
 
 ```php
 $ sudo systemctl daemon-reload
@@ -134,7 +133,7 @@ $ systemctl status bitwarden_rs.service
 
 ### 旧版 systemd 的沙盒选项 <a id="sandboxing-options-with-older-systemd-versions"></a>
 
-在 RHEL 7（和 debian 8）中，使用的 systemd 不支持某些隔离选项（[\#445](https://github.com/dani-garcia/bitwarden_rs/issues/445)，[\#363](https://github.com/dani-garcia/bitwarden_rs/issues/363)）。这可能导致出现如下错误之一：
+在 RHEL 7（和 debian 8）中，使用的 systemd 不支持某些隔离选项（[\#445](https://github.com/dani-garcia/bitwarden_rs/issues/445)，[\#363](https://github.com/dani-garcia/bitwarden_rs/issues/363)）。这可能导致出现如下错误：
 
 ```python
 Failed at step NAMESPACE spawning /home/bitwarden_rs/bitwarden_rs: Permission denied
@@ -146,7 +145,7 @@ Failed at step NAMESPACE spawning /home/bitwarden_rs/bitwarden_rs: Permission de
 Failed to parse protect system value
 ```
 
-要解决这一点，你可以将含有  `PrivateTmp`、`PrivateDevices`、`ProtectHome`、`ProtectSystem` 和 `ReadWriteDirectories` 的部分或全部行前面放置 \# 符号来将其注释掉。尽管将所有这些注释掉可能会起作用，但不建议这样做，因为这些都是很好的安全措施。要查看您的 systemd 支持哪些选项，请运行以下命令来查看输出：
+要解决这一点，你可以在包含有  `PrivateTmp`、`PrivateDevices`、`ProtectHome`、`ProtectSystem` 和 `ReadWriteDirectories` 的部分或全部行前面放置 \# 符号来将其注释掉。尽管将所有这些行注释掉可能会起作用，但不建议这样做，因为这些都是很好的安全措施。要查看您的 systemd 支持哪些选项，请运行以下命令来查看输出：
 
 ```php
 $ systemctl --version
