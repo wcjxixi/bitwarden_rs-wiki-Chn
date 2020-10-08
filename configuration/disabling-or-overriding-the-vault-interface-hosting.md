@@ -1,10 +1,10 @@
-# 15.禁用或覆盖 Vault 接口托管
+# 15.禁用或覆盖密码库接口托管
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting)
 {% endhint %}
 
-为方便起见，bitwarden\_rs 映像还将托管网页密码库界面的静态文件。您可以通过设置 `WEB_VAULT_ENABLED` 环境变量来完全禁用静态文件托管。
+为方便起见，bitwarden\_rs 镜像还将托管网页密码库界面的静态文件。您可以通过设置 `WEB_VAULT_ENABLED` 环境变量来完全禁用静态文件的托管。
 
 ```python
 docker run -d --name bitwarden \
