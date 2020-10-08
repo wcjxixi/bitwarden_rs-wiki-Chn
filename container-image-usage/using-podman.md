@@ -53,7 +53,7 @@ Type=forking
 PIDFile=/%t/%n-pid
 ```
 
-环境文件 `bitwarden.conf` 可以包含容器的所有环境值，你需要增加如下参数：
+环境文件 `bitwarden.conf` 可以包含容器的你需要的所有环境值，比如：
 
 ```python
 ROCKET_PORT=8080
@@ -65,7 +65,7 @@ ROCKET_PORT=8080
 
 ### 调试 systemd 服务文件 <a id="debugging-systemd-service-file"></a>
 
-如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。我们可以通过 `journalctl --user -u container-bitwarden -t 100` 来定位错误。
+如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。可以通过 `journalctl --user -u container-bitwarden -t 100` 来定位错误。
 
 在大多数情况下，我们可以通过简单地增加服务文件中的 podman 命令的超时来解决我们看到的错误。
 
