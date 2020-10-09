@@ -29,9 +29,13 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 :443 {
   tls ${SSLCERTIFICATE} ${SSLKEY}
   # 或使用 'tls self_signed' 生成自签名证书
+
+  # 此设置可能会对某些浏览器产生兼容性问题
+  # （例如，在Firefox上下载附件时）。
+  # 如果遇到问题，请尝试禁用此功能。
   gzip
 
-  # The negotiation endpoint is also proxied to Rocket
+  # 协商端点也被代理到 Rocket
   proxy /notifications/hub/negotiate <SERVER>:80 {
     transparent
   }
@@ -68,7 +72,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
   header / {
        # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
        X-XSS-Protection "1; mode=block"
-       # 不允许网站在一个框架内渲染 (clickjacking 保护)
+       # 禁止在框架内渲染站点 (clickjacking protection)
        X-Frame-Options "DENY"
        # 防止搜索引擎收录 (可选)
        X-Robots-Tag "none"
@@ -97,7 +101,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 #   #rool_keep 30 #在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
 #  }
 #
-#  # 仅取消注释两行中的一行。取决于你提供自己的证书或是从 Let's Encrypt 请求证书
+#  # 仅取消注释两行中的一行。取决于你提供自己的证书还是从 Let's Encrypt 请求证书
 #  tls {env.SSLCERTIFICATE} {env.SSLKEY}
 #  tls {env.EMAIL}
 #
@@ -108,14 +112,14 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 #       Strict-Transport-Security "max-age=31536000;"
 #       # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
 #       X-XSS-Protection "1; mode=block"
-#       # 不允许网站在一个框架内渲染 (clickjacking 保护)
+#       # 禁止在框架内渲染站点 (clickjacking protection)
 #       X-Frame-Options "DENY"
 #       # 防止搜索引擎收录 (可选)
 #       X-Robots-Tag "none"
 #       # 移除服务器名称
 #       -Server
 #   }
-#  # 谈判端点也被代理到 Rocket
+#  # 协商端点也被代理到 Rocket
 #  reverse_proxy /notifications/hub/negotiate <SERVER>:80
 #
 #  # Notifications 重定向到 websockets 服务器
@@ -222,7 +226,7 @@ nginx__servers:
 
           proxy_pass http://bitwarden;
 
-      ## 不要使用图标功能，只要能显示出从我们的凭证到服务器的所有域名。
+      ## 只要能显示出从我们的凭证到服务器的所有域名，就不要使用图标功能。
       - pattern: '/ekkP9wtJ_psk_changeme_Hr9CCTud/icons/'
         options: |-
           access_log off;
@@ -261,7 +265,7 @@ NixOS  Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部�
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          proxyPass = "http://localhost:8812"; #由于某些冲突，更改了默认的 rocket 端口
+          proxyPass = "http://localhost:8812"; #由于某些冲突，这里更改了默认的 rocket 端口
           proxyWebsockets = true;
         };
         locations."/notifications/hub" = {
