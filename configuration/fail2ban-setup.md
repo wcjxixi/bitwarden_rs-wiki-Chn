@@ -25,8 +25,8 @@
 ## 预先说明 <a id="pre-requisite"></a>
 
 * 以下示例使用 `vi` 指令编辑。您可以在[这里](https://pc.net/resources/commands/vi)查看它的基本使用方法。然而，您也可以使用您想用的任何文本编辑器。
-* 从 1.5.0 版开始，Bitwarden\_rs 支持记录到文件。请参考这里的设置：[日志记录](logging.md)
-* 使用错误的帐户尝试登录到网页版密码库，并检查日志文件中如下格式的记录项：
+* 从 1.5.0 版开始，Bitwarden\_rs 支持记录到文件。请设置[日志记录](logging.md)。
+* 尝试使用错误的帐户信息登录到网页版密码库，并检查日志文件中如下格式的记录项：
 
 ```python
 [YYYY-MM-DD hh:mm:ss][bitwarden_rs::api::identity][ERROR] Username or password is incorrect. Try again. IP: XXX.XXX.XXX.XXX. Username: email@domain.com.
@@ -185,7 +185,7 @@ enabled = true
 port = 80,443,8081
 filter = bitwarden
 action = iptables-allports[name=bitwarden]
-logpath = /path/to/bitwarden/log
+logpath = /path/to/bitwarden.log
 maxretry = 3
 bantime = 14400
 findtime = 14400
