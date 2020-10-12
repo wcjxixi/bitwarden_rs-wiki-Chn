@@ -13,7 +13,7 @@
   * [Debian / Ubuntu / Raspian](fail2ban-setup.md#debian-ubuntu-raspian)
   * [Fedora / Centos](fail2ban-setup.md#fedora-centos)
   * [群晖 DSM](fail2ban-setup.md#synology-dsm)
-* [为 web vault 设置](fail2ban-setup.md#setup-for-web-vault)
+* [为网页密码库设置](fail2ban-setup.md#setup-for-web-vault)
   * [筛选](fail2ban-setup.md#filter)
   * [Jail](fail2ban-setup.md#jail)
 * [为管理页面设置](fail2ban-setup.md#setup-for-admin-page)
@@ -132,9 +132,9 @@ docker-compose up -d
 
 您现在应该看到该容器在 Synolog 的 Docker GUI 中运行了。在配置筛选器和 jail 后，您必须重新加载。
 
-## 为 Web Vault 设置 <a id="setup-for-web-vault"></a>
+## 为网页密码库设置 <a id="setup-for-web-vault"></a>
 
-按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统。例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
+按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统，例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
 
 ### 筛选 <a id="filter"></a>
 
@@ -198,16 +198,16 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 ```
 
 **注意**：  
-如果在 Docker 容器之前使用反向代理，请不要做此操作。仅当在使用**无**代理的 Docker 时，如果使用了 apache2 或 nginx 之类的代理，请使用代理的端口而不要使用 chain = FORWARD！
+如果在 Docker 容器之前使用了反向代理，请不要做此操作。如果使用了 apache2 或 nginx 之类的代理，请使用代理的端口而不要使用 chain = FORWARD。仅当在**无**代理的 Docker 时使用！
 
 **上面注意中的注意**：  
-在使用 caddy 作为反向代理的 Docker（CentOS 7）上运行时，上面的说法是不正确的。当用 caddy 作为反向代理时，是可以使用 chain = FORWARD 的。
+在使用 caddy 作为反向代理的 Docker（CentOS 7）上运行时，上面的说法是不正确的。当用 caddy 作为反向代理时，可以使用 chain = FORWARD 。
 
 随意更改您认为合适的选项。
 
 ## 为管理页面设置 <a id="setup-for-admin-page"></a>
 
-如果您通过设置 `ADMIN_TOKEN` 环境变量启用了管理控制台，则可以使用 Fail2Ban 来阻止攻击者暴力破解您的管理令牌。该过程与网络密码库相同。
+如果您通过设置 `ADMIN_TOKEN` 环境变量启用了管理控制台，则可以使用 Fail2Ban 来阻止攻击者暴力破解您的管理令牌。该过程与网页密码库相同。
 
 ### 筛选 <a id="filter"></a>
 
@@ -268,7 +268,7 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 
 如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于 /data/ 中，而不是容器外部）。
 
-还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们一致，则有多种解决方法。一种是使用 `-e "TZ=<timezone>"` 选项启动 docker 。可用的时区列表位于：[https://en.wikipedia.org/wiki/List\_of\_tz\_database\_time\_zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) 页面的“TZ  database name”列标题下（比如 -e "TZ = Australia/Melbourne"）。
+还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e "TZ=<timezone>"` 选项启动 docker 。可用的时区列表位于：[https://en.wikipedia.org/wiki/List\_of\_tz\_database\_time\_zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) 页面的“TZ  database name”列标题下（比如 -e "TZ = Australia/Melbourne"）。
 
 如果您使用的是 podman 而不是 docker，则无法通过 `-e "TZ=<timezone>"` 来设置时区。可以按照以下指南解决此问题（当使用 alpine 镜像时）：[https://wiki.alpinelinux.org/wiki/Setting\_the\_timezone](https://wiki.alpinelinux.org/wiki/Setting_the_timezone)。
 
