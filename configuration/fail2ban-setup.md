@@ -268,9 +268,9 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 
 如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于 /data/ 中，而不是容器外部）。
 
-还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e "TZ=<timezone>"` 选项启动 docker 。可用的时区列表位于：[https://en.wikipedia.org/wiki/List\_of\_tz\_database\_time\_zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) 页面的“TZ  database name”列标题下（比如 -e "TZ = Australia/Melbourne"）。
+还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e TZ = <timezone>` 选项启动 docker 。可用的时区列表位于：[https://en.wikipedia.org/wiki/List\_of\_tz\_database\_time\_zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) 页面的“TZ  database name”列标题下（比如 -e TZ = Australia/Melbourne）。
 
-如果您使用的是 podman 而不是 docker，则无法通过 `-e "TZ=<timezone>"` 来设置时区。可以按照以下指南解决此问题（当使用 alpine 镜像时）：[https://wiki.alpinelinux.org/wiki/Setting\_the\_timezone](https://wiki.alpinelinux.org/wiki/Setting_the_timezone)。
+如果您使用的是 podman 而不是 docker，则无法通过 `-e TZ = <timezone>` 来设置时区。可以按照以下指南解决此问题（当使用 alpine 镜像时）：[https://wiki.alpinelinux.org/wiki/Setting\_the\_timezone](https://wiki.alpinelinux.org/wiki/Setting_the_timezone)。
 
 ## SELinux 中的问题 <a id="selinux-problems"></a>
 
