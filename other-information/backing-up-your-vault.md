@@ -13,19 +13,15 @@ mkdir $DATA_FOLDER/db-backup
 sqlite3 /$DATA_FOLDER/db.sqlite3 ".backup '/$DATA_FOLDER/db-backup/backup.sqlite3'"
 ```
 
-可以通过 CRON 计划任务每天运行此命令，但是请注意，这会每次覆盖相同的 `backup.sqlite3` 文件。因此，该备份文件应通过使用附加时间戳的 CRON 计划任务命令或其他备份应用程序（如 Duplicati）通过增量备份保存。要恢复，简单地将 `backup.sqlite3` 覆盖为 `db.sqlite3` 即可（当 bitwarden\_rs 停止时）。
+可以通过 CRON 计划任务每天运行此命令，但是请注意，这会每次覆盖相同的 `backup.sqlite3` 文件。因此，该备份文件应通过使用附加时间戳的 CRON 计划任务命令或其他备份应用程序（如 Duplicati）通过增量备份保存。要恢复，只需用 `backup.sqlite3` 覆盖为 `db.sqlite3` 即可（当 bitwarden\_rs 停止时）。
 
-运行以上命令要求在 docker 主机系统上安装 sqlite3。您可以使用以下命令用 sqlite3 docker 容器实现相同的结果。
+运行以上命令要求在 docker 主机系统上安装 sqlite3。您可以通过以下命令使用 sqlite3 docker 容器实现相同的结果。
 
 ```python
 docker run --rm --volumes-from=bitwarden bruceforce/bw_backup /backup.sh
 ```
 
-您还可以运行带有集成 cron 守护程序的容器以自动备份数据库。参考：
-
-* [https://github.com/shivpatel/bitwarden\_rs-local-backup](https://github.com/shivpatel/bitwarden_rs-local-backup)
-* [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)
-* [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup)
+您还可以运行带有集成 cron 守护程序的容器以自动备份数据库。有关示例，请参见 [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup) 或 [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)。
 
 ## 2.附件文件夹 <a id="2-the-attachments-folder"></a>
 
