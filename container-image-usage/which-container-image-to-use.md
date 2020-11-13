@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Which-container-image-to-use)
 {% endhint %}
 
-`bitwarden_rs` 从版本 1.17.0 开始，只提供一个 Docker 镜像（[`bitwardenrs/server`](https://hub.docker.com/r/bitwardenrs/server)），该映像对 SQLite、MySQL 和 PostgreSQL 数据库后端提供统一的支持。在该版本之前，每个数据库后端都有单独的镜像（请参阅[历史镜像](https://github.com/dani-garcia/bitwarden_rs/wiki/Which-container-image-to-use#historical-images)）。
+`bitwarden_rs` 从版本 1.17.0 开始，只提供一个 Docker 镜像（[`bitwardenrs/server`](https://hub.docker.com/r/bitwardenrs/server)），该映像对 SQLite、MySQL 和 PostgreSQL 数据库后端提供统一的支持。在该版本之前，每个数据库后端都有单独的镜像（请参阅[历史镜像](which-container-image-to-use.md#historical-images)）。
 
 `bitwardenrs/server` 是一个[多架构](https://www.docker.com/blog/multi-arch-all-the-things/)镜像，这意味着它在一个镜像名下支持多种 CPU 架构。假设你运行的是支持的架构之一，简单地拉取 `bitwardenrs/server` 会自动产生适合你的环境的特定架构的镜像，但 Armv6 板卡除外，比如 Raspberry Pi 1 和 Zero（请参见 [moby/moby\#41017](https://github.com/moby/moby/issues/41017)）。Armv6 用户必须在镜像标签中指定 `arm32v6`，例如 `latest- arm32v6`。
 
@@ -31,7 +31,7 @@ SQLite 后端是最广泛使用/测试的后端，除非有特殊需要使用其
 
 网页密码库是唯一的例外：由于它与 bitwarden\_rs 镜像捆绑在一起，网页密码库的版本总是与 bitwarden\_rs 服务器的版本相匹配。如果你只把网页密码库用作客户端（可能性不大），那么你就不需要担心这些兼容性问题。
 
-## 历史镜像 <a id="image-updates"></a>
+## 历史镜像 <a id="historical-images"></a>
 
 在增加对多数据库支持的 1.17.0 版本之前，MySQL 和 PostgreSQL 的支持仅包含在单独的特定数据库镜像中。您仍可以在 Docker Hub 中找到较旧版本的bitwarden\_rs，但不应再使用它们：
 
