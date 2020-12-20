@@ -1,10 +1,14 @@
-# 1.配置概要
+# 1.概要
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Configuration-overview)
 {% endhint %}
 
-\[**译者注**\]：某些设置只能通过环境变量配置，如日志记录
+\[**译者注**\]：
+
+1. 某些设置只能通过环境变量配置，如日志记录等管理页面的 Read-Only Config 配置项目
+2. 通过管理页面修改配置后马上生效
+3. 直接修改 config.json 文件，需要重启 bitwarden 生效（只有启动时才会读取 config.json 文件）
 
 ## 配置方式 <a id="configuration-methods"></a>
 

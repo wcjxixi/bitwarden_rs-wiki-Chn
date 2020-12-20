@@ -32,6 +32,10 @@ bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的
 
 > Rocket's built-in TLS is not considered ready for production use. It is intended for development use only. （Rocket 内置的 TLS 还不能用于生产。它只用于开发用途。）
 
+比如，Rocket TLS 不支持严格 SNI 或 ECC 证书（仅 RSA）。
+
+请参看[代理示例](../deployment/proxy-examples.md)，以了解反向代理配置的案例。
+
 ## Docker 配置 <a id="docker-configuration"></a>
 
 下面的小节涵盖了 Docker 相关的强化。

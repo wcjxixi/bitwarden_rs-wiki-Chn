@@ -1,6 +1,6 @@
 # 配置
 
-* 📄 [概要](configuration-overview.md)
+* 📄 [概要](overview.md)
 * 📄 [禁用新用户注册](disable-registration-of-new-users.md)
 * 📄 [禁用邀请](disable-invitations.md)
 * 📄 [启用管理页面](enabling-admin-page.md)
@@ -14,10 +14,10 @@
 * 📄 [更改 worker 数量](changing-the-number-of-workers.md)
 * 📄 [SMTP 配置](smtp-configuration.md)
 * 📄 [禁用显示密码提示](password-hint-display.md)
-* 📄 [禁用或覆盖 Vault 接口托管](disabling-or-overriding-the-vault-interface-hosting.md)
+* 📄 [禁用或覆盖密码库接口托管](disabling-or-overriding-the-vault-interface-hosting.md)
 * 📄 [日志记录](logging.md)
 * 📄 [Fail2Ban 设置](fail2ban-setup.md)
-* 📄 [创建为系统服务](creating-a-systemd-service.md)
+* 📄 [设置为系统服务](creating-a-systemd-service.md)
 * 📄 [使用 systemd-docker 运行](running-with-systemd-docker.md)
 * 📄 [在未启用 WAL 的情况下运行](running-without-wal-enabled.md)
 * 📄 [从 LDAP 同步用户](syncing-users-from-ldap.md)

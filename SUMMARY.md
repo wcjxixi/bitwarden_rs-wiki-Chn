@@ -1,7 +1,6 @@
 # Table of contents
 
 * [关于](README.md)
-* [目录](categories.md)
 * [主页](home.md)
 * [容器镜像的使用](container-image-usage/README.md)
   * [1.镜像的选择](container-image-usage/which-container-image-to-use.md)
@@ -16,7 +15,7 @@
   * [4.部署示例](deployment/deployment-examples.md)
   * [5.代理示例](deployment/proxy-examples.md)
 * [配置](configuration/README.md)
-  * [1.配置概要](configuration/configuration-overview.md)
+  * [1.概要](configuration/overview.md)
   * [2.禁用新用户注册](configuration/disable-registration-of-new-users.md)
   * [3.禁用邀请](configuration/disable-invitations.md)
   * [4.启用管理页面](configuration/enabling-admin-page.md)
@@ -41,7 +40,7 @@
   * [23.使用 MySQL 后端](configuration/using-the-mysql-backend.md)
   * [24.使用 PostgreSQL 后端](configuration/using-the-postgresql-backend.md)
   * [25.使用备用基本目录（子目录/子路径）](configuration/using-an-alternate-base-dir-subdir-subpath.md)
-* [其他信息](other-information/README.md)
+* [其他](other-information/README.md)
   * [1.从 Keepass 或 KeepassX 导入数据](other-information/importing-data-from-keepass-or-keepassx.md)
   * [2.备份密码库](other-information/backing-up-your-vault.md)
   * [3.使私有 CA 和自签名证书兼容 Chrome](other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)

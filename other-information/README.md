@@ -1,4 +1,4 @@
-# 其他信息
+# 其他
 
 * 📄 [从 Keepass 或 KeepassX 导入数据](importing-data-from-keepass-or-keepassx.md)
 * 📄 [备份密码库](backing-up-your-vault.md)
