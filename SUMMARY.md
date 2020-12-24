@@ -2,7 +2,7 @@
 
 * [关于](README.md)
 * [主页](home.md)
-* [容器镜像的使用](container-image-usage/README.md)
+* [镜像的用法](container-image-usage/README.md)
   * [1.镜像的选择](container-image-usage/which-container-image-to-use.md)
   * [2.启动容器](container-image-usage/starting-a-container.md)
   * [3.更新 Bitwarden 镜像](container-image-usage/updating-the-bitwarden-image.md)
@@ -44,8 +44,9 @@
   * [1.从 Keepass 或 KeepassX 导入数据](other-information/importing-data-from-keepass-or-keepassx.md)
   * [2.备份密码库](other-information/backing-up-your-vault.md)
   * [3.使私有 CA 和自签名证书兼容 Chrome](other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)
-  * [4.与上游 API 实现的区别](other-information/differences-from-the-upstream-api-implementation.md)
-  * [5.支持上游发展](other-information/supporting-upstream-development.md)
-  * [6.强化指南](other-information/hardening-guide.md)
+  * [4.使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例](other-information/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)
+  * [5.与上游 API 实现的区别](other-information/differences-from-the-upstream-api-implementation.md)
+  * [6.支持上游发展](other-information/supporting-upstream-development.md)
+  * [7.强化指南](other-information/hardening-guide.md)
 * [资源](resources.md)
 

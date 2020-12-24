@@ -1,4 +1,4 @@
-# 4.与上游 API 实现的区别
+# 5.与上游 API 实现的区别
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Differences-from-the-upstream-API-implementation)
