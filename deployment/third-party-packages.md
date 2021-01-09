@@ -14,13 +14,19 @@ Bitwarden\_rs 已打包用于 Archlinux，感谢 @mqus。这里是可用的 [AUR
 
 基于工具链的 docker 可用于构建 debian 软件包：[https://github.com/greizgh/bitwarden\_rs-debian](https://github.com/greizgh/bitwarden_rs-debian)。它将服务器和网页密码库捆绑在一起。
 
-## CentOS7/RHEL7
+## CentOS7 / RHEL7
 
 RPM 库由 @MrMEEE 打包在这里：[https://copr.fedorainfracloud.org/coprs/mrmeee/bitwarden\_rs/](https://copr.fedorainfracloud.org/coprs/mrmeee/bitwarden_rs/)...在附加包里同样包含有网页界面。
 
 安装说明：[https://github.com/MrMEEE/bitwarden\_rs\_rpm/blob/master/README.md](https://github.com/MrMEEE/bitwarden_rs_rpm/blob/master/README.md)
 
 任何 RPM 话题可以提交到这里：[https://github.com/MrMEEE/bitwarden\_rs\_rpm/issues](https://github.com/MrMEEE/bitwarden_rs_rpm/issues)
+
+## CentOS 8 / RHEL 8
+
+克隆的一个分支，它构建一个 RPM 并使用 Docker 将其推送到 COPR。
+
+[https://github.com/alexpdp7/bitwarden\_rs/tree/rpm/packages/centos8](https://github.com/alexpdp7/bitwarden_rs/tree/rpm/packages/centos8) [https://copr.fedorainfracloud.org/coprs/koalillo/bitwarden\_rs/](https://copr.fedorainfracloud.org/coprs/koalillo/bitwarden_rs/)
 
 ## Nix \(OS\)
 
@@ -39,4 +45,8 @@ RPM 库由 @MrMEEE 打包在这里：[https://copr.fedorainfracloud.org/coprs/mr
 ## 用于 Ubuntu 20.04 的编译脚本 <a id="build-script-for-ubuntu-20-04"></a>
 
 Dinger1986 创建了一个在 Ubuntu 20.04 上从源代码安装 bitwarden\_rs 的脚本，参见：[https://github.com/dinger1986/bitwardenrs\_install\_script](https://github.com/dinger1986/bitwardenrs_install_script)
+
+## FreeBSD
+
+在 FreeBSD 端口树中可用，并在 FreeBSD pkg 存储库中作为二进制包提供：`pkg install bitwarden_rs`
 

@@ -34,7 +34,7 @@
 
 ## 安装 <a id="installation"></a>
 
-### Debian / Ubuntu / Raspian
+### Debian / Ubuntu / Raspian Pi OS
 
 ```python
 sudo apt-get install fail2ban -y
@@ -77,12 +77,8 @@ mkdir -p /volumeX/docker/fail2ban/filter.d/
 3、将 `REJECT` 替换为 `DROP` 块类型
 
 ```python
-vi /volumeX/docker/fail2ban/action.d/iptables-common.local
-```
+# /volumeX/docker/fail2ban/action.d/iptables-common.local
 
-复制并粘帖以下内容
-
-```python
 [Init]
 blocktype = DROP
 [Init?family=inet6]
@@ -92,12 +88,8 @@ blocktype = DROP
 4、创建 docker-compose 文件
 
 ```python
-vi /volumeX/docker/fail2ban/docker-compose.yml
-```
+# /volumeX/docker/fail2ban/docker-compose.yml
 
-复制并粘帖以下内容
-
-```python
 version: '3'
 services:
 	fail2ban:
@@ -136,17 +128,13 @@ docker-compose up -d
 
 按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统，例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
 
-### 筛选 <a id="filter"></a>
+### Filter <a id="filter"></a>
 
-创建文件
-
-```python
-vi path_f2b/filter.d/bitwarden.local
-```
-
-复制并粘帖以下内容
+创建文件并使用如下内容
 
 ```python
+# path_f2b/filter.d/bitwarden_rs.local
+
 [INCLUDES]
 before = common.conf
 
@@ -171,37 +159,39 @@ ignoreregex =
 
 \[**译者注**\]：[Jail 是什么](https://www.freebsd.org/doc/zh_CN/books/arch-handbook/jail.html)
 
-创建文件
-
-```php
-vi path_f2b/jail.d/bitwarden.local
-```
-
-复制并粘帖以下内容
+创建文件并使用如下内容
 
 ```python
-[bitwarden]
+# path_f2b/jail.d/bitwarden_rs.local
+
+[bitwarden_rs]
 enabled = true
 port = 80,443,8081
-filter = bitwarden
-action = iptables-allports[name=bitwarden]
+filter = bitwarden_rs
+banaction = %(banaction_allports)s
 logpath = /path/to/bitwarden.log
 maxretry = 3
 bantime = 14400
 findtime = 14400
 ```
 
-请注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，在使用 Docker 时，请执行以下操作：
+请注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 替换 `banaction` 行：
 
-```php
-action = iptables-allports[name=bitwarden, chain=FORWARD]
+```python
+action = iptables-allports[name=bitwarden_rs, chain=FORWARD]
 ```
 
 **注意**：  
-如果在 Docker 容器之前使用了反向代理，请不要做此操作。如果使用了 apache2 或 nginx 之类的代理，请使用代理的端口而不要使用 chain = FORWARD。仅当在**无**代理的 Docker 时使用！
+如果在 Docker 容器之前使用了反向代理，请不要做此操作。如果使用了 apache2 或 nginx 之类的代理，请使用代理的端口而不要使用 `chain = FORWARD`。仅当在**无**代理的 Docker 时使用！
 
 **上面注意中的注意**：  
-在使用 caddy 作为反向代理的 Docker（CentOS 7）上运行时，上面的说法是不正确的。当用 caddy 作为反向代理时，可以使用 chain = FORWARD 。
+在使用 caddy 作为反向代理的 Docker（CentOS 7）上运行时，上面的说法是不正确的。当用 caddy 作为反向代理时，可以使用 `chain = FORWARD` 。
+
+重新加载 fail2ban 使更改生效：
+
+```text
+sudo systemctl reload fail2ban
+```
 
 随意更改您认为合适的选项。
 
@@ -209,17 +199,13 @@ action = iptables-allports[name=bitwarden, chain=FORWARD]
 
 如果您通过设置 `ADMIN_TOKEN` 环境变量启用了管理控制台，则可以使用 Fail2Ban 来阻止攻击者暴力破解您的管理令牌。该过程与网页密码库相同。
 
-### 筛选 <a id="filter"></a>
+### Filter <a id="filter"></a>
 
-创建文件
-
-```python
-vi path_f2b/filter.d/bitwarden-admin.local
-```
-
-复制并粘帖以下内容
+创建文件并使用如下内容
 
 ```python
+# path_f2b/filter.d/bitwarden-admin.local
+
 [INCLUDES]
 before = common.conf
 
@@ -230,47 +216,55 @@ ignoreregex =
 
 ### Jail
 
-创建文件
+创建文件并使用如下内容
 
 ```python
-vi path_f2b/jail.d/bitwarden-admin.local
-```
+# path_f2b/jail.d/bitwarden_rs-admin.local
 
-复制并粘帖以下内容
-
-```python
-[bitwarden-admin]
+[bitwarden_rs-admin]
 enabled = true
 port = 80,443
-filter = bitwarden-admin
-action = iptables-allports[name=bitwarden]
+filter = bitwarden_rs-admin
+banaction = %(banaction_allports)s
 logpath = /path/to/bitwarden.log
 maxretry = 3
 bantime = 14400
 findtime = 14400
 ```
 
-注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，在使用 Docker 时，请执行以下操作：
+注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 替换 `banaction` 行：
 
 ```python
-action = iptables-allports[name=bitwarden, chain=FORWARD]
+action = iptables-allports[name=bitwarden_rs, chain=FORWARD]
+```
+
+重新加载 fail2ban 使更改生效：
+
+```text
+sudo systemctl reload fail2ban
 ```
 
 ## 测试 Fail2Ban <a id="testing-fail-2-ban"></a>
 
 现在，尝试使用任何电子邮件地址登录 Bitwarden（不必是有效电子邮件，只需是电子邮件格式即可）。如果它可以正常工作，您的 IP 将被阻止。运行以下命令来取消 IP 阻止：
 
-不使用 Docker：  
-`sudo fail2ban-client set bitwarden unbanip XX.XX.XX.XX`
+使用 Docker：
 
-使用 Docker：  
-`sudo docker exec -t fail2ban fail2ban-client set bitwarden unbanip XX.XX.XX.XX`
+```python
+sudo docker exec -t fail2ban fail2ban-client set bitwarden_rs unbanip XX.XX.XX.XX
+```
 
-如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于 /data/ 中，而不是容器外部）。
+未使用 Docker：
 
-还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e TZ = <timezone>` 选项启动 docker 。可用的时区列表位于：[https://en.wikipedia.org/wiki/List\_of\_tz\_database\_time\_zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) 页面的“TZ  database name”列标题下（比如 -e TZ = Australia/Melbourne）。
+```python
+sudo fail2ban-client set bitwarden_rs unbanip XX.XX.XX.XX
+```
 
-如果您使用的是 podman 而不是 docker，则无法通过 `-e TZ = <timezone>` 来设置时区。可以按照以下指南解决此问题（当使用 alpine 镜像时）：[https://wiki.alpinelinux.org/wiki/Setting\_the\_timezone](https://wiki.alpinelinux.org/wiki/Setting_the_timezone)。
+如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于 `/data/` 中，而不是容器外部）。
+
+还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e "TZ = <timezone>"` 选项启动 docker 。可用的时区（比如 `-e TZ = "Australia/Melbourne"`）的列表在[这里](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)查看。
+
+如果您使用的是 podman 而不是 docker，则无法通过 `-e "TZ = <timezone>"` 来设置时区。可以按照以下指南解决此问题（当使用 alpine 镜像时）：[https://wiki.alpinelinux.org/wiki/Setting\_the\_timezone](https://wiki.alpinelinux.org/wiki/Setting_the_timezone)。
 
 ## SELinux 中的问题 <a id="selinux-problems"></a>
 

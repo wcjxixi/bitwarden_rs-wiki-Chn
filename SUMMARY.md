@@ -14,6 +14,7 @@
   * [3.第三方软件包](deployment/third-party-packages.md)
   * [4.部署示例](deployment/deployment-examples.md)
   * [5.代理示例](deployment/proxy-examples.md)
+  * [6.转储示例](deployment/logrotate-example.md)
 * [配置](configuration/README.md)
   * [1.概要](configuration/overview.md)
   * [2.禁用新用户注册](configuration/disable-registration-of-new-users.md)

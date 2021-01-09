@@ -4,9 +4,9 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MySQL-Backend)
 {% endhint %}
 
-要使用 MySQL 后端，你可以使用[官方的 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以[使用 MySQL](../deployment/building-binary.md#mysql-backend) 构建你自己的二进制。由于交叉编译问题，官方的 Docker 镜像目前只适用于 x86\_64 平台，所以如果使用其他平台，你需要构建自己的二进制或使用第三方的二进制或 Docker 镜像。
+要使用 MySQL 后端，你可以使用[官方的 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以[使用 MySQL](../deployment/building-binary.md#mysql-backend) 构建你自己的二进制。
 
-要运行二进制或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`），并将 `ENABLE_DB_WAL` 设置为 `false`（即 `ENABLE_DB_WAL='false'`）。
+要运行二进制或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`）。
 
 **连接字符串语法：**
 
@@ -46,6 +46,49 @@ docker run -d --name bitwarden --net <some-docker-network>\
 ```python
 Server IP/Port 192.168.1.10:3306 UN: dbuser / PW: yourpassword / DB: bitwarden
 mysql://dbuser:yourpassword@192.168.1.10:3306/bitwarden
+```
+
+\*\* 使用 docker-compose 的示例：
+
+```text
+version: "3.7"
+services:
+ mariadb:
+  image: "mariadb"
+  container_name: "mariadb"
+  hostname: "mariadb"
+  restart: always
+  env_file:
+   - ".env"
+  volumes:
+   - "mariadb_vol:/var/lib/mysql"
+   - "/etc/localtime:/etc/localtime:ro"
+  environment:
+   - "MYSQL_ROOT_PASSWORD=<my-secret-pw>"
+   - "MYSQL_PASSWORD=<bitwarden_pw>"
+   - "MYSQL_DATABASE=bitwarden_db"
+   - "MYSQL_USER=<bitwarden_user>"
+
+ bitwarden:
+  image: "bitwardenrs/server-mysql:latest"
+  container_name: "bitwarden"
+  hostname: "bitwarden"
+  restart: always
+  env_file:
+   - ".env"
+  volumes:
+   - "bitwarden_vol:/data/"
+  environment:
+## Had issues when using single parentheses around the mysql URL as in the plain docker example 
+   - "DATABASE_URL=mysql://<bitwarden_user>:<bitwarden_pw>@mariadb/bitwarden_db"
+   - "ADMIN_TOKEN=<some_random_token_as_per_above_explanation>"
+   - "RUST_BACKTRACE=1"
+  ports:
+   - "80:80"
+
+volumes:
+ bitwarden_vol:
+ mariadb_vol:
 ```
 
 **从** **SQLite** **迁移到** **MySQL**

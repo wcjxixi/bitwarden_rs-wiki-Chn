@@ -13,6 +13,7 @@
 * [Caddy 1.x](proxy-examples.md#caddy-1-x)
 * [Caddy 2.x](proxy-examples.md#caddy-2-x)
 * [Nginx](proxy-examples.md#nginx-by-shauder) \(by shauder\)
+* [Nginx with sub-path](proxy-examples.md#nginx-with-sub-path-by-blackdex) \(by BlackDex\)
 * [Nginx](proxy-examples.md#nginx-by-ypid) \(by ypid\)
 * [Nginx](proxy-examples.md#nginx-nixos-by-tklitschi) \(NixOS\)\(by tklitschi\)
 * [Apache](proxy-examples.md#apache-by-fbartels) \(by fbartels\)
@@ -175,6 +176,88 @@ server {
 
     proxy_pass http://<SERVER>:80;
   }
+
+}
+```
+
+## Nginx with sub-path \(by BlackDex\)
+
+在这个示例中，bitwarden\_rs 的访问地址为 `https://bitwarden.example.tld/vault/`，如果您想使用任何其他的子路径，比如 `bitwarden` 或 `secret-vault`，您需要更改下面示例中相应的地方。
+
+为此，您需要配置 `DOMAIN` 变量以使其匹配，它应类似于：
+
+```text
+; Add the sub-path! Else this will not work!
+DOMAIN=https://bitwarden.example.tld/vault/
+```
+
+```text
+# Define the server IP and ports here.
+upstream bitwardenrs-default { server 127.0.0.1:8080; }
+upstream bitwardenrs-ws { server 127.0.0.1:3012; }
+
+# Redirect HTTP to HTTPS
+server {
+    listen 80;
+    listen [::]:80;
+    server_name bitwardenrs.example.tld;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name bitwardenrs.example.tld;
+
+    # Specify SSL Config when needed
+    #ssl_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
+    #ssl_certificate_key /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/privkey.pem;
+    #ssl_trusted_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
+
+    client_max_body_size 128M;
+
+    ## Using a Sub Path Config
+    # Path to the root of your installation
+    location /vault/ {
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+
+      proxy_pass http://bitwardenrs-default;
+    }
+
+    location /vault/notifications/hub/negotiate {
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+
+      proxy_pass http://bitwardenrs-default;
+    }
+
+    location /vault/notifications/hub {
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $http_connection;
+      proxy_set_header X-Real-IP $remote_addr;
+
+      proxy_pass http://bitwardenrs-ws;
+    }
+
+    # Optionally add extra authentication besides the ADMIN_TOKEN
+    # If you don't want this, leave this part out
+    location ^~ /vault/admin {
+      # See: https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
+      auth_basic "Private";
+      auth_basic_user_file /path/to/htpasswd_file;
+
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+
+      proxy_pass http://bitwardenrs-default;
+    }
 
 }
 ```
