@@ -4,13 +4,13 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Logrotate-example)
 {% endhint %}
 
-随着时间的流逝，Bitwarden\_RS 日志文件的大小可能会增长到很大。使用 logrotate，我们可以定期旋转日志。
+随着时间的流逝，Bitwarden\_RS 日志文件的大小可能会增长到很大。使用 logrotate，我们可以定期转储日志。
 
 ```text
 sudo nano /etc/logrotate.d/bitwarden
 ```
 
-```text
+```python
 /var/log/bitwarden/*.log {
     # Perform logrotation as the bitwarden user and group
     su bitwarden bitwarden
@@ -35,9 +35,9 @@ sudo nano /etc/logrotate.d/bitwarden
 }
 ```
 
-要查看压缩的日志文件而无需手动解压缩：
+无需手动解压缩而查看压缩的日志文件：
 
-```text
+```python
 zcat logfile.gz
 zless logfile.gz
 zgrep -i keyword_search logfile.gz

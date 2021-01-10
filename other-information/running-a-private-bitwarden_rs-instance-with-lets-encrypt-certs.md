@@ -4,13 +4,13 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-a-private-bitwarden_rs-instance-with-Let%27s-Encrypt-certs)
 {% endhint %}
 
-假设你希望运行一个只能从通过本地网络访问的 bitwarden\_rs 实例，但你希望此实例启用 HTTPS，证书由一个被广泛接受的 CA 而不是你自己的[私有 CA](private-ca-and-self-signed-certs-that-work-with-chrome.md) 来签署。
+假设你希望运行一个只能从本地网络访问的 bitwarden\_rs 实例，但你又希望此实例启用 HTTPS，此 HTTPS 证书由一个被广泛接受的 CA 而不是你自己的[私有 CA](private-ca-and-self-signed-certs-that-work-with-chrome.md) 来签署。
 
 本文将演示如何使用 [Caddy](https://caddyserver.com/) Web 服务器创建这样的设置，Caddy 内置了对诸多 DNS 提供商的 ACME 支持。我们将通过 ACME [DNS 验证方式](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge)获取 Let's Encrypt 证书来配置 Caddy -- 在这里使用通常的 HTTP 验证方式的话会有问题，因为它依赖于 Let's Encrypt 服务器能够访问到你的内部 Web 服务器。
 
 涵盖了两个 DNS 提供商：
 
-* [Duck DNS](https://www.duckdns.org/) -- 这给你一个 `duckdns.org` 下的子域名（例如 `my-bwrs.duckdns.org`）。如果你没有自己的域名，此选项是最简单的。 
+* [Duck DNS](https://www.duckdns.org/) -- 为你提供一个 `duckdns.org` 下的子域名（例如 `my-bwrs.duckdns.org`）。如果你没有自己的域名，此选项是最简单的。 
 * [Cloudflare](https://www.cloudflare.com/) -- 你可以将 Cloudflare 仅仅作为一个 DNS 提供商使用（即不代理你的流量）。
 
 当然也可以使用其他的网络服务器、[ACME 客户端](https://letsencrypt.org/docs/client-options/)和 DNS 提供商的组合来创建类似的设置，但你必须解决细节上的差异。
@@ -27,11 +27,11 @@
 xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/caddy-dns/lego-deprecated
 ```
 
-将 `caddy` 二进制 移动到 `/usr/local/bin/caddy` 或其他合适的目录中。可选，运行语句 `sudo setcap cap_net_bind_service=+ep /usr/local/bin/caddy` 以允许 `caddy` 而在特权端口（&lt; 1024）上监听，而无须以 root 身份运行。
+将 `caddy` 二进制 移动到 `/usr/local/bin/caddy` 或其他合适的目录中。（可选）运行语句 `sudo setcap cap_net_bind_service=+ep /usr/local/bin/caddy` 以允许 `caddy` 而在特权端口（&lt; 1024）上监听，而无须以 root 身份运行。
 
 ## Duck DNS 设置 <a id="duck-dns-setup"></a>
 
-如果您还没有账户，请在 [https://www.duckdns.org/](https://www.duckdns.org/) 创建一个。给您的 bitwarden\_rs 实例创建一个子域名（例如，`my-bwrs.duckdns.org`），将其 IP 地址设置为你的 bitwarden\_rs 主机的私有 IP（例如，192.168.1.100）。记下你的账户的 token 值（[UUID](https://en.wikipedia.org/wiki/UUID) 格式的字符串）。Caddy 将需要此 token 来解决 DNS 验证。
+如果您还没有账户，请在 [https://www.duckdns.org/](https://www.duckdns.org/) 创建一个。给您的 bitwarden\_rs 实例创建一个子域名（例如，`my-bwrs.duckdns.org`），将其 IP 地址设置为你的 bitwarden\_rs 主机的私有 IP（例如，192.168.1.100）。记下你的账户的 token 值（[UUID](https://en.wikipedia.org/wiki/UUID) 格式的字符串）。Caddy 将需要此 token 来完成 DNS 验证。
 
 创建一个名为 `Caddyfile` 的文件，内容如下：
 
