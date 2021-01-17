@@ -49,7 +49,7 @@ delete
 
 ### 2、在 `bitwarden_rs` 中禁用 WAL  <a id="2-disable-wal-in-bitwarden_rs"></a>
 
-要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `false` 来启动 `bitwarden_rs`。
+要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `false` 以启动 `bitwarden_rs`。
 
 ```python
 docker run -d --name bitwarden \
