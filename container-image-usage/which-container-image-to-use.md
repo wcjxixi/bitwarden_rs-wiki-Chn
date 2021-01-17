@@ -33,20 +33,20 @@ SQLite 后端是最广泛使用/测试的后端，除非有特殊需要使用其
 
 ## 历史镜像 <a id="historical-images"></a>
 
-在增加对多数据库支持的 1.17.0 版本之前，MySQL 和 PostgreSQL 的支持仅包含在单独的特定数据库镜像中。您仍可以在 Docker Hub 中它们，并且它们现在仍然在更新，但是，这些特定数据库的镜像将来会被移除，因此您应过渡到使用统一的 `bitwardenrs/server` 映像。
+在增加对多数据库支持的 1.17.0 版本之前，MySQL 和 PostgreSQL 的支持仅包含在单独的特定数据库镜像中。您仍可以在 Docker Hub 中找到较旧版本的bitwarden\_rs，但不应再使用它们：
 
 * [`bitwardenrs/server-mysql`](https://hub.docker.com/r/bitwardenrs/server-mysql) -- 基于 Debian 的 `bitwarden_rs` 映像，仅支持 MySQL（不支持 SQLite 和 PostgreSQL）。
 * [`bitwardenrs/server-postgresql`](https://hub.docker.com/r/bitwardenrs/server-postgresql) -- 基于 Debian 的 `bitwarden_rs` 映像，仅支持 PostgreSQL（不支持 SQLite 和 MySQL）。
 
 ## 历史标签 <a id="historical-tags"></a>
 
-在增加对多数架构支持的 1.16.0 版本之前，所有特定架构镜像都有其自己的特定架构标签。自 2021-01-14 以来，这些标签已被移除，由于遵循过时的教程或未阅读发行说明，许多用户仍然最终拉取了这些旧的标签。
+在增加对多数据库支持的 1.16.0 版本之前，所有特定架构镜像都有其自己的特定架构标签。你仍然可以在 Docker Hub 中找到这些旧版本的 bitwarden\_rs，但不应再使用它们：
 
 * `raspberry` - Armv7hf 镜像。可以运行在 Raspberry Pi 2 或更新的版本上，也可以运行在任何其他兼容的板子上 。这个镜像不能在 Raspberry Pi 1 或 Raspberry Pi Zero 上运行，因为他们使用 armv6 CPU。
 * `armv6` - Armv6 镜像。可以运行在 Raspberry Pi 1 和 Raspberry Pi Zero 上。
 * `aarch64` - Aarch64 镜像。可以运行在 ARMv8 设备上，如 Raspberry Pi 3 或其他基于 ARMv8 的设备。
 
-需要**注意**的是，如果你在 Raspberry Pi 3 上使用 Raspbian，它要求在设备上安装 aarch64 发行版，但因为 Raspbian 是一个 `armv7hf` 发行版，你仍然需要使用 `raspberry` 标签。
+需要**注意**的是，如果你在 Raspberry Pi 3 上使用 Raspbian，它要求安装 aarch64 发行版，但因为 Raspbian 是一个 `armv7hf` 发行版，你仍然需要使用 `raspberry` 标签。
 
 ## 已报告的兼容性表 <a id="reported-compatibility-table"></a>
 
