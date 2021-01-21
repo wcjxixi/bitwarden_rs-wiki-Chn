@@ -6,31 +6,31 @@
 
 随着时间的流逝，Bitwarden\_RS 日志文件的大小可能会增长到很大。使用 logrotate，我们可以定期转储日志。
 
-```text
+```python
 sudo nano /etc/logrotate.d/bitwarden
 ```
 
 ```python
 /var/log/bitwarden/*.log {
-    # Perform logrotation as the bitwarden user and group
+    # 以 bitwarden 用户和群组的身份执行轮换
     su bitwarden bitwarden
-    # Rotate daily
+    # 每天轮换
     daily
-    # Rotate when the size is bigger than 5MB
+    # 当尺寸大于 5M 时轮换
     size 5M
-    # Compress old log files
+    # 压缩旧的日志文件
     compress
-    # Keep 4 rotations of log files before removing or mailing to the address specified in a mail directive
+    # 在删除或邮寄到 mail 指令中指定的地址之前，保留 4 个轮换的日志文件
     rotate 4
-    # Truncate the original log file in place after creating a copy
+    # 把当前日志备份并截断
     copytruncate
-    # Don't panic if not found
+    # 如果日志文件不存在，继续下一个操作
     missingok
-    # Don't rotate log if file is empty
+    # 如果日志文件为空则不进行轮换
     notifempty
-    # Add date instaed of number to rotated log file
+    # 在轮换的日志文件中添加数字格式的日期
     dateext
-    # Date format of dateext
+    # dateext 的日期格式
     dateformat -%Y-%m-%d-%s
 }
 ```

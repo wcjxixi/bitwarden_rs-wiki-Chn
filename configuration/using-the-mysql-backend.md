@@ -32,7 +32,7 @@ docker run --name mysql --net <some-docker-network>\
  -e MYSQL_USER=<bitwarden_user>\
  -e MYSQL_PASSWORD=<bitwarden_pw> -d mysql:5.7
 
-# 使用 MySQL 环境变量值启动 bitwarden_rs .
+# 使用 MySQL 环境变量值启动 bitwarden_rs
 docker run -d --name bitwarden --net <some-docker-network>\
  -v $(pwd)/bw-data/:/data/ -v <Path to ssl certs>:/ssl/\
  -p 443:80 -e ROCKET_TLS='{certs="/ssl/<your ssl cert>",key="/ssl/<your ssl key>"}'\
@@ -50,7 +50,7 @@ mysql://dbuser:yourpassword@192.168.1.10:3306/bitwarden
 
 \*\* 使用 docker-compose 的示例：
 
-```text
+```python
 version: "3.7"
 services:
  mariadb:
@@ -79,7 +79,7 @@ services:
   volumes:
    - "bitwarden_vol:/data/"
   environment:
-## Had issues when using single parentheses around the mysql URL as in the plain docker example 
+## 当在 mysql URL 周围使用单括号时会出现问题，就像在普通的 docker 例子中的一样
    - "DATABASE_URL=mysql://<bitwarden_user>:<bitwarden_pw>@mariadb/bitwarden_db"
    - "ADMIN_TOKEN=<some_random_token_as_per_above_explanation>"
    - "RUST_BACKTRACE=1"

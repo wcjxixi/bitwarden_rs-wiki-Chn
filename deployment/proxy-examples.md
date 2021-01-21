@@ -165,7 +165,7 @@ server {
   # 除 AUTH_TOKEN 外，还可以选择性添加额外的身份验证
   # 如果您不需要，删除这部分即可
   location /admin {
-    # See: https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
+    # 参考: https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
     auth_basic "Private";
     auth_basic_user_file /path/to/htpasswd_file;
 
@@ -186,17 +186,17 @@ server {
 
 为此，您需要配置 `DOMAIN` 变量以使其匹配，它应类似于：
 
-```text
+```python
 ; Add the sub-path! Else this will not work!
 DOMAIN=https://bitwarden.example.tld/vault/
 ```
 
-```text
-# Define the server IP and ports here.
+```python
+# 在这里定义服务器的 IP 和端口。
 upstream bitwardenrs-default { server 127.0.0.1:8080; }
 upstream bitwardenrs-ws { server 127.0.0.1:3012; }
 
-# Redirect HTTP to HTTPS
+# 将 HTTP 重定向到 HTTPS
 server {
     listen 80;
     listen [::]:80;
@@ -209,15 +209,15 @@ server {
     listen [::]:443 ssl http2;
     server_name bitwardenrs.example.tld;
 
-    # Specify SSL Config when needed
+    # 根据需要制定 SSL 配置
     #ssl_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
     #ssl_certificate_key /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/privkey.pem;
     #ssl_trusted_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
 
     client_max_body_size 128M;
 
-    ## Using a Sub Path Config
-    # Path to the root of your installation
+    ## 使用子路径配置
+    # 您的安装的 root 的路径
     location /vault/ {
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
@@ -244,10 +244,10 @@ server {
       proxy_pass http://bitwardenrs-ws;
     }
 
-    # Optionally add extra authentication besides the ADMIN_TOKEN
-    # If you don't want this, leave this part out
+    # 除了 ADMIN_TOKEN 之外，还可以选择添加额外的认证
+    # 如果你不想要，就把这部分删掉
     location ^~ /vault/admin {
-      # See: https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
+      # 参考: https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
       auth_basic "Private";
       auth_basic_user_file /path/to/htpasswd_file;
 

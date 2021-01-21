@@ -23,7 +23,7 @@
 
 如果你喜欢从源代码构建，你可以使用 [`xcaddy`](https://caddyserver.com/docs/build#xcaddy)。例如，要创建一个包含 Cloudflare 和 Duck DNS 支持的构建：
 
-```text
+```python
 xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/caddy-dns/lego-deprecated
 ```
 
@@ -35,7 +35,7 @@ xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/caddy-dns/
 
 创建一个名为 `Caddyfile` 的文件，内容如下：
 
-```text
+```python
 {$DOMAIN}:443 {
     tls {
         dns lego_deprecated duckdns
@@ -47,20 +47,20 @@ xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/caddy-dns/
 
 创建一个名为 `caddy.env` 的文件，内容如下（替换相应的值）：
 
-```text
+```python
 DOMAIN=my-bwrs.duckdns.org
 DUCKDNS_TOKEN=00112233-4455-6677-8899-aabbccddeeff
 ```
 
 运行命令以启动 `caddy`：
 
-```text
+```python
 caddy run -envfile caddy.env
 ```
 
 运行命令以启动 `bitwarden_rs`：
 
-```text
+```python
 export ROCKET_PORT=8080
 export WEBSOCKET_ENABLED=true
 
@@ -91,7 +91,7 @@ export WEBSOCKET_ENABLED=true
 
 创建一个名为 `Caddyfile` 的文件，内容如下：
 
-```text
+```python
 {$DOMAIN}:443 {
     tls {
         dns cloudflare {env.CLOUDFLARE_API_TOKEN}
@@ -103,20 +103,20 @@ export WEBSOCKET_ENABLED=true
 
 创建一个名为 `caddy.env` 的文件，内容如下（替换相应的值）：
 
-```text
+```python
 DOMAIN=bwrs.example.com
 CLOUDFLARE_API_TOKEN=<your-api-token>
 ```
 
 运行命令以启动 `caddy`：
 
-```text
+```python
 caddy run -envfile caddy.env
 ```
 
 运行命令以启动 `bitwarden_rs`：
 
-```text
+```python
 export ROCKET_PORT=8080
 export WEBSOCKET_ENABLED=true
 

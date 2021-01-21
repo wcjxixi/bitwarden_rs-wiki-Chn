@@ -16,7 +16,7 @@ bitwarden\_rs 仅提供 API（服务器）端实现，用户仍依赖来自上�
 
 ## 帮助翻译应用程序 <a id="help-translating-the-apps"></a>
 
-每个应用程序都有 [Crowdin](https://crowdin.com/profile/kspearrin) [上的项目](https://crowdin.com/profile/kspearrin)。如果您精通英语以外的其他语言，则可以帮助翻译应用程序。
+每一个应用程序都有 [Crowdin 项目](https://crowdin.com/profile/kspearrin)。如果您精通英语以外的其他语言，则可以帮助翻译应用程序。
 
 ## 测试并报告客户端中的错误 <a id="testing-reporting-bugs-in-clients"></a>
 

@@ -82,5 +82,5 @@ services:
 
 ### 暴力破解 <a id="brute-force-mitigation"></a>
 
-当不使用双重身份验证时，（理论上）可以暴力破解用户密码，从而获得对其帐户的访问权限。缓解此问题的一种相对简单的方法是设置 fail2ban，设置后，将在过多的失败登录尝试后阻止访问者的 IP 地址。但是：在多个反向代理（例如 cloudflare）后面使用此功能时，应格外注意。请参阅：[Fail2Ban](https://github.com/dani-garcia/bitwarden_rs/wiki/Fail2Ban-Setup) [设置](https://github.com/dani-garcia/bitwarden_rs/wiki/Fail2Ban-Setup)。
+当不使用双重身份验证时，（理论上）可以暴力破解用户密码，从而获得对其帐户的访问权限。缓解此问题的一种相对简单的方法是设置 fail2ban，设置后，将在过多的失败登录尝试后阻止访问者的 IP 地址。但是：在多个反向代理（例如 cloudflare）后面使用此功能时，应格外注意。请参阅：[Fail2Ban 设置](../configuration/fail2ban-setup.md)。
 
