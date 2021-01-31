@@ -14,7 +14,7 @@
 
 ## bitwarden\_rs 是什么
 
-bitwarden\_rs 是一个用于本地搭建 Bitwarden 服务器的第三方项目。
+bitwarden\_rs 是一个用于本地搭建 Bitwarden 服务器的第三方 Docker 项目。
 
 bitwarden\_rs 使用 Rust 编写，与官方 Bitwarden 客户端兼容，并改用 SQLite 数据库（现在也支持 MySQL 和 PostgreSQL），相对于官方版使用 MSSQL 数据库要求至少 2GB 内存，运行 bitwarden\_rs 时只需要 10M 内存，可以说对硬件基本没有要求。
 
