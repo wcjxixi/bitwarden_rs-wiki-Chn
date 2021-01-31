@@ -162,7 +162,7 @@ server {
     proxy_pass http://<SERVER>:80;
   }
 
-  # 除 AUTH_TOKEN 外，还可以选择性添加额外的身份验证
+  # 除 AUTH_TOKEN 外，还可以选择性添加额外的身份认证
   # 如果您不需要，删除这部分即可
   location /admin {
     # 参考: https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/

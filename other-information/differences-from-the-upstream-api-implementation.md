@@ -4,10 +4,6 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Differences-from-the-upstream-API-implementation)
 {% endhint %}
 
-## 更改用户电子邮件 <a id="changing-user-email"></a>
-
-电子邮件验证已实现。~~电子邮件验证尚未实现，因此用户只需输入任意的随机令牌即可继续进行更改。~~
-
 ## 邀请用户加入组织 <a id="inviting-users-into-organization"></a>
 
 ### 启用 S​​MTP 时 <a id="with-smtp-enabled"></a>

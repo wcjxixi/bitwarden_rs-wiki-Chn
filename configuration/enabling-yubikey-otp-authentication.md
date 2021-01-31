@@ -1,10 +1,10 @@
-# 9.启用 Yubikey OPT 身份验证
+# 9.启用 Yubikey OPT 身份认证
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-Yubikey-OTP-authentication)
 {% endhint %}
 
-要启用 YubiKey 身份验证，必须设置 `YUBICO_CLIENT_ID` 和 `YUBICO_SECRET_KEY` 变量。
+要启用 YubiKey 身份认证，必须设置 `YUBICO_CLIENT_ID` 和 `YUBICO_SECRET_KEY` 变量。
 
 如果 `YUBICO_SERVER` 未指定，它将使用默认的 YubiCloud 服务器地址。您可以在[这里](https://upgrade.yubico.com/getapikey/)为默认的 YubiCloud 生成 `YUBICO_CLIENT_ID` 和 `YUBICO_SECRET_KEY`。
 
