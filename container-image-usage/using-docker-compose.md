@@ -48,7 +48,6 @@ volumes:
 # Caddyfile
 {$DOMAIN} {
     tls {$EMAIL}
-    gzip
 
     header / {
         # 启用 HTTP Strict Transport Security (HSTS)
@@ -117,13 +116,13 @@ services:
 
 然后颁发证书。参考 [https://github.com/Neilpang/acme.sh/wiki/dnsap](https://github.com/Neilpang/acme.sh/wiki/dnsapi)。
 
-最后安装证书。
+最后安装证书：
 
 ```python
 acme.sh --install-cert -d home.example.com --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
 ```
 
-或简单地使用
+或简单地使用：
 
 ```python
 acme.sh --issue -d home.example.com --challenge-alias otherdomain.com --dns dns_cf --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
