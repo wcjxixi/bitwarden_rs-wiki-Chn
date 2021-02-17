@@ -6,7 +6,7 @@
 
 Dockerfile（Caddy 构建器）：
 
-```text
+```python
 FROM caddy:builder AS builder
 RUN xcaddy build --with github.com/caddy-dns/cloudflare
 
@@ -16,13 +16,13 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
 构建命令：
 
-```text
+```python
 docker build -t [YOUR-NAME]/caddycfdns .
 ```
 
 Caddyfile（作为反向代理）：
 
-```text
+```python
 https://[YOUR-DOMAIN]:443 {
 
   tls {
@@ -32,27 +32,27 @@ https://[YOUR-DOMAIN]:443 {
   encode gzip
 
   header / {
-       # Enable HTTP Strict Transport Security (HSTS)
+       # 启用 HTTP Strict Transport Security (HSTS)
        Strict-Transport-Security "max-age=31536000;"
-       # Enable cross-site filter (XSS) and tell browser to block detected attacks
+       # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
        X-XSS-Protection "1; mode=block"
-       # Disallow the site to be rendered within a frame (clickjacking protection)
+       # 禁止在框架内呈现网站（clickjacking protection）
        X-Frame-Options "DENY"
-       # Prevent search engines from indexing (optional)
+       # 防止搜索引擎编制索引（可选）
        X-Robots-Tag "none"
-       # Server name removing
+       # 服务器名称移除
        -Server
    }
-  # The negotiation endpoint is also proxied to Rocket
+  # 协商端点也代理到 Rocket
   reverse_proxy /notifications/hub/negotiate bitwarden:80
 
-  # Notifications redirected to the websockets server
+  # 通知重定向到 websockets 服务器
   reverse_proxy /notifications/hub bitwarden:3012
 
-  # Proxy the Root directory to Rocket
+  # 将 Root 目录代理到 Rocket
   reverse_proxy bitwarden:80 {
-       # Send the true remote IP to Rocket, so that bitwarden_rs can put this in the
-       # log, so that fail2ban can ban the correct IP.
+       # 将真正的远程 IP 发送给 Rocket，以便 bitwarden_rs 可以将其
+       # 放入日志，以便 fail2ban 可以禁止正确的 IP。
        header_up X-Real-IP {remote_host}
   }
 }
@@ -60,7 +60,7 @@ https://[YOUR-DOMAIN]:443 {
 
 docker-compose.yml：
 
-```text
+```python
 version: '3'
 
 services:
