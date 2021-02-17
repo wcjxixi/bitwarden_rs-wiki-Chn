@@ -50,5 +50,4 @@
   * [6.支持上游发展](other-information/supporting-upstream-development.md)
   * [7.强化指南](other-information/hardening-guide.md)
   * [8.使用 Cloudflare DNS 的 Caddy 2.x](other-information/caddy-2.x-with-cloudflare-dns.md)
-* [资源](resources.md)
 
