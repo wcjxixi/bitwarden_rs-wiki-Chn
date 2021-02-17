@@ -20,7 +20,7 @@
 * [Apache in a sub-location](proxy-examples.md#apache-in-a-sub-location-by-ss-89) \(by ss89\)
 * [Traefik v1](proxy-examples.md#traefik-v1-dockercompose-shi-li) \(docker-compose 示例\)
 * [Traefik v2](proxy-examples.md#traefik-v-2-docker-compose-example-by-hwwilliams) \(docker-compose 示例 by hwwilliams\)
-* [HAproxy](proxy-examples.md#haproxy-by-patbel-pwr) \(by patbel-pwr\)
+* [HAproxy](proxy-examples.md#haproxy-by-blackdex) \(by BlackDex\)
 
 ## Caddy 1.x
 
@@ -487,12 +487,25 @@ labels:
   - traefik.http.services.bitwarden-websocket.loadbalancer.server.port=3012
 ```
 
-## HAproxy \(by patbel-pwr\)
+## HAproxy \(by BlackDex\)
 
-在 `frontend https` 部分添加这几行，以为您的所有代理服务转发 IP 地址。
+将这些行添加到您的 haproxy 配置中。
 
 ```python
+frontend bitwarden_rs
+    bind 0.0.0.0:80
     option forwardfor header X-Real-IP
     http-request set-header X-Real-IP %[src]
+    default_backend bitwarden_rs_http
+    use_backend bitwarden_rs_ws if { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
+
+backend bitwarden_rs_http
+    # Enable compression if you want
+    # compression algo gzip
+    # compression type text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
+    server bwrshttp 0.0.0.0:8080
+
+backend bitwarden_rs_ws
+    server bwrsws 0.0.0.0:3012
 ```
 

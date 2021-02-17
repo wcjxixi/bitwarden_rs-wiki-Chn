@@ -43,11 +43,12 @@
   * [25.使用备用基本目录（子目录/子路径）](configuration/using-an-alternate-base-dir-subdir-subpath.md)
 * [其他](other-information/README.md)
   * [1.从 Keepass 或 KeepassX 导入数据](other-information/importing-data-from-keepass-or-keepassx.md)
-  * [2.备份密码库](other-information/backing-up-your-vault.md)
+  * [=2.备份您的密码库](other-information/backing-up-your-vault.md)
   * [3.使私有 CA 和自签名证书兼容 Chrome](other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)
   * [4.使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例](other-information/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)
   * [5.与上游 API 实现的区别](other-information/differences-from-the-upstream-api-implementation.md)
   * [6.支持上游发展](other-information/supporting-upstream-development.md)
   * [7.强化指南](other-information/hardening-guide.md)
+  * [=8.使用 Cloudflare DNS 的 Caddy 2.x](other-information/caddy-2.x-with-cloudflare-dns.md)
 * [资源](resources.md)
 

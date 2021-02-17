@@ -8,7 +8,7 @@
 
 ## 创建一个 systemd 服务文件 <a id="creating-a-systemd-service-file"></a>
 
-由于 Podman 的无守护程序架构，因此它比 Docker 更容易在 systemd 中运行。它带有一个便捷的 generate 命令，该命令可以生成 systemd 文件，[这篇文章](https://www.redhat.com/sysadmin/podman-shareable-systemd-services)详细介绍了它。
+由于 Podman 的无守护程序架构，因此它比 Docker 更容易在 systemd 中运行。它带有一个便捷的 [generate syetemd 命令](http://docs.podman.io/en/latest/markdown/podman-generate-systemd.1.html)，该命令可以生成 systemd 文件，这里有[一篇不错的文章详细介绍了它](https://www.redhat.com/sysadmin/podman-shareable-systemd-services)，还有[这篇文章也详细介绍了一些最新的更新](https://www.redhat.com/sysadmin/improved-systemd-podman)。
 
 ```python
 $ podman run -d --name bitwarden -v /bw-data/:/data/:Z -e ROCKET_PORT=8080 -p 8080:8080 bitwardenrs/server:latest
@@ -29,6 +29,9 @@ ExecStop=/usr/bin/podman stop -t 10 bitwarden
 KillMode=none
 Type=forking
 PIDFile=/run/user/1000/overlay-containers/54502f309f3092d32b4c496ef3d099b270b2af7b5464e7cb4887bc16a4d38597/userdata/conmon.pid
+
+[Install]
+WantedBy=multi-user.target default.target
 ```
 
 您可以提供一个 `--files` 标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们就可以将容器作为任何常规服务文件来启用和启动。

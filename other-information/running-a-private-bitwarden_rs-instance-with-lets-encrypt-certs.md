@@ -4,14 +4,14 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-a-private-bitwarden_rs-instance-with-Let%27s-Encrypt-certs)
 {% endhint %}
 
-假设你希望运行一个只能从本地网络访问的 bitwarden\_rs 实例，但你又希望此实例启用 HTTPS，此 HTTPS 证书由一个被广泛接受的 CA 而不是你自己的[私有 CA](private-ca-and-self-signed-certs-that-work-with-chrome.md) 来签署。
+假设你希望运行一个只能从本地网络访问的 bitwarden\_rs 实例，但你又希望此实例启用 HTTPS，此 HTTPS 证书由一个被广泛接受的 CA 而不是你自己的[私有 CA](private-ca-and-self-signed-certs-that-work-with-chrome.md) 来签署（以避免将专用CA证书加载到所有设备中的麻烦）。
 
 本文将演示如何使用 [Caddy](https://caddyserver.com/) Web 服务器创建这样的设置，Caddy 内置了对诸多 DNS 提供商的 ACME 支持。我们将通过 ACME [DNS 验证方式](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge)获取 Let's Encrypt 证书来配置 Caddy -- 在这里使用通常的 HTTP 验证方式的话会有问题，因为它依赖于 Let's Encrypt 服务器能够访问到你的内部 Web 服务器。
 
 涵盖了两个 DNS 提供商：
 
 * [Duck DNS](https://www.duckdns.org/) -- 为你提供一个 `duckdns.org` 下的子域名（例如 `my-bwrs.duckdns.org`）。如果你没有自己的域名，此选项是最简单的。 
-* [Cloudflare](https://www.cloudflare.com/) -- 你可以将 Cloudflare 仅仅作为一个 DNS 提供商使用（即不代理你的流量）。
+* [Cloudflare](https://www.cloudflare.com/) -- 这可以让你把你的 bitwarden\_rs 实例放在你拥有或控制的域名下。请注意，Cloudflare 可以只作为一个 DNS 提供商使用（即不使用 Cloudflare 最著名的代理功能）。如果你目前没有自己的域名，你也许可以在 [Freenom](https://www.freenom.com/) 获得一个免费的域名。
 
 当然也可以使用其他的网络服务器、[ACME 客户端](https://letsencrypt.org/docs/client-options/)和 DNS 提供商的组合来创建类似的设置，但你必须解决细节上的差异。
 
@@ -85,7 +85,7 @@ export WEBSOCKET_ENABLED=true
 6. 在 `TTL` 下，为您的 tokan 设置一个变为非活动状态的 End Date。您也可以在以后设置。
 7. 创建 token 并复制 token 值。
 
-您的令牌列表看起来像这样：
+您的 token 列表看起来像这样：
 
 ![](https://camo.githubusercontent.com/3317aacd91dd3a80b0a9689929ded89c1b384749ec7eda07bebccae2d79ceba0/68747470733a2f2f692e696d6775722e636f6d2f466f4f763957772e706e67)
 
