@@ -1,4 +1,4 @@
-# =2.备份您的密码库
+# 2.备份您的密码库
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Backing-up-your-vault)
@@ -6,44 +6,87 @@
 
 ## 概览 <a id="overview"></a>
 
+bitwarden\_rs 数据应该定期备份，最好是通过自动化流程（例如，cron 作业）。理想情况下，至少应该远程存储一个副本（例如，云存储或不同的计算机）。避免依赖文件系统或虚拟机快照作为备份方法，因为这些都是比较复杂的操作，可能会出现更多的问题，在这种情况下恢复对典型用户来说是困难的，甚至是不可能的。在备份上添加额外的加密层通常是个好主意（尤其是当您的备份还包括配置数据（例如您的[管理员令牌](../configuration/enabling-admin-page.md)）时），但如果您确信您的主密码（以及其他用户的密码（如果有的话））是强大的，则可以选择跳过这一步。
+
 ## 备份您的数据 <a id="backing-up-data"></a>
+
+默认情况下，bitwarden\_rs 将所有的数据存储在一个名为 `data` 的目录下（与 `bitwarden_rs` 可执行文件位于同一目录）。这个位置可以通过设置 [DATA\_FOLDER](../configuration/changing-persistent-data-location.md) 环境变量来改变。如果你使用 SQLite 运行 bitwarden\_rs（这是最常见的设置），那么 SQL 数据库只是 data 文件夹中的一个文件。如果你使用 MySQL 或 PostgreSQL 运行，你将不得不单独转储这些数据 -- 这超出了本文的范围，但在网上搜索会发现许多其他教程涵盖了这个主题。
+
+当使用默认的 SQLite 后端运行时，bitwarden\_rs 的 `data` 目录具有如下结构：
+
+```text
+data
+├── attachments          # 每个附件都作为单独的文件存储在此目录下。
+│   └── <uuid>
+│       └── <random_id>
+├── config.json          # 存储管理页面配置；仅在之前已启用管理页面的情况下存在。
+├── db.sqlite3           # 主 SQLite 数据库文件。
+├── db.sqlite3-shm       # SQLite 共享内存文件（并非始终存在）。
+├── db.sqlite3-wal       # SQLite 预写日志文件（并非始终存在）。
+├── icon_cache           # 站点图标（favicon）缓存在此目录下。
+│   ├── <domain>.png
+│   ├── example.com.png
+│   ├── example.net.png
+│   └── example.org.png
+├── rsa_key.der          # ‘rsa_key.*’文件用于签署认证令牌。
+└── rsa_key.pub.der
+```
+
+当使用 MySQL 或 PostgreSQL 后端运行时，目录结构是一样的，只是没有 SQLite 文件。你仍然需要备份数据目录中的文件，以及 MySQL 或 PostgreSQL 表的转储。
+
+接下来会详细讨论每一组文件。
 
 ### SQLite 数据库文件 <a id="sqlite-database-files"></a>
 
-使用合适的 sqlite3 备份命令来备份 sqlite3 数据库。如果在数据库写操作期间进行备份，请确保数据库不会损坏。
+_**需要备份。**_
+
+SQLite _****_数据库文件（`db.sqlite3`）存储了几乎所有重要的 bitwarden\_rs 数据/状态（数据库条目、用户/org/设备元数据等），主要的例外是附件，附件作为单独的文件存储在文件系统中。
+
+您一般应使用 SQLite CLI（`sqlite3`）中的 `.backup` 命令来备份数据库文件。该命令使用 [Online Backup API](https://www.sqlite.org/backup.html)，SQLite 文档是备份可能正在被使用的数据库文件的[最佳方式](https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active)。如果你能确保数据库在备份运行时未被使用，你也可以使用其他方式，例如 `.dump` 命令，或者简单地复制所有 SQLite 数据库文件（包括 `-shm` 和 `-wal` 文件，如果存在）。
+
+一个基本的备份命令看起来像这样，假设你的数据文件夹是 `data`（默认）：
 
 ```python
-mkdir $DATA_FOLDER/db-backup
-sqlite3 /$DATA_FOLDER/db.sqlite3 ".backup '/$DATA_FOLDER/db-backup/backup.sqlite3'"
+sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sqlite3'"
 ```
 
-可以通过 CRON 计划任务每天运行此命令，但是请注意，这会每次覆盖相同的 `backup.sqlite3` 文件。因此，该备份文件应通过使用附加时间戳的 CRON 计划任务命令或其他备份应用程序（如 Duplicati）通过增量备份保存。要恢复，简单地将 `backup.sqlite3` 覆盖为 `db.sqlite3` 即可（当 bitwarden\_rs 停止时）。
+假设此命令在 2021 年 1 月 1 日中午 12:34（当地时间）运行，这将备份你的 SQLite 数据库文件到 `/path/to/backups/db-20210101-1234.sqlite3`。
 
-运行以上命令要求在 docker 主机系统上安装 sqlite3。您可以使用以下命令用 sqlite3 docker 容器实现相同的结果。
+你可以通过一个 cron 作业定期运行这个命令（最好每天至少一次）。
 
-```python
-docker run --rm --volumes-from=bitwarden bruceforce/bw_backup /backup.sh
-```
+如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。
 
-您还可以运行带有集成 cron 守护程序的容器以自动备份数据库。参考：
+### `attachments` 文件夹 <a id="the-attachments-folder"></a>
+
+_**需要备份。**_
+
+附件是唯一不存储在数据库表中的重要数据，主要是因为它们可以任意大，而 SQL 数据库一般不是为了有效处理大的 blob 而设计的。
+
+### `rsa_key*` 文件 <a id="the-rsa_key-files"></a>
+
+_**建议备份。**_
+
+这些文件用于签署当前登录用户的 [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)（认证令牌）。删除这些文件将简单地注销每个用户，迫使他们重新登录。
+
+**\[译者注\]**：[JWT](https://jwt.io/)（JSON Web Tokens），是一种基于 JSON 的、用于在网络上声明某种主张的令牌（token）。JWT 通常由三部分组成:：头信息（header）、消息体（payload）和签名（signature）。
+
+### `icon_cache` 文件夹 <a id="the-icon_cache-dir"></a>
+
+_**可选备份。**_
+
+图标缓存用于存储[网站图标](https://help.bitwarden.in/security/privacy-when-using-website-icons)，这样就不需要反复从登录网站获取图标。这可能不值得备份，除非你真的想避免重新获取大量的图标缓存。
+
+## 恢复备份数据 <a id="restoring-backup-data"></a>
+
+确保 bitwarden\_rs 停止了，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
+
+定期运行从备份中恢复的过程是个好主意，只是为了验证你的备份是否能正常工作。这样做的时候，请确保移动或保留原始数据的副本，以防备份实际上不能正常工作。
+
+## 示例 <a id="examples"></a>
+
+本节包含第三方备份示例的索引。在使用示例之前，您应该彻底阅读示例并了解其功能。
 
 * [https://github.com/shivpatel/bitwarden\_rs-local-backup](https://github.com/shivpatel/bitwarden_rs-local-backup)
 * [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)
 * [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup)
-
-### `attachments` 文件夹 <a id="the-attachments-folder"></a>
-
-默认情况下，它位于 `$DATA_FOLDER/attachments`。
-
-### `rsa_key*` 文件 <a id="the-rsa_key-files"></a>
-
-可选。它们仅用于存储当前登录用户的令牌，删除令牌只会将每个用户注销，从而迫使他们再次登录。默认情况下，它们位于 `$DATA_FOLDER`（默认为 docker 中的 /data）。有 3 个文件：rsa\_key.der、rsa\_key.pem 和 rsa\_key.pub.der。
-
-### `icon_cache` 文件夹 <a id="the-icon_cache-dir"></a>
-
-可选。图标缓存可以自动重新下载，但是如果缓存很大，则可能需要很长时间。默认情况下它位于 `$DATA_FOLDER/icon_cache`。
-
-## 恢复备份数据 <a id="restoring-backup-data"></a>
-
-## 示例 <a id="examples"></a>
 
