@@ -60,13 +60,13 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 ```python
 # Caddyfile V2.0 配置文件
 :80 {
-  #容器中的 80 端口上的 Caddy 到 bitwarden_rs 私有实例
-  #如果 Caddy 背后有另一个反向代理，例如 Synology 上的嵌入式代理，则使用它
+  # 容器中的 80 端口上的 Caddy 到 bitwarden_rs 私有实例
+  # 如果 Caddy 背后有另一个反向代理，例如 Synology 上的嵌入式代理，则使用它
   log {
 	output file {env.LOG_FILE}
 	level INFO
-	#roll_size 5MiB #在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
-	#roll_keep 2 #在 Caddy V2.0.0 Beta20 无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
+	# roll_size 5MiB #在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
+	# roll_keep 2 #在 Caddy V2.0.0 Beta20 无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
   }
   encode gzip
 
@@ -92,14 +92,14 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 }
 
 #{env.DOMAIN}:443 {
-#  #容器中的 443 端口上的 Caddy 到 bitwarden_rs 私有实例 
-#  #如果 Caddy 暴露到网络中，则使用它 
+#  # 容器中的 443 端口上的 Caddy 到 bitwarden_rs 私有实例 
+#  # 如果 Caddy 暴露到网络中，则使用它 
 #
 #  log {
 #	output file {env.LOG_FILE}
 #	level INFO
-#   #roll_size 5MiB #在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
-#   #rool_keep 30 #在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
+#   #roll_size 5MiB # 在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
+#   #rool_keep 30 # 在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
 #  }
 #
 #  # 仅取消注释两行中的一行。取决于你提供自己的证书还是从 Let's Encrypt 请求证书
@@ -348,7 +348,7 @@ NixOS  Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部�
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          proxyPass = "http://localhost:8812"; #由于某些冲突，这里更改了默认的 rocket 端口
+          proxyPass = "http://localhost:8812"; # 由于某些冲突，这里更改了默认的 rocket 端口
           proxyWebsockets = true;
         };
         locations."/notifications/hub" = {
@@ -414,7 +414,7 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 
-    <Location /bitwarden> #如果需要，调整此处
+    <Location /bitwarden> # 如果需要，调整此处
         RewriteEngine On
         RewriteCond %{HTTP:Upgrade} =websocket [NC]
         RewriteRule /notifications/hub(.*) ws://<SERVER>:3012/$1 [P,L]

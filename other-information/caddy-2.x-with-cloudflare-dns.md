@@ -70,8 +70,8 @@ services:
     volumes:
       - $PWD/bw-data:/data
     environment:
-      WEBSOCKET_ENABLED: 'true' # Required to use websockets
-      SIGNUPS_ALLOWED: 'false'   # set to false to disable signups
+      WEBSOCKET_ENABLED: 'true' # 启用 websockets
+      SIGNUPS_ALLOWED: 'false'   # 设置为 false 以禁用注册
       DOMAIN: 'https://[DOMAIN]'
       SMTP_HOST: '[MAIL-SERVER]'
       SMTP_FROM: '[E-MAIL]'
