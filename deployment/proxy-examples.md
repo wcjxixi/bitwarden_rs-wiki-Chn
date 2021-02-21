@@ -21,6 +21,7 @@
 * [Traefik v1](proxy-examples.md#traefik-v1-dockercompose-shi-li) \(docker-compose 示例\)
 * [Traefik v2](proxy-examples.md#traefik-v-2-docker-compose-example-by-hwwilliams) \(docker-compose 示例 by hwwilliams\)
 * [HAproxy](proxy-examples.md#haproxy-by-blackdex) \(by BlackDex\)
+* [HAproxy](proxy-examples.md#haproxy-by-williamdes) \(by [@williamdes](https://github.com/williamdes)\)
 
 ## Caddy 1.x
 
@@ -319,7 +320,7 @@ nginx__servers:
 
 ## Nginx \(NixOS\)\(by tklitschi\)
 
-NixOS  Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部署示例](deployment-examples.md)页面。
+NixOS Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部署示例](deployment-examples.md)页面。
 
 ```python
 { config, ... }:
@@ -367,7 +368,7 @@ NixOS  Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部�
 
 ## Apache \(by fbartels\)
 
-记得启用 `mod_proxy_wstunnel`，例如：`a2enmod proxy_wstunnel`。
+记得启用 `mod_proxy_wstunnel` 和 `mod_proxy_http`，例如：`a2enmod proxy_wstunnel` 和 `a2enmod proxy_http`。
 
 ```python
 <VirtualHost *:443>
@@ -400,6 +401,8 @@ NixOS  Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部�
 ```python
 LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 ```
+
+在某些操作系统上，您可以使用 a2enmod，例如：`a2enmod proxy_wstunnel` 和 `a2enmod proxy_http`。
 
 ```python
 <VirtualHost *:443>
@@ -489,7 +492,7 @@ labels:
 
 ## HAproxy \(by BlackDex\)
 
-将这些行添加到您的 haproxy 配置中。
+将这些行添加到您的 HAproxy 配置中。
 
 ```python
 frontend bitwarden_rs
@@ -500,12 +503,48 @@ frontend bitwarden_rs
     use_backend bitwarden_rs_ws if { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
 backend bitwarden_rs_http
-    # Enable compression if you want
-    # compression algo gzip
-    # compression type text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
+    # 如果需要，启用压缩
+    # 压缩算法 gzip
+    # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     server bwrshttp 0.0.0.0:8080
 
 backend bitwarden_rs_ws
     server bwrsws 0.0.0.0:3012
+```
+
+##  HAproxy \(by [@williamdes](https://github.com/williamdes)\)
+
+将这些行添加到您的 HAproxy 配置中。
+
+```python
+backend static-success-default
+  mode http
+  errorfile 503 /usr/local/etc/haproxy/static/index.static.default.html
+  errorfile 200 /usr/local/etc/haproxy/static/index.static.default.html
+
+frontend http-in
+    bind *:80
+    bind *:443 ssl crt /acme.sh/domain.tld/domain.tld.pem
+    option forwardfor header X-Real-IP
+    http-request set-header X-Real-IP %[src]
+    default_backend static-success-default
+
+    # 定义主机
+    acl host_bitwarden_domain_tld hdr_dom(Host) -i bitwarden.domain.tld
+
+    ## 找出要使用哪一个
+    use_backend bitwarden_rs_http if host_bitwarden_domain_tld !{ path_beg /notifications/hub } or { path_beg /notifications/hub/negotiate }
+    use_backend bitwarden_rs_ws if host_bitwarden_domain_tld { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
+
+backend bitwarden_rs_http
+    # 如果需要，启用压缩
+    # 压缩算法 gzip
+    # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
+    # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名
+    server bwrs_http 0.0.0.0:8080
+
+backend bitwarden_rs_ws
+    # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名
+    server bwrs_ws 0.0.0.0:3012
 ```
 
