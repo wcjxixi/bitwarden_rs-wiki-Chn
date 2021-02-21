@@ -74,7 +74,7 @@ docker images
 #
 ```
 
-`restart` 命令将会依次停止容器、提取最新镜像、然后再次运行容器。`prune` 命令将会移除目前较旧的容器（-f 表示不需要确认）。
+`restart` 命令将会依次停止容器、提取最新镜像、然后再次运行容器。`prune` 命令将会移除当前较旧的容器（-f 表示不需要确认）。
 
 如果需要，可以将它们放入 cronjob 中以计划任务自动运行（根据您的需要修改时间）：
 
@@ -85,5 +85,5 @@ $ sudo crontab -e
 0 3 * * * sudo /usr/bin/docker system prune -f
 ```
 
-如果 `/usr/bin/docker` 不是 docker 的正确路径，可以使用命令 `which docker` 查看它的实际路径。
+如果 `/usr/bin/docker` 不是 docker 的正确路径，可以使用 `which docker` 命令查看它的实际路径。
 

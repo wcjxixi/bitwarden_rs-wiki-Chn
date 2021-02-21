@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Which-container-image-to-use)
 {% endhint %}
 
-`bitwarden_rs` 从版本 1.17.0 开始，只提供一个 Docker 镜像（[`bitwardenrs/server`](https://hub.docker.com/r/bitwardenrs/server)），该映像对 SQLite、MySQL 和 PostgreSQL 数据库后端提供统一的支持。在该版本之前，每个数据库后端都有单独的镜像（请参阅[历史镜像](which-container-image-to-use.md#historical-images)）。
+`bitwarden_rs` 从版本 1.17.0 开始，只提供一个 Docker 镜像（[`bitwardenrs/server`](https://hub.docker.com/r/bitwardenrs/server)），该映像对 SQLite、MySQL 和 PostgreSQL 数据库后端提供统一的支持。在该版本之前，每一种数据库后端都有单独的镜像（请参阅[历史镜像](which-container-image-to-use.md#historical-images)）。
 
 `bitwardenrs/server` 是一个[多架构](https://www.docker.com/blog/multi-arch-all-the-things/)镜像，这意味着它在一个镜像名下支持多种 CPU 架构。假设你运行的是支持的架构之一，简单地拉取 `bitwardenrs/server` 会自动产生适合你的环境的特定架构的镜像，但 Armv6 板卡可能除外，比如 Raspberry Pi 1 和 Zero（请参见 [moby/moby\#41017](https://github.com/moby/moby/issues/41017)）。运行 Docker 20.10.0 以及更高版本的 Armv6 用户可以像通常那样简单地拉取 `bitwardenrs/server` 多架构镜像，运行早期 Docker 版本的 Armv6 用户必须在镜像标签中指定 `arm32v6` 标签，例如 `latest- arm32v6`。
 
@@ -12,7 +12,7 @@ SQLite 后端是最广泛使用/测试的后端，除非有特殊需要使用其
 
 ## 镜像标签 <a id="image-tags"></a>
 
- `bitwardenrs/server` 镜像有好几个标签，每个标签都代表了镜像的一些变体或属性（例如，特定版本）。
+ `bitwardenrs/server` 镜像有好几个标签，每个标签都代表了镜像的一些变体或属性（例如特定的版本）。
 
 * `latest` --  跟踪最新发布的版本（即带有版本号的标签）。推荐大多数用户使用这个标签，因为它通常是最稳定的。
 * `testing` -- 跟踪源代码库的最新提交的版本。这个标签推荐给想要提前获取最新功能或增强功能的用户。测试版一般都很稳定，但不可避免它偶尔也会出现一些问题。
@@ -33,14 +33,14 @@ SQLite 后端是最广泛使用/测试的后端，除非有特殊需要使用其
 
 ## 历史镜像 <a id="historical-images"></a>
 
-在增加对多数据库支持的 1.17.0 版本之前，MySQL 和 PostgreSQL 的支持仅包含在单独的特定数据库镜像中。您仍可以在 Docker Hub 中它们，并且它们现在仍然在更新，但是，这些特定数据库的镜像将来会被移除，因此您应过渡到使用统一的 `bitwardenrs/server` 映像。
+在增加对多数据库支持的 1.17.0 版本之前，MySQL 和 PostgreSQL 的支持仅包含在单独的特定数据库镜像中。您仍可以在 Docker Hub 中找到它们，并且它们现在仍然在更新，但是，这些特定数据库的镜像将来会被移除，因此您应过渡到使用统一的 `bitwardenrs/server` 映像。
 
 * [`bitwardenrs/server-mysql`](https://hub.docker.com/r/bitwardenrs/server-mysql) -- 基于 Debian 的 `bitwarden_rs` 映像，仅支持 MySQL（不支持 SQLite 和 PostgreSQL）。
 * [`bitwardenrs/server-postgresql`](https://hub.docker.com/r/bitwardenrs/server-postgresql) -- 基于 Debian 的 `bitwarden_rs` 映像，仅支持 PostgreSQL（不支持 SQLite 和 MySQL）。
 
 ## 历史标签 <a id="historical-tags"></a>
 
-在增加对多数架构支持的 1.16.0 版本之前，所有特定架构镜像都有其自己的特定架构标签。自 2021-01-14 以来，这些标签已被移除，由于遵循过时的教程或未阅读发行说明，许多用户仍然最终拉取了这些旧的标签。
+在增加对多架构支持的 1.16.0 版本之前，所有特定架构镜像都有其自己的特定架构标签。自 2021-01-14 以来，这些标签已被移除，由于遵循过时的教程或未阅读发行说明，许多用户仍然最终拉取了这些旧的标签。
 
 * `raspberry` - Armv7hf 镜像。可以运行在 Raspberry Pi 2 或更新的版本上，也可以运行在任何其他兼容的板子上 。这个镜像不能在 Raspberry Pi 1 或 Raspberry Pi Zero 上运行，因为他们使用 armv6 CPU。
 * `armv6` - Armv6 镜像。可以运行在 Raspberry Pi 1 和 Raspberry Pi Zero 上。
@@ -52,7 +52,7 @@ SQLite 后端是最广泛使用/测试的后端，除非有特殊需要使用其
 
 如果您在下表中尚未存在的硬件上运行镜像，请在此处添加您的详细信息。
 
-| 使用的硬件 | OS | 报告的 Docker  架构 | 使用的镜像 | 状态 | 备注 |
+| **使用的硬件** | **OS** | **报告的 Docker  架构** | **使用的镜像** | **状态** | **备注** |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 常规 64bit 服务器 | Ubuntu 18.04 | x86\_64 | `bitwardenrs/server` | OK |  |
 | O-Droid HC2 | Armbian | arm7l \(arm32\) | `registry.lollipopcloud.solutions/arm32v7/bitwarden` \(see notes\) | OK | 从上游资源建立的非官方镜像；`bitwardenrs/server:raspberry`  是官方的等效镜像 |

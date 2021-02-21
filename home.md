@@ -32,7 +32,7 @@ bitwarden\_rs 实现了大部分功能所需的 Bitwarden API，这包括：
 
 话题 [\#246](https://github.com/dani-garcia/bitwarden_rs/issues/246) 包含了完整的功能请求列表，既有官方服务器中缺少的功能，也有 bitwarden\_rs 中特有的增强功能。
 
-为了与官方服务器做简单的比较，本章节总结了官方服务器中已实现的但在 bitwarden\_rs 中目前还没有的功能。
+为了与官方服务器做简单的比较，本章节总结了官方服务器中已经实现但在 bitwarden\_rs 中目前还没有实现的功能。
 
 在时间允许的情况下，可能会添加的功能（欢迎贡献）：
 
