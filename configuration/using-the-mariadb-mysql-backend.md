@@ -1,7 +1,11 @@
-# =23.使用 MariaDB（MySQL）后端
+# 23.使用 MariaDB（MySQL）后端
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MySQL-Backend)
+{% endhint %}
+
+{% hint style="warning" %}
+我们的构建基于 MariaDB 客户端库，因为 Debian 和 Alpine 都提供这个库。我们不支持最新的 Oracle MySQLv8 版本。如果您想使用 MySQLv8 而不是 MariaDB，那么请使用旧的密码散列方式来创建用户，而不要使用默认的方式。
 {% endhint %}
 
 要使用 MySQL 后端，你可以使用[官方的 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以[使用 MySQL](../deployment/building-binary.md#mysql-backend) 构建你自己的二进制。
@@ -48,7 +52,7 @@ Server IP/Port 192.168.1.10:3306 UN: dbuser / PW: yourpassword / DB: bitwarden
 mysql://dbuser:yourpassword@192.168.1.10:3306/bitwarden
 ```
 
-\*\* 使用 docker-compose 的示例：
+**使用 docker-compose 的示例：**
 
 ```python
 version: "3.7"
@@ -109,7 +113,7 @@ GRANT ALL ON `bitwarden_rs`.* TO 'bitwarden_rs'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-您如果想使用一组受限的授权：
+如果要使用一组受限的授权：
 
 ```python
 CREATE USER 'bitwarden_rs'@'localhost' IDENTIFIED BY 'yourpassword';
@@ -162,7 +166,7 @@ _注意：加载 mysqldump.sql 数据过程中出现加载错误_
 error (1064): Syntax error near '"users" VALUES('9b5c2d13-8c4f-47e9-bd94-f0d7036ff581'*********)
 ```
 
-修复命令：
+修复：
 
 ```python
 sed -i s#\"#\#g mysqldump.sql
