@@ -1,23 +1,23 @@
-# =6.启用 HTTPS
+# 6.启用 HTTPS
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-HTTPS)
 {% endhint %}
 
-现在几乎都需要启用 HTTPS，才能满足 bitwarden\_rs 的正常操作，这是因为 Bitwarden 网络密码库使用的 [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)，大多数浏览器只有在 HTTPS 环境下才能使用。
+现在几乎都需要启用 [HTTPS](https://en.wikipedia.org/wiki/HTTPS)，才能满足 bitwarden\_rs 的正常操作，这是因为 Bitwarden 网络密码库使用的 [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)，大多数浏览器只有在 HTTPS 环境下才能使用。
 
-有几种方法启用 HTTPS：
+启用 HTTPS 的几种方式：
 
-* （推荐）把 bitwarden\_rs 放在一个反向代理后面，代表 bitwarden\_rs 处理 HTTPS 连接。
-* （不推荐）启用 bitwarden\_rs 内置的 HTTPS 功能（通过 Rocket Web 框架）。Rocket 的 HTTPS 实现相对不成熟且有限。此方法也不支持 WebSocket 通知。
+* （推荐）把 bitwarden\_rs 放在一个[反向代理](https://en.wikipedia.org/wiki/Reverse_proxy)后面，代表 bitwarden\_rs 处理 HTTPS 连接。
+* （不推荐）启用 bitwarden\_rs 内置的 HTTPS 功能（通过 [Rocket](https://rocket.rs/) 网络框架）。Rocket 的 HTTPS 实现相对不成熟且有限。此方式也不支持 [WebSocket 通知](enabling-websocket-notifications.md)。
 
-关于这些选项的更多细节，请参考启用 HTTPS 部分。
+有关这些选项的更多细节，请参考[启用 HTTPS](enabling-https.md#enabling-https) 部分。
 
 要使 HTTPS 服务器工作，它还需要 SSL/TLS 证书，因此您需要决定如何获得该证书。同样，有几个选项：
 
-* \(推荐\)使用ACME客户端获取Let's Encrypt证书。一些反向代理（如Caddy）也内置支持使用ACME协议获取证书。
-* （推荐）如果你信任Cloudflare来代理你的流量，你可以让他们处理你的SSL/TLS证书的发放。请注意，上游的Bitwarden网络保险库\([https://vault.bitwarden.com/\)运行在Cloudflare后面。](https://vault.bitwarden.com/%29运行在Cloudflare后面。)
-* \(不推荐\)建立一个私人CA，并发行你自己的\(自签名\)证书。这有各种陷阱和不便，所以考虑自己的警告。
+* （推荐）使用 [ACME 客户端](https://letsencrypt.org/docs/client-options/)获取 [Let's Encrypt](https://letsencrypt.org/) 证书。一些反向代理（例如 [Caddy](https://caddyserver.com/)）也内置支持使用 ACME 协议获取证书。
+* （推荐）如果你信任 [Cloudflare](https://www.cloudflare.com/) 来代理你的流量，你可以让他们处理你的 SSL/TLS 证书的发放。请注意，上游的 Bitwarden 网络密码库（[https://vault.bitwarden.com/](https://vault.bitwarden.com/)）运行在 Cloudflare 后面。
+* （不推荐）[建立一个私人 CA](../other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)，并发行你自己的（自签名）证书。这有各种陷阱和不便，所以请自行考虑是否使用此选项。
 
 参考[获取 SSL/TLS 证书](enabling-https.md#getting-ssl-tls-certificates)部分，以了解这些选项的更多细节。
 
@@ -122,5 +122,21 @@ verify return:1
 
 ### 通过 Let's Encrypt <a id="via-lets-encrypt"></a>
 
+[Let's Encrypt](https://letsencrypt.org/) 免费发放 SSL/TLS 证书。
+
+为了使之工作，你的 bitwarden\_rs 实例必须拥有一个 DNS 名称（即你不能简单地使用 IP 地址）。如果你的 bitwarden\_rs 可以在公共互联网上访问，那么设置 Let's Encrypt 就比较容易，但即使你的实例是私有的（即只能在你的局域网上访问），也可以通过 [DNS 挑战](../other-information/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)获取 Let's Encrypt 证书。
+
+如果你已经拥有或控制了一个域名，那么只需为你的 bitwarden\_rs 实例的 IP 地址添加一个 DNS 名称即可。如果你没有，你可以购买一个域名，尝试在 [Freenom](https://www.freenom.com/) 免费获得一个，或者使用像 [Duck DNS](https://www.duckdns.org/) 这样的服务来获取一个现有域名下的名称（例如，`my-bitwarden.duckdns.org`）。
+
+拥有了实例的 DNS 名称后，您就可以使用 [ACME 客户端](https://letsencrypt.org/docs/client-options/)为你的 DNS 名称获取证书。[Certbot](https://certbot.eff.org/) 和 [acme.sh](https://github.com/acmesh-official/acme.sh) 是两个最流行的独立客户端。一些反向代理（例如 [Caddy](https://caddyserver.com/)）也内置了 ACME 客户端。
+
 ### 通过 Cloudflare <a id="via-cloudflare"></a>
+
+[Cloudflare](https://www.cloudflare.com/) 为个人提供免费服务。如果你信任他们代理你的流量，并作为你的 DNS 供应商，你也可以让他们处理你的 SSL/TLS 证书的发放。
+
+注册您的域名并为您的 bitwarden\_rs 实例添加了 DNS 记录后，登录 Cloudflare 仪表板并选择 `SSL/TLS`，然后选择 `Origin Server`。生成一个原始证书（你可以选择最长 15 年的有效期），并配置 bitwarden\_rs 来使用它。如果你选择了 15 年有效期，那么在可预见的未来，无需续签此原始证书。
+
+请注意，原始证书仅用于确保 Cloudflare 和 bitwarden\_rs 之间的通信。Cloudflare 将自动处理用于客户端和 Cloudflare 之间通信的证书的发放和更新。
+
+另外，如果你使用的是 bitwarden\_rs 内置的 Rocket HTTPS 服务器，请确保选择 `RSA` 作为原始证书的私钥类型，因为 Rocket 目前不支持 ECC/ECDSA 证书。
 

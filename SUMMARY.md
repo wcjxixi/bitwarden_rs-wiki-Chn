@@ -22,7 +22,7 @@
   * [3.禁用邀请](configuration/disable-invitations.md)
   * [4.启用管理页面](configuration/enabling-admin-page.md)
   * [5.禁用管理令牌](configuration/disable-the-admin-token.md)
-  * [=6.启用 HTTPS](configuration/enabling-https.md)
+  * [6.启用 HTTPS](configuration/enabling-https.md)
   * [7.启用 WebSocket 通知](configuration/enabling-websocket-notifications.md)
   * [8.启用 U2F 身份验证](configuration/enabling-u2f-authentication.md)
   * [9.启用 Yubikey OTP 身份验证](configuration/enabling-yubikey-otp-authentication.md)
