@@ -1,4 +1,4 @@
-# 5.代理示例
+# 6.代理示例
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Proxy-examples)

@@ -1,4 +1,4 @@
-# 6.启用 HTTPS
+# =6.启用 HTTPS
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-HTTPS)

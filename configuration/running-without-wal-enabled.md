@@ -14,7 +14,7 @@
 
 * 某些文件系统不支持 WAL（对于网络文件系统尤其如此）。如果您使用的是这样的文件系统，该服务将无法启动并显示 `Failed to turn on WAL` 错误。
 * （要启用 WAL）数据库要求 sqlite 的版本为 `3.7.0` 或更高，因此，出于某种原因（例如备份）您需要使用无法更新的低版本工具来直接访问数据库，此时也需要禁用 WAL。
-* 您正在[使用](using-the-mysql-backend.md) [MySQL](using-the-mysql-backend.md) [后端](using-the-mysql-backend.md)。
+* 您正在[使用](using-the-mariadb-mysql-backend.md) [MySQL](using-the-mariadb-mysql-backend.md) [后端](using-the-mariadb-mysql-backend.md)。
 * 您正在[使用 PostgreSQL 后端](using-the-postgresql-backend.md)。
 * [这里](https://sqlite.org/wal.html#advantages)描述的某个缺陷也会影响您（不得不禁用 WAL）。
 

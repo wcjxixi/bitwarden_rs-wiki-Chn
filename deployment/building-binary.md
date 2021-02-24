@@ -4,16 +4,30 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary)
 {% endhint %}
 
-如果您不想自己构建二进制，可以看看是否有[已打包用于您的 Linux 发行版](third-party-packages.md)的 bitwarden\_rs。
+这个页面主要是给那些对 bitwarden\_rs 开发感兴趣，或者有特殊原因想要构建自己的二进制的人。
+
+普通用户应该使用从基于 Alpine 的 Docker 镜像中[提取的预构建二进制](pre-built-binaries.md)文件，[通过 Docker 部署](../container-image-usage/which-container-image-to-use.md)，或者[寻找第三方软件包](third-party-packages.md)。
 
 ## 依赖 <a id="dependencies"></a>
 
 * `Rust nightly`（强烈建议使用 [rustup](https://rustup.rs/)）
-* `OpenSSL`（应在路径中是可用的，通过系统的包管理器安装，或使用[预构建的二进制](https://wiki.openssl.org/index.php/Binaries)）。对于 Debian，需要安装 `pkg-config` 和 `libssl-dev`
-* `NodeJS`（仅当编译网页密码库时使用，通过系统的包管理器安装，或使用[预构建的二进制](https://nodejs.org/en/download/)）或 [nodesource 二进制发行版](https://github.com/nodesource/distributions)。_备注：web-vault 当前使用的基本程序包（例如，node-sass &lt; v4.12），要求 NodeJS v11_
-* 对于 Debian（Buster）上的 MySQL 后端，您需要安装 `libmariadb-dev-compat` 和 `libmariadb-dev`
+* 在基于 Debian 的发行版上，一些通用软件包可确保构建能正常进行，请安装以下软件包：`build-essential`、`git`
+* `OpenSSL`（应在路径中是可用的，通过系统的包管理器安装，或使用[预构建的二进制](https://wiki.openssl.org/index.php/Binaries)）。在基于 Debian 的发行版上，需要安装 `pkgconfig` 和 `libssl-dev`
+* 对于基于 Debian 发行版上的 SQLite3 后端，需要安装  `libsqlite3-dev`
+* 对于基于 Debian 发行版上的 MySQL 后端，需要安装  `libmariadb-dev-compat` 和`libmariadb-dev`
+* 对于基于 Debian 发行版上的 PostgreSQL 后端，需要安装  `libpq-dev` 和 `pkgconfig`
+* `NodeJS`（仅当编译网页密码库时使用。使用[预构建的二进制](https://nodejs.org/en/download/)，通过系统的包管理器安装）或 [nodesource 二进制发行版](https://github.com/nodesource/distributions)。_备注：web-vault 当前使用的基本程序包（例如，node-sass &lt; v4.12），要求 NodeJS v11_
 
 ## 运行/编译 <a id="run-compile"></a>
+
+### 所有后端 <a id="all-backends"></a>
+
+```python
+# 使用所有后端编译并运行
+cargo run --features sqlite,mysql,postgresql --release
+# 或仅使用所有后端编译(二进制位于 target/release/bitwarden_rs)
+cargo build --features sqlite,mysql,postgresql --release
+```
 
 ### SQLite 后端 <a id="sqlite-backend"></a>
 
@@ -79,12 +93,13 @@ git apply vX.Y.Z.patch
 4、然后，构建密码库：
 
 ```python
-npm run sub:init
 npm install
+# 阅读下方的备注（我们将其用于我们的 docker 构建）。
+# npm 审计修复
 npm run dist
 ```
 
-_**注意**：可能会要求您运行_ _`npm audit fix`_ _以修复漏洞。这将自动尝试将软件包升级到较新的版本，该版本可能不兼容并破坏网页密码库功能。如果知道自己在做什么，请自行承担风险。_
+_**备注**：可能会要求您运行 `npm audit fix` 以修复漏洞。这将自动尝试将软件包升级到较新的版本，该版本可能不兼容并破坏网页密码库功能。如果知道自己在做什么，请自行承担风险。顺便一提，我们会在自己的发行版中使用它！_
 
 5、最后将 `build` 文件夹的内容复制到目标文件夹中：
 
@@ -93,7 +108,7 @@ _**注意**：可能会要求您运行_ _`npm audit fix`_ _以修复漏洞。这
 
 ## 配置 <a id="configuration"></a>
 
-可用的配置选项记录在默认的 `.env` 文件中，可以通过在该文件中取消注释所需的选项或设置它们各自的环境变量来对其进行修改。有关可用的主要配置选项，请参见[配置](../configuration/)章节。
+可用的配置选项记录在默认的 `.env` 文件中，可以通过在该文件中取消注释所需的选项或设置它们各自的环境变量来对其进行修改。有关可用的主要配置选项，请参见本 wiki 的[配置](../configuration/)章节。
 
 注意：环境变量将覆盖 `.env` 文件中设置的值。
 
@@ -131,5 +146,9 @@ diesel migration redo
 
 ## 如何从 SQLite 后端迁移到 MySQL 后端（面向开发人员） <a id="how-to-migrate-from-sqlite-backend-to-mysql-backend-for-developers"></a>
 
-如果要从 SQLite 迁移，请参考[使用 MySQL 后端](../configuration/using-the-mysql-backend.md)。
+如果要从 SQLite 迁移，请参考[使用 MySQL 后端](../configuration/using-the-mariadb-mysql-backend.md)。
+
+## 如何从 SQLite 后端迁移到 PostgreSQL 后端（面向开发人员） <a id="how-to-migrate-from-sqlite-backend-to-postgresql-backend-for-developers"></a>
+
+如果要从 SQLite 迁移，请参考[使用 PostgreSQL 后端](../configuration/using-the-postgresql-backend.md)。
 

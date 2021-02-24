@@ -1,4 +1,4 @@
-# 4.使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例
+# =4.使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-a-private-bitwarden_rs-instance-with-Let%27s-Encrypt-certs)

@@ -1,4 +1,4 @@
-# 3.第三方软件包
+# 4.第三方软件包
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Third-party-packages)
