@@ -25,7 +25,7 @@
   * [=6.启用 HTTPS](configuration/enabling-https.md)
   * [7.启用 WebSocket 通知](configuration/enabling-websocket-notifications.md)
   * [8.启用 U2F 身份验证](configuration/enabling-u2f-authentication.md)
-  * [9.启用 Yubikey OPT 身份验证](configuration/enabling-yubikey-otp-authentication.md)
+  * [9.启用 Yubikey OTP 身份验证](configuration/enabling-yubikey-otp-authentication.md)
   * [10.更改持久性数据位置](configuration/changing-persistent-data-location.md)
   * [11.更改 API 请求大小限制](configuration/changing-the-api-request-size-limit.md)
   * [12.更改 worker 数量](configuration/changing-the-number-of-workers.md)
