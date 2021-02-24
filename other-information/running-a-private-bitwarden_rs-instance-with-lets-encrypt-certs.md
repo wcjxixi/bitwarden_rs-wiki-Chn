@@ -1,4 +1,4 @@
-# =4.使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例
+# 4.使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-a-private-bitwarden_rs-instance-with-Let%27s-Encrypt-certs)
@@ -71,11 +71,11 @@ export WEBSOCKET_ENABLED=true
 
 ## Cloudflare 设置 <a id="cloudflare-setup"></a>
 
-如果您还没有账户，请在 [https://www.cloudflare.com/](https://www.cloudflare.com/) 创建一个；您还需要到您的域名注册商那里将名称服务器设置为 Cloudflare 分配给您的值。为您的 bitwarden\_rs 实例创建一个子域名（例如，`bwrs.example.com`），将其 IP 地址设置为您的 bitwarden\_rs 主机的私有 IP（例如，`192.168.1.100`）。示例：
+如果您还没有账户，请在 [https://www.cloudflare.com/](https://www.cloudflare.com/) 创建一个；您还需要到您的域名注册商那里将名称服务器设置为 Cloudflare 分配给您的值。为您的 bitwarden\_rs 实例创建一个子域名（例如，`bwrs.example.com`），将其 IP 地址设置为您的 bitwarden\_rs 主机的私有 IP（例如，`192.168.1.100`）。例如：
 
 ![](https://camo.githubusercontent.com/0e3cc1847c048fa874c2ca42d79b734d2eee88e0b36bfae7a52e1cf2a04a0b91/68747470733a2f2f692e696d6775722e636f6d2f4242767934596a2e706e67)
 
-创建一个用于 DNS 验证的 API token（关于更多背景知识，参阅 [https://github.com/libdns/cloudflare/blob/master/README.md](https://github.com/libdns/cloudflare/blob/master/README.md)）：
+创建一个用于 DNS 验证的 API token（更多背景知识，请参阅 [https://github.com/libdns/cloudflare/blob/master/README.md](https://github.com/libdns/cloudflare/blob/master/README.md)）：
 
 1. 点击右上角的个人图标并导航到 `My Profile`，然后选择  `API Tokens` 选项卡。
 2. 点击 `Create Token` 按钮，然后点击`Edit zone DNS` 右边的 `Use template`。
@@ -85,7 +85,7 @@ export WEBSOCKET_ENABLED=true
 6. 在 `TTL` 下，为您的 tokan 设置一个变为非活动状态的 End Date。您也可以在以后设置。
 7. 创建 token 并复制 token 值。
 
-您的 token 列表看起来像这样：
+您的 token 列表看起来应该像这样：
 
 ![](https://camo.githubusercontent.com/3317aacd91dd3a80b0a9689929ded89c1b384749ec7eda07bebccae2d79ceba0/68747470733a2f2f692e696d6775722e636f6d2f466f4f763957772e706e67)
 
@@ -123,7 +123,7 @@ export WEBSOCKET_ENABLED=true
 ./bitwarden_rs
 ```
 
-您现在应该可以通过 `https://bwrs.duckdns.org` 访问到您的实例了。
+您现在应该可以通过 `https://bwrs.example.com` 访问到您的实例了。
 
 ## 参考 <a id="references"></a>
 
