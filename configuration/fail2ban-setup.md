@@ -14,17 +14,17 @@
   * [Fedora / Centos](fail2ban-setup.md#fedora-centos)
   * [群晖 DSM](fail2ban-setup.md#synology-dsm)
 * [为网页密码库设置](fail2ban-setup.md#setup-for-web-vault)
-  * [Filter](fail2ban-setup.md#filter)
+  * [筛选](fail2ban-setup.md#filter)
   * [Jail](fail2ban-setup.md#jail)
 * [为管理页面设置](fail2ban-setup.md#setup-for-admin-page)
-  * [Filter](fail2ban-setup.md#filter-1)
+  * [筛选](fail2ban-setup.md#filter-1)
   * [Jail](fail2ban-setup.md#jail-1)
 * [测试 Fail2Ban](fail2ban-setup.md#testing-fail-2-ban)
 * [SELinux 中的问题](fail2ban-setup.md#selinux-problems)
 
 ## 预先说明 <a id="pre-requisite"></a>
 
-* 文件名位于每个代码块的顶部。
+* 以下示例使用 `vi` 指令编辑。您可以在[这里](https://pc.net/resources/commands/vi)查看它的基本使用方法。当然，您也可以使用您想使用的任何文本编辑器。
 * 从 1.5.0 版开始，Bitwarden\_rs 支持记录到文件。请设置[日志记录](logging.md)。
 * 尝试使用错误的帐户信息登录到网页版密码库，并检查日志文件中如下格式的记录项：
 
@@ -51,14 +51,14 @@ sudo yum install fail2ban -y
 
 ### 群晖 DSM <a id="synology-dsm"></a>
 
-使用 Synology 的话，由于各种原因需要做更多的工作。使用 Docker Compose 的完整的解决方案发布在[这里](https://github.com/sosandroid/docker-fail2ban-synology)。主要的问题是：
+使用 Synology 的话，由于各种原因需要做更多的工作。完整的解决方案发布在[这里](https://github.com/sosandroid/docker-fail2ban-synology)。主要问题是：
 
 1. 嵌入式 IP 禁令系统不适用于 Docker 容器
 2. 嵌入式 iptables 不支持 `REJECT` 块类型
 3. Docker GUI 不允许某些高级设置
 4. 修改系统配置不符合升级要求
 
-因此，我们将在 Docker 容器中使用 Fail2ban。[Crazy-max/docker-fail2ban](https://github.com/crazy-max/docker-fail2ban) 提供了一个很好的解决方案，并且 Synology 的 docker GUI 将被忽略。通过 SSH 的命令行，执行下列步骤（根据您的 Synology 配置调整 `volumeX`）：
+因此，我们将在 Docker 容器中使用 Fail2ban。[Crazy-max/docker-fail2ban](https://github.com/crazy-max/docker-fail2ban) 提供了一个很好的解决方案，并且 Synology 的 docker GUI 将被忽略。通过 SSH 的命令行，执行下列步骤（根据您的 Synology 配置调整 `volumeX`）。
 
 1、获取 root 权限
 
@@ -130,7 +130,7 @@ docker-compose up -d
 
 ### Filter <a id="filter"></a>
 
-使用如下内容创建文件：
+创建文件并使用如下内容
 
 ```python
 # path_f2b/filter.d/bitwarden_rs.local
@@ -145,7 +145,7 @@ ignoreregex =
 
 **提示：**如果在 `fail2ban.log` 中出现以下错误消息（CentOS 7，fail2ban v0.9.7）  
 `fail2ban.filter [5291]: ERROR No 'host' group in '^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$'`  
-请将 `bitwarden.local` 中的 `<ADDR>` 改为 `<HOST>`。
+请将 `bitwarden.local` 中的 `<HOST>` 改为 `<ADDR>`。
 
 **提示：**如果您在 `bitwarden.log` 中看到 127.0.0.1 是登录失败的 IP 地址，那么您可能正在使用反向代理，而 fail2ban 无法正常工作：
 
@@ -159,7 +159,7 @@ ignoreregex =
 
 \[**译者注**\]：[Jail 是什么](https://www.freebsd.org/doc/zh_CN/books/arch-handbook/jail.html)
 
-使用如下内容创建文件：
+创建文件并使用如下内容
 
 ```python
 # path_f2b/jail.d/bitwarden_rs.local
@@ -201,7 +201,7 @@ sudo systemctl reload fail2ban
 
 ### Filter <a id="filter"></a>
 
-使用如下内容创建文件：
+创建文件并使用如下内容
 
 ```python
 # path_f2b/filter.d/bitwarden-admin.local
@@ -216,7 +216,7 @@ ignoreregex =
 
 ### Jail
 
-使用如下内容创建文件：
+创建文件并使用如下内容
 
 ```python
 # path_f2b/jail.d/bitwarden_rs-admin.local
@@ -248,14 +248,19 @@ sudo systemctl reload fail2ban
 
 现在，尝试使用任何电子邮件地址登录 Bitwarden（不必是有效电子邮件，只需是电子邮件格式即可）。如果它可以正常工作，您的 IP 将被阻止。运行以下命令来取消 IP 阻止：
 
+使用 Docker：
+
 ```python
-# 使用 Docker
 sudo docker exec -t fail2ban fail2ban-client set bitwarden_rs unbanip XX.XX.XX.XX
-# 未使用 Docker
+```
+
+未使用 Docker：
+
+```python
 sudo fail2ban-client set bitwarden_rs unbanip XX.XX.XX.XX
 ```
 
-如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于容器外部的 `/data/...` 中）。
+如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于 `/data/` 中，而不是容器外部）。
 
 还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e "TZ = <timezone>"` 选项启动 docker 。可用的时区（比如 `-e TZ = "Australia/Melbourne"`）的列表在[这里](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)查看。
 
