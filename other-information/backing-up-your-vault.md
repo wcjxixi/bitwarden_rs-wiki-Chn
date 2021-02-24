@@ -1,4 +1,4 @@
-# =2.备份您的密码库
+# 2.备份您的密码库
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Backing-up-your-vault)
@@ -78,15 +78,17 @@ _**可选备份。**_
 
 ## 恢复备份数据 <a id="restoring-backup-data"></a>
 
-确保 bitwarden\_rs 停止了，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
+确保 bitwarden\_rs 已经停止，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
 
-定期运行从备份中恢复的过程是个好主意，只是为了验证你的备份是否能正常工作。这样做的时候，请确保移动或保留原始数据的副本，以防备份实际上不能正常工作。
+为了验证你的备份是否能正常工作，定期运行从备份中恢复的过程是个好主意。这样做的时候，请确保移动或保留原始数据的副本，以防备份实际上不能正常工作。
 
 ## 示例 <a id="examples"></a>
 
 本节包含第三方备份示例的索引。在使用示例之前，您应该彻底阅读示例并了解其功能。
 
+* [https://github.com/ttionya/BitwardenRS-Backup](https://github.com/ttionya/BitwardenRS-Backup)
 * [https://github.com/shivpatel/bitwarden\_rs-local-backup](https://github.com/shivpatel/bitwarden_rs-local-backup)
 * [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)
 * [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup)
+* [https://github.com/jjlin/bitwardenrs-backup](https://github.com/jjlin/bitwardenrs-backup)
 
