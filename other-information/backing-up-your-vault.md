@@ -1,4 +1,4 @@
-# =2.备份您的密码库
+# 2.备份您的密码库
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Backing-up-your-vault)
@@ -54,13 +54,13 @@ sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sql
 
 你可以通过一个 cron 作业定期运行这个命令（最好每天至少一次）。
 
-如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。
+如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。[restic](https://restic.net/) 是另一个不错的选择，特别是如果您有较大的附件，并希望避免在每次备份时都将其重新复制的时候。
 
 ### `attachments` 文件夹 <a id="the-attachments-folder"></a>
 
 _**需要备份。**_
 
-附件是唯一不存储在数据库表中的重要数据，主要是因为它们可以任意大，而 SQL 数据库一般不是为了有效处理大的 blob 而设计的。
+附件是唯一不存储在数据库表中的重要数据，主要是因为它们可以是任意大小，而 SQL 数据库一般不是为了有效处理大的 blob 而设计的。如果未创建[附件](https://help.bitwarden.in/your-vault/file-attachments)，则该文件夹将不存在。
 
 ### `rsa_key*` 文件 <a id="the-rsa_key-files"></a>
 
@@ -78,15 +78,17 @@ _**可选备份。**_
 
 ## 恢复备份数据 <a id="restoring-backup-data"></a>
 
-确保 bitwarden\_rs 停止了，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
+确保 bitwarden\_rs 已经停止，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
 
-定期运行从备份中恢复的过程是个好主意，只是为了验证你的备份是否能正常工作。这样做的时候，请确保移动或保留原始数据的副本，以防备份实际上不能正常工作。
+为了验证你的备份是否能正常工作，定期运行从备份中恢复的过程是个好主意。这样做的时候，请确保移动或保留原始数据的副本，以防备份实际上不能正常工作。
 
 ## 示例 <a id="examples"></a>
 
 本节包含第三方备份示例的索引。在使用示例之前，您应该彻底阅读示例并了解其功能。
 
+* [https://github.com/ttionya/BitwardenRS-Backup](https://github.com/ttionya/BitwardenRS-Backup)
 * [https://github.com/shivpatel/bitwarden\_rs-local-backup](https://github.com/shivpatel/bitwarden_rs-local-backup)
 * [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)
 * [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup)
+* [https://github.com/jjlin/bitwardenrs-backup](https://github.com/jjlin/bitwardenrs-backup)
 

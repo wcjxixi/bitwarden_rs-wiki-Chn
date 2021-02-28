@@ -1,4 +1,4 @@
-# 7.启用 WebSocket 通知
+# 6.启用 WebSocket 通知
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications)

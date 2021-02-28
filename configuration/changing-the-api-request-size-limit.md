@@ -1,4 +1,4 @@
-# 11.更改 API 请求大小限制
+# 10.更改 API 请求大小限制
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Changing-the-API-request-size-limit)

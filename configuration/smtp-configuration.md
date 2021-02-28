@@ -1,10 +1,10 @@
-# 13.SMTP 配置
+# 12.SMTP 配置
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration)
 {% endhint %}
 
-您可以配置 bitwarden\_rs 以通过 SMTP 代理来发送电子邮件：
+您可以配置 bitwarden\_rs 通过 SMTP 代理来发送电子邮件：
 
 ```python
 docker run -d --name bitwarden \
@@ -31,4 +31,13 @@ docker run -d --name bitwarden \
 ```
 
 用户邀请链接有效期为 5 天，过期后需要重新发送邀请。
+
+## SMTP 服务器 <a id="smtp-servers"></a>
+
+正确配置 SMTP 服务器/中继并不是一件小事。bitwarden\_rs 使用的邮件库也不是最容易排除故障的。所以，除非你对自己设置这个特别感兴趣，否则使用外部服务可能更容易。
+
+这里有几个免费的服务，每天可以发送 100-200 封邮件（对于大多数用例来说已经足够了）：
+
+* [SendGrid](https://sendgrid.com/)
+* [MailJet](https://www.mailjet.com/)
 

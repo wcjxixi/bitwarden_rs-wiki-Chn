@@ -1,4 +1,4 @@
-# 15.禁用或覆盖密码库接口托管
+# 14.禁用或覆盖密码库接口托管
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting)

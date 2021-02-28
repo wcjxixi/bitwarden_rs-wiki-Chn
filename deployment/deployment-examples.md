@@ -1,4 +1,4 @@
-# 4.部署示例
+# 5.部署示例
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Deployment-examples)
@@ -10,7 +10,7 @@
 
 * [https://github.com/dadatuputi/bitwarden\_gcloud](https://github.com/dadatuputi/bitwarden_gcloud)
 
-针对谷歌云的“永远免费”的 f1-micro 计算实例进行了优化的 Bitwarden 安装说明。
+针对 Google Cloud 的“永远免费”的 f1-micro 计算实例进行了优化的 Bitwarden 安装。
 
 ## Kubernetes
 
@@ -32,7 +32,11 @@
 
 * [https://github.com/jjlin/bitwardenrs-shared-hosting](https://github.com/jjlin/bitwardenrs-shared-hosting)
 
-在 [DreamHost](https://www.dreamhost.com/) 上运行 bitwarden\_rs 的配置示例，但应该同样适用于许多其他共享主机服务。
+在 [DreamHost](https://www.dreamhost.com/) 上运行 `bitwarden_rs` 的配置示例，但应该同样适用于许多其他共享主机服务。
+
+* [https://lab.uberspace.de/guide\_bitwarden.html](https://lab.uberspace.de/guide_bitwarden.html)
+
+如何从源代码安装以及如何在 [Uberspace](https://uberspace.de/en/) 共享托管服务提供商上运行的说明。
 
 ## NixOS \(by tklitschi\)
 

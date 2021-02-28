@@ -1,4 +1,4 @@
-# 21.从 LDAP 同步用户
+# 18.从 LDAP 同步用户
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Syncing-users-from-LDAP)

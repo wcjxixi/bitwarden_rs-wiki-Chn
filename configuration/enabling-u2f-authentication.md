@@ -1,4 +1,4 @@
-# 8.启用 U2F 身份验证
+# 7.启用 U2F 身份验证
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-U2F-authentication)
@@ -16,5 +16,5 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-请注意，该值必须包含 `https://`，如果不使用 `443`，在末尾还必须包含一个端口（格式为 `https://bw.domain.tld:port`）。
+请注意，该值必须包含 `https://`，并且如果不使用默认的 `443`，在末尾还必须包含一个端口（格式为 `https://bw.domain.tld:port`）。
 
