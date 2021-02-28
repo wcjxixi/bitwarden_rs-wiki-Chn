@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Deployment-examples)
 {% endhint %}
 
-本页面是一个单机部署示例的索引。如果要添加新的示例，请酌情新建一个类别，并保持一般情况下的有序性。
+本页面是一个独立部署示例的索引。如果要添加新的示例，请酌情新建一个类别，并保持常规情况下的有序性。
 
 ## Google Cloud
 
