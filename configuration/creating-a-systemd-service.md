@@ -4,11 +4,11 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Setup-as-a-systemd-service)
 {% endhint %}
 
-这部分的内容要求您已经[编译了 bitwarden\_rs 二进制](../deployment/building-binary.md)。如果您生成了 docker 镜像，则需要查看[使用 systemd-docker 运行](running-with-systemd-docker.md)。
+这部分的内容要求您已经[编译了 bitwarden\_rs 二进制](../deployment/building-binary.md)。如果您已生成了 docker 镜像，则需要查看[使用 systemd-docker 运行](running-with-systemd-docker.md)。
 
 ## 设置 <a id="setup"></a>
 
-要使 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），需要一个 `.service` 文件。以下是一个可行的起点：
+要使 bitwarden\_rs 在系统启动的时候启动并使用 systemd 的其他功能（例如，隔离、日志记录等），则需要一个 `.service` 文件。以下是一个可行的起点：
 
 ```python
 [Unit]
@@ -133,7 +133,7 @@ $ systemctl status bitwarden_rs.service
 
 ### 旧版 systemd 的沙盒选项 <a id="sandboxing-options-with-older-systemd-versions"></a>
 
-在 RHEL 7（和 debian 8）中，使用的 systemd 不支持某些隔离选项（[\#445](https://github.com/dani-garcia/bitwarden_rs/issues/445)，[\#363](https://github.com/dani-garcia/bitwarden_rs/issues/363)）。这可能导致出现如下错误：
+在 RHEL 7（以及 debian 8）中，使用的 systemd 不支持某些隔离选项（[\#445](https://github.com/dani-garcia/bitwarden_rs/issues/445)，[\#363](https://github.com/dani-garcia/bitwarden_rs/issues/363)）。这可能导致出现如下错误：
 
 ```python
 Failed at step NAMESPACE spawning /home/bitwarden_rs/bitwarden_rs: Permission denied
@@ -145,7 +145,7 @@ Failed at step NAMESPACE spawning /home/bitwarden_rs/bitwarden_rs: Permission de
 Failed to parse protect system value
 ```
 
-要解决这一点，你可以在包含有  `PrivateTmp`、`PrivateDevices`、`ProtectHome`、`ProtectSystem` 和 `ReadWriteDirectories` 的部分或全部行前面放置 \# 符号来将其注释掉。尽管将所有这些行注释掉可能会起作用，但不建议这样做，因为这些都是很好的安全措施。要查看您的 systemd 支持哪些选项，请运行以下命令来查看输出：
+要解决这一点，你可以在包含有  `PrivateTmp`、`PrivateDevices`、`ProtectHome`、`ProtectSystem` 和 `ReadWriteDirectories` 的部分或全部行前面放置 `#` 符号来将其注释掉。尽管将所有这些行注释掉可能会起作用，但不建议这样做，因为这些都是很好的安全措施。要查看您的 systemd 支持哪些选项，请运行以下命令来查看输出：
 
 ```php
 $ systemctl --version
