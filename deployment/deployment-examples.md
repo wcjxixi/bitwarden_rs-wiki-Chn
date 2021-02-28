@@ -40,7 +40,7 @@
 
 ## NixOS \(by tklitschi\)
 
-这里是一个针对 NixOS 上的 bitwarden 配置的示例。它不是很复杂，有您想使用的数据库类型的后端选项、用于系统服务专用备份的备份目录、启用它的选项以及配置选项。对于配置选项，你只需以 nix 语法[从 .env模板中](https://github.com/dani-garcia/bitwarden_rs/blob/1.13.1/.env.template)传递 .env 变量即可。请参阅[代理示例](proxy-examples.md)以了解 nixos-nginx 的配置示例。
+这里是一个针对 NixOS 上的 bitwarden 配置的示例。它不是很复杂，有您想使用的数据库类型的后端选项、用于系统服务专用备份的备份目录、启用它的选项以及配置选项。对于配置选项，你只需[从 .env 模板](https://github.com/dani-garcia/bitwarden_rs/blob/1.13.1/.env.template)传递 .env 变量到 nix 语法中即可。请参阅[代理示例](proxy-examples.md)以了解 nixos-nginx 的配置示例。
 
 配置示例：
 
