@@ -32,7 +32,7 @@
   * [10.更改 API 请求大小限制](configuration/changing-the-api-request-size-limit.md)
   * [11.更改 worker 数量](configuration/changing-the-number-of-workers.md)
   * [12.SMTP 配置](configuration/smtp-configuration.md)
-  * [13.禁用显示密码提示](configuration/password-hint-display.md)
+  * [13.密码提示显示](configuration/password-hint-display.md)
   * [14.禁用或覆盖密码库接口托管](configuration/disabling-or-overriding-the-vault-interface-hosting.md)
   * [15.日志记录](configuration/logging.md)
   * [16.设置为系统服务](configuration/creating-a-systemd-service.md)
