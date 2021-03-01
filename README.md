@@ -2,7 +2,7 @@
 
 这里是 [bitwarden\_rs wiki](https://github.com/dani-garcia/bitwarden_rs/wiki) 页面的中文翻译版。
 
-原文有太多的口语化内容，翻译起来比较费脑，这里我尽力翻译准确并使之不那么生硬。
+原文有太多口语化内容，翻译起来比较费脑，这里我尽力翻译准确并使之不那么生硬。
 
 译者：[@wcjxixi](mailto:wcjxixi@gmail.com)
 

@@ -4,11 +4,11 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki)
 {% endhint %}
 
-bitwarden\_rs 是一个使用 Rust 编写的非官方 Bitwarden 服务器实现，它与[官方 Bitwarden 客户端](https://bitwarden.com/download/)兼容，对于不希望运行官方的占用大量资源的服务的自托管部署而言，它是理想的选择。
+bitwarden\_rs 是一个使用 Rust 编写的非官方 Bitwarden 服务器实现，它与[官方 Bitwarden 客户端](https://bitwarden.com/download/)兼容，对于不希望使用官方的占用大量资源的自托管部署而言，它是理想的选择。
 
 ### 支持的特性
 
-bitwarden\_rs 实现了大部分功能所需的 Bitwarden API，这包括：
+bitwarden\_rs 实现了 Bitwarden API 所需的大部分功能，这包括：
 
 * 网页界面（等效于 [https://vault.bitwarden.com/](https://vault.bitwarden.com/%29)）
 * 个人密码库支持
