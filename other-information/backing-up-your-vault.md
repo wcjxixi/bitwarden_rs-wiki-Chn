@@ -54,7 +54,7 @@ sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sql
 
 你可以通过一个 cron 作业定期运行这个命令（最好每天至少一次）。
 
-如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。[restic](https://restic.net/) 是另一个不错的选择，特别是如果您有较大的附件，并想避免每次都将其作为备份的一部分的时候。
+如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。[restic](https://restic.net/) 是另一个不错的选择，特别是如果您有较大的附件，并希望避免在每次备份时都将其重新复制的时候。
 
 ### `attachments` 文件夹 <a id="the-attachments-folder"></a>
 

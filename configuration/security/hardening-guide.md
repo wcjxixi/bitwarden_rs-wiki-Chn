@@ -12,11 +12,11 @@
 
 默认情况下，bitwarden\_rs 允许任何匿名用户在不首先被邀请的情况下在服务器上注册新帐户。这是在服务器上创建第一个用户所必需的，但建议您在管理面板中（如果启用了管理面板的话）或[使用环境变量](../disable-registration-of-new-users.md)将其禁用，以防止攻击者在 bitwarden\_rs 服务器上创建帐户。
 
-bitwarden\_rs 还允许注册用户邀请其他新用户在服务器上创建帐户并加入其组织。只要您信任用户，这不会带来直接风险，但是可以在管理面板或[环境变量](../disable-invitations.md)中将其禁用。
+bitwarden\_rs 还允许注册用户邀请其他新用户在服务器上创建帐户并加入其组织。只要您信任用户，这不会带来直接风险，但是可以在管理面板或[使用环境变量](../disable-registration-of-new-users.md)将其禁用。
 
 ### 禁用显示密码提示 <a id="disable-password-hint-display"></a>
 
-bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的小型/本地部署，攻击者可能会滥用这些密码来促进针对服务器用户的猜测密码攻击。可以在管理面板中通过取消选中该 `Show password hints` 选项或使用[环境变量](../password-hint-display.md)来禁用它。
+bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的小型/本地部署，攻击者可能会滥用这些密码来促进针对服务器用户的猜测密码攻击。可以在管理面板中通过取消选中该 `Show password hints` 选项或[使用环境变量](../disable-registration-of-new-users.md)来禁用它。
 
 ## HTTPS / TLS 配置 <a id="https-tls-configuration"></a>
 
@@ -24,7 +24,7 @@ bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的
 
 ### 严格 SNI <a id="strict-sni"></a>
 
-[SNI](https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8D%E7%A7%B0%E6%8C%87%E7%A4%BA) 是网络浏览器请求 HTTPS 服务器为特定网站（如 `bitwarden.example.com`）提供 SSL/TLS 证书的方式。假设`bitwarden.example.com` 的 IP 地址是 `1.2.3.4`。理想情况下，你希望你的实例只能通过 https://bitwarden.example.com 而不是 https://1.2.3.4 来进行访问。这是因为 IP 地址会因为各种原因被不断扫描，如果能通过这种方式检测到你的 bitwarden\_rs 实例，就会成为一个更明显的目标。例如，一个简单的 [Shodan 搜索](https://www.shodan.io/search?query=bitwarden)就会发现一些通过 IP 地址访问的 Bitwarden 实例。
+[SNI](https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8D%E7%A7%B0%E6%8C%87%E7%A4%BA) 是网络浏览器请求 HTTPS 服务器为特定网站（如 `bitwarden.example.com`）提供 SSL/TLS 证书的方式。假设`bitwarden.example.com` 的 IP 地址是 `1.2.3.4`。理想情况下，你希望你的实例只能通过 https://bitwarden.example.com 而不是 https://1.2.3.4 来进行访问。这是因为 IP 地址会因为各种原因被不断扫描，如果能通过这种方式检测到你的 bitwarden\_rs 实例，就会成为一个更明显的目标。例如，一个简单的 [Shodan 搜索](https://www.shodan.io/search?query=bitwarden)检索就会发现一些通过 IP 地址访问的 Bitwarden 实例。
 
 ### 反向代理 <a id="reverse-proxying"></a>
 
@@ -82,5 +82,5 @@ services:
 
 ### 暴力破解 <a id="brute-force-mitigation"></a>
 
-当不使用双重身份认证时，（理论上）可以暴力破解用户密码，从而获得对其帐户的访问权限。缓解此问题的一种相对简单的方法是设置 fail2ban，设置后，将在过多的失败登录尝试后阻止访问者的 IP 地址。但是：在多个反向代理（例如 cloudflare）后面使用此功能时，应格外注意。请参阅：[Fail2Ban 设置](fail2ban-setup.md)。
+当不使用双重身份认证时，（理论上）可以暴力破解用户密码，从而获得对其帐户的访问权限。缓解此问题的一种相对简单的方法是设置 fail2ban，设置后，在过多的失败登录尝试后将阻止访问者的 IP 地址。但是：在多个反向代理（例如 cloudflare）后面使用此功能时，应格外注意。请参阅：[Fail2Ban 设置](fail2ban-setup.md)。
 
