@@ -24,7 +24,7 @@ bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的
 
 ### 严格 SNI <a id="strict-sni"></a>
 
-[SNI](https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8D%E7%A7%B0%E6%8C%87%E7%A4%BA) 是网络浏览器请求 HTTPS 服务器为特定网站（如 `bitwarden.example.com`）提供 SSL/TLS 证书的方式。假设`bitwarden.example.com` 的 IP 地址是 `1.2.3.4`。理想情况下，你希望你的实例只能通过 https://bitwarden.example.com 而不是 https://1.2.3.4 来进行访问。这是因为 IP 地址会因为各种原因被不断扫描，如果能通过这种方式检测到你的 bitwarden\_rs 实例，就会成为一个更明显的目标。例如，一个简单的 [Shodan 搜索](https://www.shodan.io/search?query=bitwarden)检索就会发现一些通过 IP 地址访问的 Bitwarden 实例。
+[SNI](https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8D%E7%A7%B0%E6%8C%87%E7%A4%BA) 是网络浏览器请求 HTTPS 服务器为特定网站（如 `bitwarden.example.com`）提供 SSL/TLS 证书的方式。假设`bitwarden.example.com` 的 IP 地址是 `1.2.3.4`。理想情况下，你希望你的实例只能通过 https://bitwarden.example.com ，并且不能通过 https://1.2.3.4 进行访问。这是因为 IP 地址会因为各种原因被不断扫描，如果能通过这种方式检测到你的 bitwarden\_rs 实例，就会成为一个更明显的目标。例如，一个简单的 [Shodan 搜索](https://www.shodan.io/search?query=bitwarden)就会发现一些通过 IP 地址访问的 Bitwarden 实例。
 
 ### 反向代理 <a id="reverse-proxying"></a>
 
