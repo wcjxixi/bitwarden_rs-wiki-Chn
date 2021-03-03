@@ -6,13 +6,13 @@
 
 ## 概览 <a id="overview"></a>
 
-bitwarden\_rs 数据应该定期备份，最好是通过自动化流程（例如，cron 作业）。理想情况下，至少应该远程存储一个副本（例如，云存储或不同的计算机）。避免依赖文件系统或虚拟机快照作为备份方法，因为这些都是比较复杂的操作，可能会出现更多的问题，在这种情况下恢复对典型用户来说是困难的，甚至是不可能的。在备份上添加额外的加密层通常是个好主意（尤其是当您的备份还包括配置数据时，例如您的[管理员令牌](../configuration/enabling-admin-page.md)），但如果您确信您的主密码（以及其他用户的密码，如果有的话）是强大的，则可以选择跳过这一步。
+应该定期备份 bitwarden\_rs 数据，并且最好是通过自动化的流程（例如，cron 作业）。理想情况下，应该远程（例如，云存储或不同的计算机）存储至少一个副本。避免依赖文件系统或虚拟机快照作为备份方法，因为这些都是比较复杂的操作，可能会出现更多的问题，在这种情况下的恢复操作对普通用户来说是困难的，甚至是不可能的。在备份上添加额外的加密层通常是个好主意（尤其是当您的备份还包括配置数据时，例如您的[管理员令牌](../configuration/enabling-admin-page.md)），但如果您确信您的主密码（以及其他用户的密码，如果有的话）足够强大，也可以选择跳过这一步。
 
 ## 备份您的数据 <a id="backing-up-data"></a>
 
-默认情况下，bitwarden\_rs 将所有的数据存储在一个名为 `data` 的目录下（与 `bitwarden_rs` 可执行文件位于同一目录）。这个位置可以通过设置 [DATA\_FOLDER](../configuration/changing-persistent-data-location.md) 环境变量来改变。如果你使用 SQLite 运行 bitwarden\_rs（这是最常见的设置），那么 SQL 数据库只是 data 文件夹中的一个文件。如果你使用 MySQL 或 PostgreSQL 运行，你将不得不单独转储这些数据 -- 这超出了本文的范围，但在网上搜索会发现许多其他教程涵盖了这个主题。
+默认情况下，bitwarden\_rs 将所有的数据存储在一个名为 `data` 的目录下（与 `bitwarden_rs` 可执行文件位于同一目录）。这个位置可以通过设置 [DATA\_FOLDER](../configuration/changing-persistent-data-location.md) 环境变量来改变。如果你使用 SQLite 运行 bitwarden\_rs（这是最常见的设置），那么 SQL 数据库只是 data 文件夹中的一个文件。如果你使用 MySQL 或 PostgreSQL 运行，则必须单独转储这些数据 -- 这超出了本文的范围，但在网上搜索会发现有许多涵盖了这个主题的教程。
 
-当使用默认的 SQLite 后端运行时，bitwarden\_rs 的 `data` 目录具有如下结构：
+当使用默认的 SQLite 后端运行时，bitwarden\_rs 的 `data` 目录具有如下的结构：
 
 ```text
 data
@@ -34,7 +34,7 @@ data
 
 当使用 MySQL 或 PostgreSQL 后端运行时，目录结构是一样的，只是没有 SQLite 文件。你仍然需要备份数据目录中的文件，以及 MySQL 或 PostgreSQL 表的转储。
 
-接下来会详细讨论每一组文件。
+接下来详细讨论每一系列文件。
 
 ### SQLite 数据库文件 <a id="sqlite-database-files"></a>
 
@@ -54,7 +54,7 @@ sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sql
 
 你可以通过一个 cron 作业定期运行这个命令（最好每天至少一次）。
 
-如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。[restic](https://restic.net/) 是另一个不错的选择，特别是如果您有较大的附件，并希望避免在每次备份时都将其重新复制的时候。
+如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。[restic](https://restic.net/) 是另一个不错的选择，特别是如果您有较大的附件，并想避免每次都将其作为备份的一部分的时候。
 
 ### `attachments` 文件夹 <a id="the-attachments-folder"></a>
 
