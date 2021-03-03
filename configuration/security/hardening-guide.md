@@ -16,7 +16,7 @@ bitwarden\_rs 还允许注册用户邀请其他新用户在服务器上创建帐
 
 ### 禁用显示密码提示 <a id="disable-password-hint-display"></a>
 
-bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的小型/本地部署，攻击者可能会滥用这些密码来促进针对服务器用户的猜测密码攻击。可以在管理面板中通过取消选中该 `Show password hints` 选项或[使用环境变量](../disable-registration-of-new-users.md)来禁用它。
+bitwarden\_rs 在登录页面上显示密码提示，以适应未配置 SMTP 的小型/本地部署，攻击者可能会滥用这些密码来促进针对服务器用户的猜测密码攻击。可以在管理面板中通过取消选中 `Show password hints` 选项或[使用环境变量](../disable-registration-of-new-users.md)来禁用它。
 
 ## HTTPS / TLS 配置 <a id="https-tls-configuration"></a>
 
