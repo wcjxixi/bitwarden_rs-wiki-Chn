@@ -22,10 +22,12 @@ docker run -d --name bitwarden \
 
 您可以通过设置 `SIGNUPS_DOMAINS_WHITELIST` 来限制只能某些域的电子邮件地址可以注册。示例：
 
-* `SIGNUPS_DOMAINS_WHITELIST=example.com` （单个域）
-* `SIGNUPS_DOMAINS_WHITELIST=example.com,example.net,example.org` （多个域）
+* `SIGNUPS_DOMAINS_WHITELIST=example.com` （单个域名）
+* `SIGNUPS_DOMAINS_WHITELIST=example.com,example.net,example.org` （多个域名）
 
+{% hint style="warning" %}
 如果设置了 `SIGNUPS_DOMAINS_WHITELIST`，`SIGNUPS_ALLOWED=false`的值将被忽略。
+{% endhint %}
 
 你可能还想设置 `SIGNUPS_VERIFY=true`，这要求新注册的用户在成功登录前进行电子邮件验证。这将阻止有人用一个拥有正确域名的假电子邮件地址注册。
 

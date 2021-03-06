@@ -84,3 +84,7 @@ services:
 
 当不使用双重身份认证时，（理论上）可以暴力破解用户密码，从而获得对其帐户的访问权限。缓解此问题的一种相对简单的方法是设置 fail2ban，设置后，在过多的失败登录尝试后将阻止访问者的 IP 地址。但是：在多个反向代理（例如 cloudflare）后面使用此功能时，应格外注意。请参阅：[Fail2Ban 设置](fail2ban-setup.md)。
 
+### 隐藏在子目录下 <a id="hiding-under-a-subdir"></a>
+
+通常，Bitwarden 实例驻留在子域的根目录下（即 `bitwarden.example.com`，而不是 `bitwarden.example.com/some/path`）。上游的 Bitwarden 服务器目前只支持子域根目录，而 bitwarden\_rs 则增加了对[备用基础目录](../using-an-alternate-base-dir-subdir-subpath.md)的支持。对于某些用户来说，这很有用，因为他们只能访问一个子域，却想在不同的目录下运行多个服务。在这种情况下，他们通常可以做一些显而易见的选择，比如使用 `mysubdomain.example.com/bitwarden`。然而，你也可以通过把 bitwarden\_rs 放在类似 `mysubdomain.example.com/bitwarden/<mysecretstring>` 这样的目录下来提供额外的保护层，其中 `<mysecretstring>` 有效地充当一个密码。也许有人会说这是[通过隐藏实现安全](https://en.wikipedia.org/wiki/Security_through_obscurity)，但实际上这是深度防御 -- 子目录的隐蔽性只是额外的一层安全保护，而不是为了成为主要的安全手段（用户主密码的强度仍然是主要的安全手段）。
+
