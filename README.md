@@ -14,9 +14,7 @@
 
 ## bitwarden\_rs 是什么
 
-bitwarden\_rs 是一个用于本地搭建 Bitwarden 服务器的第三方 Docker 项目。
-
-bitwarden\_rs 兼容 Bitwarden 官方客户端。仅在部署的时候使用 bitwarden\_rs 镜像，桌面端、移动端、浏览器扩展等客户端均使用 Bitwarden 官方的客户端。
+bitwarden\_rs 是一个用于本地搭建 Bitwarden 服务器的第三方 Docker 项目。兼容 Bitwarden 官方客户端，仅在部署的时候使用 bitwarden\_rs 镜像，桌面端、移动端、浏览器扩展等客户端均使用 Bitwarden 官方的客户端。
 
 bitwarden\_rs 很轻量，对于不希望使用官方的占用大量资源的自托管部署而言，它是理想的选择。
 
