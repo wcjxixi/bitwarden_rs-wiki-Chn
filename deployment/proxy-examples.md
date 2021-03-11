@@ -44,7 +44,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
     transparent
   }
 
-  # Notifications 重定向到 websockets server
+  # Notifications 重定向到 WebSocket 服务器
   proxy /notifications/hub <SERVER>:3012 {
     websocket
   }
@@ -87,7 +87,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
   # 谈判端点也被代理到 Rocket
   reverse_proxy /notifications/hub/negotiate <SERVER>:80
 
-  # Notifications 重定向到 websockets 服务器
+  # Notifications 重定向到 WebSocket 服务器
   reverse_proxy /notifications/hub <SERVER>:3012
 
   # 代理 Root 目录到 Rocket
@@ -126,7 +126,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 #  # 协商端点也被代理到 Rocket
 #  reverse_proxy /notifications/hub/negotiate <SERVER>:80
 #
-#  # Notifications 重定向到 websockets 服务器
+#  # Notifications 重定向到 WebSocket服务器
 #  reverse_proxy /notifications/hub <SERVER>:3012
 #
 #  # 代理 Root 目录到 Rocket
@@ -195,7 +195,7 @@ DOMAIN=https://bitwarden.example.tld/vault/
 ```
 
 ```python
-# 在这里定义服务器的 IP 和端口。
+# 在这里定义服务器的 IP 和端口
 upstream bitwardenrs-default { server 127.0.0.1:8080; }
 upstream bitwardenrs-ws { server 127.0.0.1:3012; }
 
@@ -220,7 +220,7 @@ server {
     client_max_body_size 128M;
 
     ## 使用子路径配置
-    # 您的安装的 root 的路径
+    # 您的安装的 root 路径
     location /vault/ {
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
@@ -297,7 +297,7 @@ nginx__servers:
         options: |-
           return 307 $scheme://$host$request_uri/;
 
-      ## 所有的安全 HTTP 头也需要由 nginx 来设置。
+      ## 所有的安全 HTTP 头也需要由 nginx 来设置
       # - pattern: '/ekkP9wtJ_psk_changeme_Hr9CCTud/'
       #   options: |-
       #     alias /usr/share/bitwarden_rs/web-vault/;
@@ -312,7 +312,7 @@ nginx__servers:
 
           proxy_pass http://bitwarden;
 
-      ## 只要能显示出从我们的凭证到服务器的所有域名，就不要使用图标功能。
+      ## 只要能显示出从我们的凭证到服务器的所有域名，就不要使用图标功能
       - pattern: '/ekkP9wtJ_psk_changeme_Hr9CCTud/icons/'
         options: |-
           access_log off;
@@ -505,7 +505,7 @@ frontend bitwarden_rs
     use_backend bitwarden_rs_ws if { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
 backend bitwarden_rs_http
-    # 如果需要，启用压缩
+    # 启用压缩（如果需要）
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     server bwrshttp 0.0.0.0:8080
@@ -539,7 +539,7 @@ frontend http-in
     use_backend bitwarden_rs_ws if host_bitwarden_domain_tld { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
 backend bitwarden_rs_http
-    # 如果需要，启用压缩
+    # 启用压缩（如果需要）
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名
