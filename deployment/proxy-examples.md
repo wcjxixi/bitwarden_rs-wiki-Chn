@@ -10,9 +10,11 @@
 
 注意，当你把 bitwarden\_rs 放在反向代理后面时，反向代理和 bitwarden\_rs 之间的连接通常被认为是通过安全的私有网络进行的，因此不需要加密。下面的例子假设你是在这种配置下运行的，在这种情况下，不应该启用 bitwarden\_rs 中内置的 HTTPS 功能（也就是说，不应该设置 `ROCKET_TLS` 环境变量）。如果你这样做了，连接就会失败，因为反向代理使用 HTTP 连接到 bitwarden\_rs，但你配置的 bitwarden\_rs 却希望使用 HTTPS。
 
+通常使用 [Docker Compose](https://docs.docker.com/compose/) 将容器化的服务（例如，bitwarden\_rs  和反向代理）链接在一起。请参阅[使用 Docker Compose](../container-image-usage/using-docker-compose.md) 了解这方面的示例。
+
 ## 目录 <a id="table-of-contents"></a>
 
-* [Caddy 1.x](proxy-examples.md#caddy-1-x)
+* [Caddy 1.x](proxy-examples.md#caddy-1-x)（不推荐）
 * [Caddy 2.x](proxy-examples.md#caddy-2-x)
 * [Nginx](proxy-examples.md#nginx-by-shauder) \(by shauder\)
 * [Nginx with sub-path](proxy-examples.md#nginx-with-sub-path-by-blackdex) \(by BlackDex\)
@@ -25,7 +27,7 @@
 * [HAproxy](proxy-examples.md#haproxy-by-blackdex) \(by BlackDex\)
 * [HAproxy](proxy-examples.md#haproxy-by-williamdes) \(by [@williamdes](https://github.com/williamdes)\)
 
-## Caddy 1.x
+## Caddy 1.x（不推荐） <a id="caddy-1-x-deprecated"></a>
 
 Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/v1/docs/automatic-https)。
 
@@ -60,78 +62,39 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
 
 同样，Caddy 2 在某些情况下也可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/docs/automatic-https)。
 
+在 Caddyfile 语法中，`{$VAR}` 表示环境变量 `VAR` 的值。如果你喜欢，你也可以直接指定一个值，而不是用一个环境变量的值来代替。
+
 ```python
-# Caddyfile V2.0 配置文件
-:80 {
-  # 容器中的 80 端口上的 Caddy 到 bitwarden_rs 私有实例
-  # 如果 Caddy 背后有另一个反向代理，例如 Synology 上的嵌入式代理，则使用它
+{$DOMAIN}:443 {
   log {
-	output file {env.LOG_FILE}
-	level INFO
-	# roll_size 5MiB #在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
-	# roll_keep 2 #在 Caddy V2.0.0 Beta20 无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
+    level INFO
+    output file {$LOG_FILE} {
+      roll_size 10MB
+      roll_keep 10
+    }
   }
+
+  # 如果你想通过 ACME（Let's Encrypt 或 ZeroSSL）获获取证书，请取消注释
+  # tls {$EMAIL}
+
+  # 或者如果你提供自己的证书，请取消注释。
+  # 如果你在 Cloudflare 后面运行，你也会使用此选项。
+  # tls {$SSL_CERT_PATH} {$SSL_KEY_PATH}
+
+  # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）
+  # 如果遇到问题，请尝试禁用此功能
   encode gzip
 
-  header / {
-       # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
-       X-XSS-Protection "1; mode=block"
-       # 禁止在框架内渲染站点 (clickjacking protection)
-       X-Frame-Options "DENY"
-       # 防止搜索引擎收录 (可选)
-       X-Robots-Tag "none"
-       # 移除服务器名称
-       -Server
-   }
-
-  # 谈判端点也被代理到 Rocket
-  reverse_proxy /notifications/hub/negotiate <SERVER>:80
-
-  # Notifications 重定向到 WebSocket 服务器
+  # Notifications 重定向到 websockets 服务器
   reverse_proxy /notifications/hub <SERVER>:3012
 
-  # 代理 Root 目录到 Rocket
-  reverse_proxy <SERVER>:80
+  # 将任何其他东西代理到 Rocket
+  reverse_proxy <SERVER>:80 {
+       # 把真实的远程 IP 发送给 Rocket，让 bitwarden_rs 把其放在日志中
+       # 这样 fail2ban 就可以阻止正确的 IP 了
+       header_up X-Real-IP {remote_host}
+  }
 }
-
-#{env.DOMAIN}:443 {
-#  # 容器中的 443 端口上的 Caddy 到 bitwarden_rs 私有实例 
-#  # 如果 Caddy 暴露到网络中，则使用它 
-#
-#  log {
-#	output file {env.LOG_FILE}
-#	level INFO
-#   #roll_size 5MiB # 在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
-#   #rool_keep 30 # 在 Caddy V2.0.0 Beta20 上无法工作 https://caddyserver.com/docs/caddyfile/directives/log#log
-#  }
-#
-#  # 仅取消注释两行中的一行。取决于你提供自己的证书还是从 Let's Encrypt 请求证书
-#  tls {env.SSLCERTIFICATE} {env.SSLKEY}
-#  tls {env.EMAIL}
-#
-#  encode gzip
-#
-#  header / {
-#       # 启用 HTTP Strict Transport Security (HSTS)
-#       Strict-Transport-Security "max-age=31536000;"
-#       # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
-#       X-XSS-Protection "1; mode=block"
-#       # 禁止在框架内渲染站点 (clickjacking protection)
-#       X-Frame-Options "DENY"
-#       # 防止搜索引擎收录 (可选)
-#       X-Robots-Tag "none"
-#       # 移除服务器名称
-#       -Server
-#   }
-#  # 协商端点也被代理到 Rocket
-#  reverse_proxy /notifications/hub/negotiate <SERVER>:80
-#
-#  # Notifications 重定向到 WebSocket服务器
-#  reverse_proxy /notifications/hub <SERVER>:3012
-#
-#  # 代理 Root 目录到 Rocket
-#  reverse_proxy <SERVER>:80
-#}
 ```
 
 ## Nginx \(by shauder\)
@@ -212,7 +175,7 @@ server {
     listen [::]:443 ssl http2;
     server_name bitwardenrs.example.tld;
 
-    # 根据需要制定 SSL 配置
+    # 根据需要指定 SSL 配置
     #ssl_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
     #ssl_certificate_key /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/privkey.pem;
     #ssl_trusted_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
@@ -398,6 +361,13 @@ NixOS Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部署
 
 ## Apache in a sub-location \(by ss89\)
 
+修改 docker 启动以包含 sub-location。
+
+```python
+; Add the sub-location! Else this will not work!
+DOMAIN=https://$hostname.$domainname/$sublocation/
+```
+
 需确保在 apache 配置中的某个位置加载了 websocket 代理模块。 它看起来像这样：
 
 ```python
@@ -505,7 +475,7 @@ frontend bitwarden_rs
     use_backend bitwarden_rs_ws if { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
 backend bitwarden_rs_http
-    # 启用压缩（如果需要）
+    # 启用压缩（如果您需要）
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     server bwrshttp 0.0.0.0:8080
@@ -539,7 +509,7 @@ frontend http-in
     use_backend bitwarden_rs_ws if host_bitwarden_domain_tld { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
 backend bitwarden_rs_http
-    # 启用压缩（如果需要）
+    # 启用压缩（如果您需要）
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名

@@ -55,17 +55,17 @@ services:
   # 使用 ACME HTTP-01 验证方式为已配置的域名获取证书
   tls {$EMAIL}
 
-  # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）。
-  # 如果遇到问题，请尝试禁用此功能。
+  # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）
+  # 如果遇到问题，请尝试禁用此功能
   encode gzip
 
   # Notifications 重定向到 WebSocket 服务器
   reverse_proxy /notifications/hub bitwarden:3012
 
-  # Proxy everything else to Rocket
+  # 将任何其他东西代理到 Rocket
   reverse_proxy bitwarden:80 {
-       # Send the true remote IP to Rocket, so that bitwarden_rs can put this in the
-       # log, so that fail2ban can ban the correct IP.
+       # 把真实的远程 IP 发送给 Rocket，让 bitwarden_rs 把其放在日志中
+       # 这样 fail2ban 就可以阻止正确的 IP 了
        header_up X-Real-IP {remote_host}
   }
 }
