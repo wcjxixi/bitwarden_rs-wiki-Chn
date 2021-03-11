@@ -126,7 +126,7 @@ docker-compose up -d
 
 ## 为网页密码库设置 <a id="setup-for-web-vault"></a>
 
-按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统，例如，在 Synology 上，是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
+按照惯例，`path_f2b` 代表 Fail2ban 工作所需的路径。这取决于您的系统，例如在 Synology 上是 `/volumeX/docker/fail2ban/`，但在其他系统上是 `/etc/fail2ban/`。
 
 ### Filter <a id="filter"></a>
 
@@ -175,7 +175,7 @@ bantime = 14400
 findtime = 14400
 ```
 
-请注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 替换 `banaction` 行：
+请注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 行替换 `banaction` 行：
 
 ```python
 action = iptables-allports[name=bitwarden_rs, chain=FORWARD]
@@ -232,7 +232,7 @@ bantime = 14400
 findtime = 14400
 ```
 
-注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 替换 `banaction` 行：
+注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 行替换 `banaction` 行：
 
 ```python
 action = iptables-allports[name=bitwarden_rs, chain=FORWARD]
@@ -246,7 +246,7 @@ sudo systemctl reload fail2ban
 
 ## 测试 Fail2Ban <a id="testing-fail-2-ban"></a>
 
-现在，尝试使用任何电子邮件地址登录 Bitwarden（不必是有效电子邮件，只需是电子邮件格式即可）。如果它可以正常工作，您的 IP 将被阻止。运行以下命令来取消 IP 阻止：
+现在，尝试使用任何电子邮件地址登录 Bitwarden（不必是有效电子邮件，只需是电子邮件格式即可）。如果它可以正常工作，您的 IP 将被阻止。运行以下命令来取消阻止的 IP：
 
 ```python
 # 使用 Docker
@@ -257,7 +257,7 @@ sudo fail2ban-client set bitwarden_rs unbanip XX.XX.XX.XX
 
 如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于容器外部的 `/data/...` 中）。
 
-还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e "TZ = <timezone>"` 选项启动 docker 。可用的时区（比如 `-e TZ = "Australia/Melbourne"`）的列表在[这里](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)查看。
+还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e "TZ = <timezone>"` 选项启动 docker 。可用的时区（比如 `-e TZ = "Australia/Melbourne"`）列表在[这里](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)查看。
 
 如果您使用的是 podman 而不是 docker，则无法通过 `-e "TZ = <timezone>"` 来设置时区。可以按照以下指南解决此问题（当使用 alpine 镜像时）：[https://wiki.alpinelinux.org/wiki/Setting\_the\_timezone](https://wiki.alpinelinux.org/wiki/Setting_the_timezone)。
 

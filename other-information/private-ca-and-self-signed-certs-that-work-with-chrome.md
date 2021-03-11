@@ -5,7 +5,7 @@
 {% endhint %}
 
 {% hint style="warning" %}
-此方法仅用于测试和开发。绝大多数用户不应该使用这种方法，因为它需要在你的每台设备上加载一个证书，这既容易出错，又需要后期的维护。相反，把精力集中在通过 [Let's Encrypt](https://letsencrypt.org/getting-started/) 获取的真实证书上。如果你的 bitwarden\_rs 实例不处于公共互联网中，此方法甚至可以工作（[示例](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)）。
+此方法仅用于测试和开发。绝大多数用户不应该使用这种方法，因为它需要在你的每台设备上加载一个证书，这既容易出错，又需要后期的维护。相反，把精力集中在通过 [Let's Encrypt](https://letsencrypt.org/getting-started/) 获取的真实证书上。如果你的 bitwarden\_rs 实例不处于公共互联网中，此方法甚至也可以工作（[示例](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)）。
 
 此方法不受支持。请不要开启 GitHub 问题，也不要在讨论区发帖询问如何让这个方法能正常工作。
 {% endhint %}
@@ -26,7 +26,7 @@ openssl genpkey -algorithm RSA -aes128 -out private-ca.key -outform PEM -pkeyopt
 openssl req -x509 -new -nodes -sha256 -days 3650 -key private-ca.key -out self-signed-ca-cert.crt
 ```
 
-注意：该 `-nodes` 参数将阻止在测试/安全环境中为私钥（密钥对）设置密码短语，否则每次启动/重启服务器时都必须输入密码短语。
+注意：`-nodes` 参数将阻止在测试/安全环境中为私钥（密钥对）设置密码短语，否则每次启动/重启服务器时都必须输入密码短语。
 
 创建一个 bitwarden 密钥：
 
@@ -40,7 +40,7 @@ openssl genpkey -algorithm RSA -out bitwarden.key -outform PEM -pkeyopt rsa_keyg
 openssl req -new -key bitwarden.key -out bitwarden.csr
 ```
 
-创建具有以下内容的文本文件 `bitwarden.ext`，将域名更改为您设置的域名。
+创建具有以下内容的文本文件 `bitwarden.ext`，将域名更改为您设置的域名：
 
 ```python
 authorityKeyIdentifier=keyid,issuer
