@@ -10,7 +10,7 @@
 
 ### 禁用注册和（可选）邀请 <a id="disable-registration-and-optionally-invitations"></a>
 
-默认情况下，bitwarden\_rs 允许任何匿名用户在不首先被邀请的情况下在服务器上注册新帐户。这是在服务器上创建第一个用户所必需的，但建议您在管理面板中（如果启用了管理面板的话）或[使用环境变量](../disable-registration-of-new-users.md)将其禁用，以防止攻击者在 bitwarden\_rs 服务器上创建帐户。
+默认情况下，bitwarden\_rs 允许任何匿名用户在未被邀请的情况下在服务器上注册新帐户。这是在服务器上创建第一个用户所必需的，但建议您在管理面板中（如果启用了管理面板的话）或[使用环境变量](../disable-registration-of-new-users.md)将其禁用，以防止攻击者在 bitwarden\_rs 服务器上创建帐户。
 
 bitwarden\_rs 还允许注册用户邀请其他新用户在服务器上创建帐户并加入其组织。只要您信任用户，这不会带来直接风险，但是可以在管理面板或[使用环境变量](../disable-registration-of-new-users.md)将其禁用。
 
