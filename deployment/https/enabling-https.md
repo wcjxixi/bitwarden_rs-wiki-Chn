@@ -93,7 +93,7 @@ docker run -d --name bitwarden \
 
 当您的 bitwarden\_rs 服务器对外界可用时，您可以使用 [https://comodosslstore.com/ssltools/ssl-checker.php](https://comodosslstore.com/ssltools/ssl-checker.php) 网站来检查 SSL 证书是否包含证书链。缺少证书链，Android 设备将无法连接。
 
-您也可以使用 [https://www.ssllabs.com/ssltest/analyze.html](https://www.ssllabs.com/ssltest/analyze.html) 网站进行检查，但是它不支持自定义端口。另外，请记住选中“Do not show the results on the boards”复选框，否则您的系统将在“Recently Seen”列表中可见。
+您也可以使用 [https://www.ssllabs.com/ssltest/analyze.html](https://www.ssllabs.com/ssltest/analyze.html) 网站进行检查，但是它不支持自定义端口。另外，请记住选中“Do not show the results on the boards”复选框，否则您的系统将在「Recently Seen」列表中可见。
 
 如果您运行的是没有与公共 Internet 连接的本地服务器，则可以使用 openssl 工具来验证您的证书。
 

@@ -38,5 +38,5 @@
 
 * `https://bitwarden.example.com`
 * `https://bitwarden.example.com:8443`（非默认端口）
-* `https://host.example.com/bitwarden`（[子目录托管](using-an-alternate-base-dir-subdir-subpath.md) -尽可能避免 URL 重写）
+* `https://host.example.com/bitwarden`（[子目录托管](using-an-alternate-base-dir-subdir-subpath.md) - 尽可能避免 URL 重写）
 

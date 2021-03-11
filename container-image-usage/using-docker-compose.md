@@ -4,70 +4,76 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose)
 {% endhint %}
 
-[Docker Compose](https://docs.docker.com/compose/) 是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望 Bitwarden\_rs 服务器和代理都将 WebSocket 请求重定向到正确的地方。
+Docker Compose 是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望 Bitwarden\_rs 服务器和代理都将 WebSocket 请求重定向到正确的地方。
 
-本示例假定您已[安装](https://docs.docker.com/compose/install/) Docker Compose，并且您的 bitwarden\_rs 实例具有一个可以公开访问的域名（比如 `bitwarden.example.com`）。
+本指南基于 [\#126 \(comment\)](https://github.com/dani-garcia/bitwarden_rs/issues/126#issuecomment-417872681)。[这里](https://github.com/sosandroid/docker-bitwarden_rs-caddy-synology)也有另一种基于 Bitwarden\_rs 和 Caddy 2.0 的解决方案。
 
-首先创建一个新的目录并切换到该目录。接下来，创建如下的 `docker-compose.yml` 文件（注意将 `DOMAIN` 和 `EMAIL` 变量替换为相应的值）：
+基于以下内容创建 `docker-compose.yml` 文件：
 
 ```python
+# docker-compose.yml
 version: '3'
 
 services:
   bitwarden:
-    image: bitwardenrs/server:latest
-    container_name: bitwarden
+    image: bitwardenrs/server
     restart: always
-    environment:
-      - WEBSOCKET_ENABLED=true  # 启用 WebSocket 通知
     volumes:
       - ./bw-data:/data
+    environment:
+      WEBSOCKET_ENABLED: 'true' # 请求使用 websockets
+      SIGNUPS_ALLOWED: 'true'   # 设置为 false 表示禁用注册
 
   caddy:
-    image: caddy:2
-    container_name: caddy
+    image: abiosoft/caddy
     restart: always
-    ports:
-      - 80:80  #  ACME HTTP-01 验证需要
-      - 443:443
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./caddy-config:/config
-      - ./caddy-data:/data
+      - ./Caddyfile:/etc/Caddyfile:ro
+      - caddycerts:/root/.caddy
+    ports:
+      - 80:80 # Let's Encrypt 需要使用此端口
+      - 443:443
     environment:
-      - DOMAIN=bitwarden.example.com  # 您的域名
-      - EMAIL=admin@example.com       # 用于 ACME 注册的电子邮件地址
-      - LOG_FILE=/data/access.log
+      ACME_AGREE: 'true'              # 同意 Let's Encrypt 用户协议
+      DOMAIN: 'bitwarden.example.org' # 修改为您自己的! 用于自动生成 Let's Encrypt SSL
+      EMAIL: 'bitwarden@example.org'  # 修改为您自己的! 可选。提供给 Let's Encrypt
+
+volumes:
+  caddycerts:
 ```
 
-相同的目录下创建如下的 `Caddyfile` 文件（此文件不需要修改）：
+并创建相应的 `Caddyfile` 文件（不需要修改）：
 
 ```python
-{$DOMAIN}:443 {
-  log {
-    level INFO
-    output file {$LOG_FILE} {
-      roll_size 10MB
-      roll_keep 10
+# Caddyfile
+{$DOMAIN} {
+    tls {$EMAIL}
+
+    header / {
+        # 启用 HTTP Strict Transport Security (HSTS)
+        Strict-Transport-Security "max-age=31536000;"
+        # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
+        X-XSS-Protection "1; mode=block"
+        # 禁止在框架内渲染站点 (clickjacking protection)
+        X-Frame-Options "DENY"
+        # 防止搜索引擎收录 (可选)
+        #X-Robots-Tag "none"
     }
-  }
 
-  # 使用 ACME HTTP-01 验证方式为已配置的域名获取证书
-  tls {$EMAIL}
+    # 协商端点也被代理到 Rocket
+    proxy /notifications/hub/negotiate bitwarden:80 {
+        transparent
+    }
 
-  # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）
-  # 如果遇到问题，请尝试禁用此功能
-  encode gzip
+    # Notifications 重定向到 websockets 服务器
+    proxy /notifications/hub bitwarden:3012 {
+        websocket
+    }
 
-  # Notifications 重定向到 WebSocket 服务器
-  reverse_proxy /notifications/hub bitwarden:3012
-
-  # 将任何其他东西代理到 Rocket
-  reverse_proxy bitwarden:80 {
-       # 把真实的远程 IP 发送给 Rocket，让 bitwarden_rs 把其放在日志中
-       # 这样 fail2ban 就可以阻止正确的 IP 了
-       header_up X-Real-IP {remote_host}
-  }
+    # 将 root 目录代理到 Rocket
+    proxy / bitwarden:80 {
+        transparent
+    }
 }
 ```
 
@@ -82,8 +88,6 @@ docker-compose up -d
 ```python
 docker-compose down
 ```
-
-[此处](https://github.com/sosandroid/docker-bitwarden_rs-caddy-synology)提供了一个类似的适用于 Synology 的基于 Caddy 的示例。
 
 如果不需要 WebSocket 通知，则可以单独运行 Bitwarden\_rs。如果你和我一样，在 Raspberry Pi 上使用 bitwardenrs/server:raspberry 镜像运行 Bitwarden\_rs，请按我的示例操作。这是我的示例：
 

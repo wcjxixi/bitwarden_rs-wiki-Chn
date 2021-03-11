@@ -15,11 +15,11 @@
 Description=Bitwarden Server (Rust Edition)
 Documentation=https://github.com/dani-garcia/bitwarden_rs
 # 如果你使用 mariadb、mysql 或 postgresql 数据库， 
-# 你必须像下面这样添加它们，并去掉前面的 "#" 以取消注释。
+# 你必须像下面这样添加它们，并去掉前面的 # 以取消注释。
 # 这将确保你的数据库服务器在 bitwarden_rs 之前启动("After")，
 # 并且在启动 bitwarden_rs 之前成功启动("Requires")。
 
-# Only sqlite
+# 仅 sqlite
 After=network.target
 
 # MariaDB
@@ -77,7 +77,7 @@ $ sudo systemctl daemon-reload
 
 ## 用法 <a id="usage"></a>
 
-要启动此“服务”，请运行：
+要启动此「服务」，请运行：
 
 ```python
 $ sudo systemctl start bitwarden_rs.service

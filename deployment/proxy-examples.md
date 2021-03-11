@@ -432,7 +432,7 @@ labels:
 
 ### 迁移的标签加上 HTTP 到 HTTPS 重定向 <a id="migrated-labels-plus-http-to-https-redirect"></a>
 
-这些标签假定 Traefik 中为端口 80 和 443 定义的入口点分别是“web”和“websecure”。
+这些标签假定 Traefik 中为端口 80 和 443 定义的入口点分别是「web」和「websecure」。
 
 这些标签还假定您已经在 Traefik 中定义了默认的证书解析器。
 
