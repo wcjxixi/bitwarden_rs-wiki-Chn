@@ -48,7 +48,7 @@ SQLite _****_数据库文件（`db.sqlite3`）存储了几乎所有重要的 bit
 
 您一般应使用 SQLite CLI（`sqlite3`）中的 `.backup` 命令来备份数据库文件。该命令使用 [Online Backup API](https://www.sqlite.org/backup.html)，SQLite 文档是备份可能正在被使用的数据库文件的[最佳方式](https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active)。如果你能确保数据库在备份运行时未被使用，你也可以使用其他方式，例如 `.dump` 命令，或者简单地复制所有 SQLite 数据库文件（包括 `-shm` 和 `-wal` 文件，如果存在）。
 
-一个基本的备份命令看起来像这样，假设你的数据文件夹是 `data`（默认）：
+假设你的数据文件夹是 `data`（默认），一个基本的备份命令看起来像这样：
 
 ```python
 sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sqlite3'"
