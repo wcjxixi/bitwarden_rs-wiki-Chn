@@ -46,14 +46,21 @@ $ systemctl --user start container-bitwarden.service
 如果我们希望每次服务启动时都创建一个新容器，我们可以编辑服务文件以包含以下内容：
 
 ```python
+[Unit]
+Description=Podman container-bitwarden.service
+
 [Service]
 Restart=on-failure
 ExecStartPre=/usr/bin/rm -f /%t/%n-pid /%t/%n-cid
-ExecStart=/usr/bin/podman run --conmon-pidfile /%t/%n-pid --env-file=/home/spytec/Bitwarden/bitwarden.conf -d -p 8080:8080 -v /home/spytec/Bitwarden/bw-data:/data/:Z bitwardenrs/server:latest
-ExecStop=/usr/bin/podman rm -f --cid-file /%t/%n-cid
+ExecStart=/usr/bin/podman run --conmon-pidfile /%t/%n-pid --cidfile /%t/%n-cid --env-file=/home/spytec/Bitwarden/bitwarden.conf -d -p 8080:8080 -v /home/spytec/Bitwarden/bw-data:/data/:Z bitwardenrs/server:latest
+ExecStop=/usr/bin/podman stop -t "15" --cidfile /%t/%n-cid
+ExecStop=/usr/bin/podman rm -f --cidfile /%t/%n-cid
 KillMode=none
 Type=forking
 PIDFile=/%t/%n-pid
+
+[Install]
+WantedBy=multi-user.target default.target
 ```
 
 环境文件 `bitwarden.conf` 可以包含容器的你需要的所有环境值，比如：
