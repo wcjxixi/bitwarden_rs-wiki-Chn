@@ -29,7 +29,11 @@ data
 │   ├── example.net.png
 │   └── example.org.png
 ├── rsa_key.der          # ‘rsa_key.*’文件用于签署认证令牌。
-└── rsa_key.pub.der
+├── rsa_key.pem
+├── rsa_key.pub.der
+└── sends                # Each Send attachment is stored as a separate file under this dir.
+    └── <uuid>           # (The sends dir won't be present if no Send attachments have been created.)
+        └── <random_id>
 ```
 
 当使用 MySQL 或 PostgreSQL 后端运行时，目录结构是一样的，只是没有 SQLite 文件。你仍然需要备份数据目录中的文件，以及 MySQL 或 PostgreSQL 表的转储。
@@ -56,11 +60,21 @@ sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sql
 
 如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。[restic](https://restic.net/) 是另一个不错的选择，特别是如果您有较大的附件，并想避免每次都将其作为备份的一部分的时候。
 
-### `attachments` 文件夹 <a id="the-attachments-folder"></a>
+### `attachments` 目录 <a id="the-attachments-dir"></a>
 
 _**需要备份。**_
 
-附件是唯一不存储在数据库表中的重要数据，主要是因为它们可以是任意大小，而 SQL 数据库一般不是为了有效处理大的 blob 而设计的。如果未创建[附件](https://help.bitwarden.in/your-vault/file-attachments)，则该文件夹将不存在。
+[文件附件](https://help.bitwarden.in/your-vault/file-attachments)是唯一不存储在数据库表中的重要数据，主要是因为它们可以是任意大小，而 SQL 数据库一般不是为了有效处理大的 blob 而设计的。如果未创建文件附件，则该目录将不存在。
+
+### `sends` 目录 <a id="the-sends-dir"></a>
+
+_**可选备份。**_
+
+与常规文件附件一样，Send 文件附件也不存储在数据库表中。（但是，Send 的文本注释存储在数据库中。）
+
+与常规附件不同，Send 附件的目的是短暂的。因此，如果要最小化备份的大小，则可以选择不备份此目录。另一方面，如果在还原过程中维护现有 Send 的适当功能更为重要，则应备份此目录。
+
+如果未创建任何 Send 附件，则该目录将不存在。
 
 ### `rsa_key*` 文件 <a id="the-rsa_key-files"></a>
 
@@ -70,7 +84,7 @@ _**建议备份。**_
 
 **\[译者注\]**：[JWT](https://jwt.io/)（JSON Web Tokens），是一种基于 JSON 的、用于在网络上声明某种主张的令牌（token）。JWT 通常由三部分组成:：头信息（header）、消息体（payload）和签名（signature）。
 
-### `icon_cache` 文件夹 <a id="the-icon_cache-dir"></a>
+### `icon_cache` 目录 <a id="the-icon_cache-dir"></a>
 
 _**可选备份。**_
 
