@@ -17,7 +17,7 @@
 ```text
 data
 ├── attachments          # 每个附件都作为单独的文件存储在此目录下。
-│   └── <uuid>
+│   └── <uuid>           # （如果未创建附件，则此 attachments 目录将不存在）
 │       └── <random_id>
 ├── config.json          # 存储管理页面配置；仅在之前已启用管理页面的情况下存在。
 ├── db.sqlite3           # 主 SQLite 数据库文件。
@@ -28,11 +28,11 @@ data
 │   ├── example.com.png
 │   ├── example.net.png
 │   └── example.org.png
-├── rsa_key.der          # ‘rsa_key.*’文件用于签署认证令牌。
+├── rsa_key.der          # ‘rsa_key.*’文件用于签署验证令牌。
 ├── rsa_key.pem
 ├── rsa_key.pub.der
-└── sends                # Each Send attachment is stored as a separate file under this dir.
-    └── <uuid>           # (The sends dir won't be present if no Send attachments have been created.)
+└── sends                # 每个 Send 的附件都作为单独的文件存储在此目录下。
+    └── <uuid>           # （如果未创建 Send 附件，则此 sends 目录将不存在）
         └── <random_id>
 ```
 
