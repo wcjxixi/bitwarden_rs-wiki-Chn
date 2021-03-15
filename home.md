@@ -6,6 +6,8 @@
 
 bitwarden\_rs 是一个使用 Rust 编写的非官方 Bitwarden 服务器实现，它与[官方 Bitwarden 客户端](https://bitwarden.com/download/)兼容，对于不希望使用官方的占用大量资源的自托管部署而言，它是理想的选择。
 
+bitwarden\_rs 面向个人、家庭和小型组织。尽管开发主要对大型组织有用的功能（例如，单点登录、目录同步等）并不是优先事项，但欢迎实现此类功能的高质量 PR。
+
 ### 支持的特性
 
 bitwarden\_rs 实现了 Bitwarden API 所需的大部分功能，这包括：
@@ -19,7 +21,8 @@ bitwarden\_rs 实现了 Bitwarden API 所需的大部分功能，这包括：
 * [文件夹](https://help.bitwarden.in/features/organizing-your-vault-with-folders)
 * [收藏](https://help.bitwarden.in/features/using-favorites)
 * [网站图标](https://help.bitwarden.in/security/your-privacy-when-using-website-icons)
-* [Bitwarden 认证器（TOTP）](https://help.bitwarden.in/features/bitwarden-authenticator-totp)
+* [Bitwarden 验证器（TOTP）](https://help.bitwarden.in/features/bitwarden-authenticator-totp)
+* [Bitwarden Send](https://help.bitwarden.in/bitwarden-send/about-send)
 * 用于桌面和浏览器客户端的[实时同步](https://bitwarden.com/blog/post/live-sync/)（仅 WebSocket）
 * [回收站](https://help.bitwarden.in/account-management/managing-items#items-in-the-trash)（软删除）
 * [电子邮件](https://help.bitwarden.in/two-step-login/two-step-login-via-email)、[Duo](https://help.bitwarden.in/two-step-login/two-step-login-via-duo)、[Yubikey](https://help.bitwarden.in/two-step-login/two-step-login-via-yubikey) 和 [FIDO U2F](https://help.bitwarden.in/two-step-login/two-step-login-via-fido-u2f) 方式的两步登录
@@ -43,6 +46,7 @@ bitwarden\_rs 实现了 Bitwarden API 所需的大部分功能，这包括：
 * 某些企业策略：
   * [两步登录](https://help.bitwarden.in/organizations/enterprise-policies#two-step-login)（[\#981](https://github.com/dani-garcia/bitwarden_rs/issues/981)）
   * [单一组织](https://help.bitwarden.in/organizations/enterprise-policies#single-organization)
+  * [禁用 Send](https://help.bitwarden.in/organizations/enterprise-policies#disable-send)
 
 除非做出贡献，否则可能不会添加的功能：
 
