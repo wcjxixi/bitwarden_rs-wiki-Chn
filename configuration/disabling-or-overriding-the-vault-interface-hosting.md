@@ -24,5 +24,6 @@ docker run -d --name bitwarden \
   bitwardenrs/server:latest
 ```
 
-请注意，您还可以通过为 `WEB_VAULT_FOLDER` 环境变量设置路径来更改 bitwarden\_rs 查找静态文件的路径。
+请注意，您还可以通过为 `WEB_VAULT_FOLDER` 环境变量设置路径来更改 bitwarden\_rs 查找静态文件的路径。  
+
 
