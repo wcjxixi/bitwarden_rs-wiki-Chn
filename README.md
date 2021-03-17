@@ -1,4 +1,4 @@
-# 关于
+# bitwarden\_rs wiki 中文版
 
 这里是 [bitwarden\_rs wiki](https://github.com/dani-garcia/bitwarden_rs/wiki) 页面的中文翻译版。
 
