@@ -25,7 +25,7 @@
 
 ### 通过反向代理 <a id="via-a-reverse-proxy"></a>
 
-有很多常用的反向代理。 在[代理示例](../proxy-examples.md)中可以找到一些配置示例。 如果您不熟悉反向代理并且没有偏好，请首先考虑 [Caddy](https://caddyserver.com/)，因为它内置了对获取 Let's Encrypt 证书的支持。
+有很多常用的反向代理， 在[代理示例](../proxy-examples.md)中可以找到一些配置的示例。 如果您不熟悉反向代理并且没有偏好，请首先考虑 [Caddy](https://caddyserver.com/)，因为它内置了对获取 Let's Encrypt 证书的支持。[使用 Docker Compose](../../container-image-usage/using-docker-compose.md) 文章中有一个使用 Caddy 的很好的例子。
 
 ### 通过 Rocket <a id="via-rocket"></a>
 
