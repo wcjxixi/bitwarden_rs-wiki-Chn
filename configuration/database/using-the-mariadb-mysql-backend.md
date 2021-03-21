@@ -12,7 +12,7 @@
 Alpine 目前不支持 MariaDB（MySQL）。在 amd64 上 Alpine 支持 SQLite 和 PostgreSQL，在 arm32v7 上它仅支持 SQLite。
 {% endhint %}
 
-要使用 MySQL 后端，你可以使用[官方的 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以[使用 MySQL](../../deployment/building-binary.md#mysql-backend) 构建你自己的二进制。
+要使用 MySQL 后端，你可以使用[官方 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以[使用 MySQL](../../deployment/building-binary.md#mysql-backend) 构建你自己的启用二进制。
 
 要运行二进制或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`）。
 
