@@ -26,6 +26,7 @@ bitwarden\_rs 实现大多数功能所需的 Bitwarden API，其中包括：
 * 用于桌面和浏览器客户端的[实时同步](https://bitwarden.com/blog/post/live-sync/)（仅 WebSocket）
 * [回收站](https://help.bitwarden.in/account-management/managing-items#items-in-the-trash)（软删除）
 * [电子邮件](https://help.bitwarden.in/two-step-login/two-step-login-via-email)、[Duo](https://help.bitwarden.in/two-step-login/two-step-login-via-duo)、[Yubikey](https://help.bitwarden.in/two-step-login/two-step-login-via-yubikey) 和 [FIDO U2F](https://help.bitwarden.in/two-step-login/two-step-login-via-fido-u2f) 方式的两步登录
+* [目录连接器](https://help.bitwarden.in/directory-connector/about-directory-connector)支持（基本实现，但不支持群组）
 * 某些企业策略：
   * [主密码](https://help.bitwarden.in/organizations/enterprise-policies#master-password)
   * [密码生成器](https://help.bitwarden.in/organizations/enterprise-policies#password-generator)
@@ -51,7 +52,6 @@ bitwarden\_rs 实现大多数功能所需的 Bitwarden API，其中包括：
 除非做出贡献，否则可能不会添加的功能：
 
 * [单点登录（SSO）](https://help.bitwarden.in/login-with-sso/about-login-with-sso)
-* [目录连接器](https://help.bitwarden.in/directory-connector/about-directory-connector)支持
 * [群组](https://help.bitwarden.in/organizations/about-groups)
 * [自定义角色](https://help.bitwarden.in/organizations/user-types-and-access-control#custom-role)
 
