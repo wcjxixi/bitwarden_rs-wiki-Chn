@@ -1,7 +1,7 @@
 # 1.使用 MariaDB（MySQL）后端
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MySQL-Backend)
+对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MariaDB-%28MySQL%29-Backend)
 {% endhint %}
 
 {% hint style="warning" %}
@@ -106,7 +106,7 @@ volumes:
 1、为 bitwarden\_rs 创建一个新的（空）数据库： 
 
 ```python
-CREATE DATABASE bitwarden_rs;
+CREATE DATABASE bitwarden_rs CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 2、创建一个新的数据库用户并授予数据库权限：
