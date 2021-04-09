@@ -12,10 +12,10 @@
 
 * `Rust nightly`（强烈建议使用 [rustup](https://rustup.rs/)）
 * 在基于 Debian 的发行版上，一些通用软件包可确保构建能正常进行，请安装以下软件包：`build-essential`、`git`
-* `OpenSSL`（应在路径中是可用的，通过系统的包管理器安装，或使用[预构建的二进制](https://wiki.openssl.org/index.php/Binaries)）。在基于 Debian 的发行版上，需要安装 `pkgconfig` 和 `libssl-dev`
+* `OpenSSL`（应在路径中是可用的，通过系统的包管理器安装，或使用[预构建的二进制](https://wiki.openssl.org/index.php/Binaries)）。在基于 Debian 的发行版上，需要安装 `pkg-config` 和 `libssl-dev`
 * 对于基于 Debian 发行版上的 SQLite3 后端，需要安装  `libsqlite3-dev`
 * 对于基于 Debian 发行版上的 MySQL 后端，需要安装  `libmariadb-dev-compat` 和`libmariadb-dev`
-* 对于基于 Debian 发行版上的 PostgreSQL 后端，需要安装  `libpq-dev` 和 `pkgconfig`
+* 对于基于 Debian 发行版上的 PostgreSQL 后端，需要安装  `libpq-dev` 和 `pkg-config`
 * `NodeJS`（仅当编译网页密码库时使用。使用[预构建的二进制](https://nodejs.org/en/download/)，通过系统的包管理器安装）或 [nodesource 二进制发行版](https://github.com/nodesource/distributions)。_备注：web-vault 当前使用的基本程序包（例如，node-sass &lt; v4.12），要求 NodeJS v11_
 
 ## 运行/编译 <a id="run-compile"></a>
