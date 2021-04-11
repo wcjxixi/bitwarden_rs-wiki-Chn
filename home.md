@@ -23,7 +23,7 @@ bitwarden\_rs 实现大多数功能所需的 Bitwarden API，其中包括：
 * [网站图标](https://help.bitwarden.in/security/your-privacy-when-using-website-icons)
 * [Bitwarden 验证器（TOTP）](https://help.bitwarden.in/features/bitwarden-authenticator-totp)
 * [Bitwarden Send](https://help.bitwarden.in/bitwarden-send/about-send)
-* 用于桌面和浏览器客户端的[实时同步](https://bitwarden.com/blog/post/live-sync/)（仅 WebSocket）
+* 用于桌面端/浏览器客户端/扩展的[实时同步](https://bitwarden.com/blog/post/live-sync/)（仅 WebSocket）
 * [回收站](https://help.bitwarden.in/account-management/managing-items#items-in-the-trash)（软删除）
 * [电子邮件](https://help.bitwarden.in/two-step-login/two-step-login-via-email)、[Duo](https://help.bitwarden.in/two-step-login/two-step-login-via-duo)、[Yubikey](https://help.bitwarden.in/two-step-login/two-step-login-via-yubikey) 和 [FIDO U2F](https://help.bitwarden.in/two-step-login/two-step-login-via-fido-u2f) 方式的两步登录
 * [目录连接器](https://help.bitwarden.in/directory-connector/about-directory-connector)支持（基本实现，但不支持群组）
