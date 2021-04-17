@@ -4,76 +4,72 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose)
 {% endhint %}
 
-Docker Compose 是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望 Bitwarden\_rs 服务器和代理都将 WebSocket 请求重定向到正确的地方。
+[Docker Compose](https://docs.docker.com/compose/) 是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望 Bitwarden\_rs 服务器和代理都将 WebSocket 请求重定向到正确的地方。
 
-本指南基于 [\#126 \(comment\)](https://github.com/dani-garcia/bitwarden_rs/issues/126#issuecomment-417872681)。[这里](https://github.com/sosandroid/docker-bitwarden_rs-caddy-synology)也有另一种基于 Bitwarden\_rs 和 Caddy 2.0 的解决方案。
+## 带有 HTTP 验证的 Caddy <a id="caddy-with-http-challenge"></a>
 
-基于以下内容创建 `docker-compose.yml` 文件：
+本示例假定您已[安装](https://docs.docker.com/compose/install/) Docker Compose，并且您的 bitwarden\_rs 实例具有一个可以公开访问的域名（比如 `bitwarden.example.com`）。
+
+首先创建一个新的目录并切换到该目录。接下来，创建如下的 `docker-compose.yml` 文件（注意将 `DOMAIN` 和 `EMAIL` 变量替换为相应的值）：
 
 ```python
-# docker-compose.yml
 version: '3'
 
 services:
   bitwarden:
-    image: bitwardenrs/server
+    image: bitwardenrs/server:latest
+    container_name: bitwarden
     restart: always
+    environment:
+      - WEBSOCKET_ENABLED=true  # 启用 WebSocket 通知
     volumes:
       - ./bw-data:/data
-    environment:
-      WEBSOCKET_ENABLED: 'true' # 请求使用 websockets
-      SIGNUPS_ALLOWED: 'true'   # 设置为 false 表示禁用注册
 
   caddy:
-    image: abiosoft/caddy
+    image: caddy:2
+    container_name: caddy
     restart: always
-    volumes:
-      - ./Caddyfile:/etc/Caddyfile:ro
-      - caddycerts:/root/.caddy
     ports:
-      - 80:80 # Let's Encrypt 需要使用此端口
+      - 80:80  #  ACME HTTP-01 验证需要
       - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy-config:/config
+      - ./caddy-data:/data
     environment:
-      ACME_AGREE: 'true'              # 同意 Let's Encrypt 用户协议
-      DOMAIN: 'bitwarden.example.org' # 修改为您自己的! 用于自动生成 Let's Encrypt SSL
-      EMAIL: 'bitwarden@example.org'  # 修改为您自己的! 可选。提供给 Let's Encrypt
-
-volumes:
-  caddycerts:
+      - DOMAIN=bitwarden.example.com  # 您的域名
+      - EMAIL=admin@example.com       # 用于 ACME 注册的电子邮件地址
+      - LOG_FILE=/data/access.log
 ```
 
-并创建相应的 `Caddyfile` 文件（不需要修改）：
+相同的目录下创建如下的 `Caddyfile` 文件（此文件不需要修改）：
 
 ```python
-# Caddyfile
-{$DOMAIN} {
-    tls {$EMAIL}
-
-    header / {
-        # 启用 HTTP Strict Transport Security (HSTS)
-        Strict-Transport-Security "max-age=31536000;"
-        # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
-        X-XSS-Protection "1; mode=block"
-        # 禁止在框架内渲染站点 (clickjacking protection)
-        X-Frame-Options "DENY"
-        # 防止搜索引擎收录 (可选)
-        #X-Robots-Tag "none"
+{$DOMAIN}:443 {
+  log {
+    level INFO
+    output file {$LOG_FILE} {
+      roll_size 10MB
+      roll_keep 10
     }
+  }
 
-    # 协商端点也被代理到 Rocket
-    proxy /notifications/hub/negotiate bitwarden:80 {
-        transparent
-    }
+  # 使用 ACME HTTP-01 验证方式为已配置的域名获取证书
+  tls {$EMAIL}
 
-    # Notifications 重定向到 websockets 服务器
-    proxy /notifications/hub bitwarden:3012 {
-        websocket
-    }
+  # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）
+  # 如果遇到问题，请尝试禁用此功能
+  encode gzip
 
-    # 将 root 目录代理到 Rocket
-    proxy / bitwarden:80 {
-        transparent
-    }
+  # Notifications 重定向到 WebSocket 服务器
+  reverse_proxy /notifications/hub bitwarden:3012
+
+  # 将任何其他东西代理到 Rocket
+  reverse_proxy bitwarden:80 {
+       # 把真实的远程 IP 发送给 Rocket，让 bitwarden_rs 把其放在日志中
+       # 这样 fail2ban 就可以阻止正确的 IP 了
+       header_up X-Real-IP {remote_host}
+  }
 }
 ```
 
@@ -89,44 +85,80 @@ docker-compose up -d
 docker-compose down
 ```
 
-如果不需要 WebSocket 通知，则可以单独运行 Bitwarden\_rs。如果你和我一样，在 Raspberry Pi 上使用 bitwardenrs/server:raspberry 镜像运行 Bitwarden\_rs，请按我的示例操作。这是我的示例：
+[此处](https://github.com/sosandroid/docker-bitwarden_rs-caddy-synology)提供了一个类似的适用于 Synology 的基于 Caddy 的示例。
+
+## 带有 DNS 验证的 Caddy <a id="caddy-with-dns-challenge"></a>
+
+这个示例和上一个示例一样，但适用于您不希望您的实例被公开访问的情况（即您只能从您的本地网络访问它）。这个示例使用 Duck DNS 作为 DNS 提供商。更多的背景资料，以及如何设置 Duck DNS 的细节，请参考[使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)。
+
+首先创建一个新目录，并切换到该目录。接下来，创建下面的 `docker-compose.yml` 文件，确保为 `DOMAIN` 和 `EMAIL` 变量替换适当的值。
 
 ```python
-# docker-compose.yml
 version: '3'
 
 services:
- bitwarden:
-  image: bitwardenrs/server
-  restart: always
-  volumes:
+  bitwarden:
+    image: bitwardenrs/server:latest
+    container_name: bitwarden
+    restart: always
+    environment:
+      - WEBSOCKET_ENABLED=true  # 启用 WebSocket 通知。
+    volumes:
       - ./bw-data:/data
-      - ./ssl:/ssl
-  ports:
-    - 443:80
-  environment:
-   ROCKET_TLS: '{certs = "/ssl/fullchain.pem", key = "/ssl/key.pem"}'
-   LOG_FILE: '/data/bitwarden.log'
-   SIGNUPS_ALLOWED: 'true'
+
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./caddy:/usr/bin/caddy  # 您的 Caddy 自定义构建
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy-config:/config
+      - ./caddy-data:/data
+    environment:
+      - DOMAIN=bitwarden.example.com  # 您的域名
+      - EMAIL=admin@example.com       # 用于 ACME 注册的电子邮件地址
+      - DUCKDNS_TOKEN=<token>         # 您的 Duck DNS 令牌
+      - LOG_FILE=/data/access.log
 ```
 
-即使服务器运行在位于 NAT 后面的家庭网络上，我也想使用 Let's Encrypt 证书。我参考了这里的说明 [https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode](https://github.com/Neilpang/acme.sh/wiki/DNS-alias-mode)。
+常规的 Caddy 构建（包括 Docker 映像中的构建）不包含 DNS 验证模块，因此接下来，您需要[获取自定义 Caddy 构建](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md#getting-a-custom-caddy-build)。将自定义构建重命名为 `caddy` 并将其移动到与 `docker-compose.yml` 相同的目录下。确保 `caddy` 文件是可执行的（例如 `chmod a + x caddy`）。上面的 `docker-compose.yml` 文件会将自定义构建绑定挂载到 `caddy:2` 容器中，并替换常规的构建。
 
-首先设置域名的 CNAME 记录，并通过 CloudFlare 导出 CF\_Key 和 CF\_Email 或  CF\_Token 和 CF\_Account\_ID。
-
-然后颁发证书。参考 [https://github.com/Neilpang/acme.sh/wiki/dnsap](https://github.com/Neilpang/acme.sh/wiki/dnsapi)。
-
-最后安装证书：
+在同一目录下，创建下面的 `Caddyfile` 文件（这个文件不需要做修改）。
 
 ```python
-acme.sh --install-cert -d home.example.com --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
+{$DOMAIN}:443 {
+  log {
+    level INFO
+    output file {$LOG_FILE} {
+      roll_size 10MB
+      roll_keep 10
+    }
+  }
+
+  # 使用 ACME HTTP-01 验证方式为已配置的域名获取证书
+  tls {
+    dns lego_deprecated duckdns
+  }
+
+  # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）
+  # 如果遇到问题，请尝试禁用此功能
+  encode gzip
+
+  # Notifications 重定向到 WebSocket 服务器
+  reverse_proxy /notifications/hub bitwarden:3012
+
+  # 代理所有，但除了 Rocket
+  reverse_proxy bitwarden:80
+}
 ```
 
-或简单地使用：
+与 HTTP 验证的示例一样，运行下面的命令以创建并启动容器：
 
 ```python
-acme.sh --issue -d home.example.com --challenge-alias otherdomain.com --dns dns_cf --key-file /home/pi/ssl/key.pem --fullchain-file /home/pi/ssl/fullchain.pem
+docker-compose up -d
 ```
-
-我的域名的 A 记录指向 docker-compose.yml 文件最后一行绑定的 IP 地址，这样就不会出现证书相关的警告了。
 

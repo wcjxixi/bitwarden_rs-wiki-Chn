@@ -85,12 +85,12 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
   # 如果遇到问题，请尝试禁用此功能
   encode gzip
   
-  # （可选）仅允许从本地网络访问管理界面
-  @insecureadmin {
-    not remote_ip 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8
-    path /admin*
-  }
-  redir @insecureadmin /
+  # 取消注释以仅允许从本地网络访问管理界面
+  # @insecureadmin {
+  #   not remote_ip 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8
+  #   path /admin*
+  # }
+  # redir @insecureadmin /
 
   # Notifications 重定向到 websockets 服务器
   reverse_proxy /notifications/hub <SERVER>:3012
