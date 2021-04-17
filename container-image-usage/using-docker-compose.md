@@ -10,7 +10,7 @@
 
 本示例假定您已[安装](https://docs.docker.com/compose/install/) Docker Compose，并且您的 bitwarden\_rs 实例具有一个可以公开访问的域名（比如 `bitwarden.example.com`）。
 
-首先创建一个新的目录并切换到该目录。接下来，创建如下的 `docker-compose.yml` 文件（注意将 `DOMAIN` 和 `EMAIL` 变量替换为相应的值）：
+首先创建一个新目录，并切换到该目录。接下来，创建下面的 `docker-compose.yml` 文件，确保将 `DOMAIN` 和 `EMAIL` 变量替换为适当的值。
 
 ```python
 version: '3'
@@ -91,7 +91,7 @@ docker-compose down
 
 这个示例和上一个示例一样，但适用于您不希望您的实例被公开访问的情况（即您只能从您的本地网络访问它）。这个示例使用 Duck DNS 作为 DNS 提供商。更多的背景资料，以及如何设置 Duck DNS 的细节，请参考[使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)。
 
-首先创建一个新目录，并切换到该目录。接下来，创建下面的 `docker-compose.yml` 文件，确保为 `DOMAIN` 和 `EMAIL` 变量替换适当的值。
+首先创建一个新目录，并切换到该目录。接下来，创建下面的 `docker-compose.yml` 文件，确保将 `DOMAIN` 和 `EMAIL` 变量替换为适当的值。
 
 ```python
 version: '3'
