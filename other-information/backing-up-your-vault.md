@@ -54,6 +54,12 @@ SQLite _****_数据库文件（`db.sqlite3`）存储了几乎所有重要的 bit
 sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sqlite3'"
 ```
 
+或者，您可以使用 `VACUUM INTO` 选项，该选项将清理数据库中的删除记录：
+
+```text
+sqlite3 data/db.sqlite3 "VACUUM INTO '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sqlite3'"
+```
+
 假设此命令在 2021 年 1 月 1 日中午 12:34（当地时间）运行，这将备份你的 SQLite 数据库文件到 `/path/to/backups/db-20210101-1234.sqlite3`。
 
 你可以通过一个 cron 作业定期运行这个命令（最好每天至少一次）。
