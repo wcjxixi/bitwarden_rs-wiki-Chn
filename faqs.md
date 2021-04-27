@@ -46,20 +46,20 @@ ALTER USER 'bitwarden_rs'@'localhost' IDENTIFIED WITH mysql_native_password BY '
 
 没有显示图标的原因有很多。如果只是几个密码库项目，可能是我们无法提取它。有些网站启用了一些保护措施，导致我们的实施失败。他们中的大多数需要 Javascript 才能工作。
 
-这也可能是 Bitwarden\_RS 服务器无法访问互联网或未解决 DNS 查询。你可以检查 `/admin/diagnostics` 页面，看看你是否能解决 DNS 查询，是否有连接到互联网。如果这样做了，也有可能是防火墙或外发互联网代理阻止了这些请求。
+这也可能是 Bitwarden\_RS 服务器无法访问互联网或未解决 DNS 查询。你可以检查 `/admin/diagnostics` 页面，看看你是否能解决 DNS 查询以及是否有连接到互联网。如果都没问题，也有可能是防火墙或外发互联网代理阻止了这些请求。
 
 ## 可以将 Bitwarden\_RS 作为 Azure WebApp 运行吗？ <a id="can-i-run-bitwarden_rs-as-an-azure-webapp"></a>
 
 不幸的是，Azure WebApp 使用 CIFS/Samba 作为卷存储，不支持锁定。这导致不能使用 SQLite 数据库文件。 
 
-有两种方法可以解决这个问题：
+有两种方法解决：
 
 1. 不要使用 SQLite，而使用 MariaDB/MySQL 或 Posgresql 作为数据库后端。
 2. 尝试将 `ENABLE_DB_WAL` 环境变量的值设置为 `false` 以禁用 WAL。这需要在一个新的文件上完成，所以你需要移除之前创建的 `db.sqlite3` 文件，并再次重启 Bitwarden\_RS 应用程序。
 
 ## 我在 FAQ 中找不到答案，下一步该怎么做？ <a id="i-did-not-find-my-answer-here-in-the-faq-what-to-do-next"></a>
 
-那么，请尝试搜索和点击我们精彩的 [Wiki](./)。如果这对你没有帮助，请尝试查看 [Github 讨论](https://github.com/dani-garcia/bitwarden_rs/discussions)或 [Bitwarden\_RS 论坛](https://bitwardenrs.discourse.group/)。如果这也没有解决，你可以尝试搜索开放的和已关闭的[话题](https://github.com/dani-garcia/bitwarden_rs/issues)。
+那么，请尝试在我们精彩的 [Wiki](./) 中搜索和点击。如果这对你没有帮助，请尝试查看 [Github 讨论](https://github.com/dani-garcia/bitwarden_rs/discussions)或 [Bitwarden\_RS 论坛](https://bitwardenrs.discourse.group/)。如果这也没有解决，你可以尝试搜索开放的和已关闭的[话题](https://github.com/dani-garcia/bitwarden_rs/issues)。
 
 如果你仍然没有找到答案，你可以在 [Github 讨论](https://github.com/dani-garcia/bitwarden_rs/discussions)或 [Bitwarden\_RS 论坛](https://bitwardenrs.discourse.group/)上发起一个主题，或者加入我们的[聊天室](https://matrix.to/#/#bitwarden_rs:matrix.org)。
 
