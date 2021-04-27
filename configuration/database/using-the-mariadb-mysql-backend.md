@@ -30,7 +30,7 @@ DATABASE_URL=mysql://[[user]:[password]@]host[:port][/database]
 
 完整的代码列表可以在 [Wikipedia 的百分号编码页面](https://zh.wikipedia.org/wiki/%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81)上找到。
 
-**使用** **Docker** **的示例：**
+### 使用 Docker 的示例 <a id="example-using-docker"></a>
 
 ```python
 # 启动 mysql 容器
@@ -49,14 +49,14 @@ docker run -d --name bitwarden --net <some-docker-network>\
  -e ENABLE_DB_WAL='false' <you bitwarden_rs image name>
 ```
 
-**使用非** **Docker MySQL** **服务器的示例：**
+### 使用非 Docker MySQL 服务器的示例 <a id="example-using-non-docker-mysql-server"></a>
 
 ```python
 Server IP/Port 192.168.1.10:3306 UN: dbuser / PW: yourpassword / DB: bitwarden
 mysql://dbuser:yourpassword@192.168.1.10:3306/bitwarden
 ```
 
-**使用 docker-compose 的示例：**
+### 使用 docker-compose 的示例 <a id="example-using-docker-compose"></a>
 
 ```python
 version: "3.7"
@@ -99,63 +99,82 @@ volumes:
  mariadb_vol:
 ```
 
-**从** **SQLite** **迁移到** **MySQL**
+### 创建数据库和用户 <a id="create-database-and-user"></a>
 
-此[话题评论](https://github.com/dani-garcia/bitwarden_rs/issues/497#issuecomment-511827057)中描述了一种从 SQLite 迁移到 MySQL 的简单方法。下面重复这些步骤。请注意，使用此方法风险自负，强烈建议备份您的安装和数据！
+1、为 bitwarden\_rs 创建一个新的（空）数据库（确保字符集和排序规则正确！）：
 
-1、为 bitwarden\_rs 创建一个新的（空）数据库： 
-
-```python
+```sql
 CREATE DATABASE bitwarden_rs CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-2、创建一个新的数据库用户并授予数据库权限：
+2a、创建一个新的数据库用户并授予数据库权限（对于 MariaDB，版本低于 v8 的 MySQL）：
 
-```python
+```sql
 CREATE USER 'bitwarden_rs'@'localhost' IDENTIFIED BY 'yourpassword';
 GRANT ALL ON `bitwarden_rs`.* TO 'bitwarden_rs'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-如果要使用一组受限的授权：
+2b、如果使用 MySQL v8.x，则需要这样创建用户：
 
-```python
-CREATE USER 'bitwarden_rs'@'localhost' IDENTIFIED BY 'yourpassword';
+```sql
+-- 在 MySQLv8 安装上这样使用
+CREATE USER 'bitwarden_rs'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourpassword';
+GRANT ALL ON `bitwarden_rs`.* TO 'bitwarden_rs'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+如果您已经创建了用户，想要更改密码类型：
+
+```sql
+-- 密码类型由 caching_sha2_password 更改未原生
+ALTER USER 'bitwarden_rs'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourpassword';
+```
+
+您可能想尝试一组受限的授权：
+
+```sql
 GRANT ALTER, CREATE, DELETE, DROP, INDEX, INSERT, SELECT, UPDATE ON `bitwarden_rs`.* TO 'bitwarden_rs'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-3、配置 bitwarden\_rs 并启动它，以便 [diesel](http://diesel.rs/) 可以运行迁移并正确设置模式。除此之外不要做别的。
+### 从 SQLite 迁移到 MySQL <a id="migrating-from-sqlite-to-mysql"></a>
 
-4、停止 bitwarden\_rs。
+此[话题评论](https://github.com/dani-garcia/bitwarden_rs/issues/497#issuecomment-511827057)中描述了一种从 SQLite 迁移到 MySQL 的简单方法。下面重复这些步骤。请注意，使用此方法风险自负，强烈建议备份您的安装和数据！
 
-5、使用下面的命令转储你现有的 SQLite 数据库。仔细检查你的 sqlite 数据库的名称，默认应该是 db.sqlite。
+1、首先遵循上面的步骤 1 和步骤 2
+
+2、配置 bitwarden\_rs 并启动它，以便 [diesel](http://diesel.rs/) 可以运行迁移并正确设置模式。除此之外不要做别的。
+
+3、停止 bitwarden\_rs。
+
+4、使用下面的命令转储你现有的 SQLite 数据库。再次检查你的 sqlite 数据库的名称，默认应该是 db.sqlite。
 
 **注意：**在您的 Linux 系统上需要已经安装了 sqlite3 命令。
 
-我们需要从 sqlite 转储的输出中删除一些查询，如创建表等，我们将在这里进行。
+我们需要从 sqlite 转储的输出中移除一些查询，如创建表等，我们将在这里进行。
 
 你可以使用以下单行命令：
 
-```python
+```sql
 sqlite3 db.sqlite3 .dump | grep "^INSERT INTO" | grep -v "__diesel_schema_migrations" > sqlitedump.sql ; echo -ne "SET FOREIGN_KEY_CHECKS=0;\n$(cat sqlitedump.sql)" > mysqldump.sql
 ```
 
 或者逐行运行下列命令：
 
-```python
+```sql
 sqlite3 db.sqlite3 .dump | grep "^INSERT INTO" | grep -v "__diesel_schema_migrations" > sqlitedump.sql
 echo "SET FOREIGN_KEY_CHECKS=0;" > mysqldump.sql
 cat sqlitedump.sql >> mysqldump.sql
 ```
 
-6、加载 MySQL 转储：
+5、加载 MySQL 转储：
 
-```python
+```sql
 mysql --force --password --user=bitwarden_rs --database=bitwarden_rs < mysqldump.sql
 ```
 
-7、重新启动 bitwarden\_rs。
+6、重新启动 bitwarden\_rs。
 
 _注意：使用_ _`--show-warnings`_ _加载_ _MySQL_ _转储时，会突出显示 datetime_ _字段在导入期间被截断了，这**似乎**还可以。_
 
