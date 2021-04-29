@@ -157,7 +157,7 @@ ignoreregex =
 
 ### Jail
 
-\[**译者注**\]：[Jail 是什么](https://www.freebsd.org/doc/zh_CN/books/arch-handbook/jail.html)
+> \[**译者注**\]：[Jail 是什么](https://www.freebsd.org/doc/zh_CN/books/arch-handbook/jail.html)
 
 使用如下内容创建文件：
 
