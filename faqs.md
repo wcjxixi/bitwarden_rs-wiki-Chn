@@ -1,5 +1,9 @@
 # FAQ
 
+{% hint style="success" %}
+对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/FAQs)
+{% endhint %}
+
 ## Bitwarden\_RS 是否与 Bitwarden 项目或 8bit Solutions LLC 有关？ <a id="is-bitwarden_rs-associated-with-the-bitwarden-project-or-8-bit-solutions-llc"></a>
 
 简短的回答，**没有**。两个项目的开发人员之间有时会有联系，但没有合作。除此之外，Bitwarden\_RS 项目仅使用 8bit Solutions LLC 提供的 Web Vault 并打了一些补丁，以使其与我们的实现兼容。
