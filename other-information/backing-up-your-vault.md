@@ -46,12 +46,18 @@ _**需要备份。**_
 
 SQLite _****_数据库文件（`db.sqlite3`）存储了几乎所有重要的 bitwarden\_rs 数据/状态（数据库条目、用户/org/设备元数据等），主要的例外是附件，附件作为单独的文件存储在文件系统中。
 
-您一般应使用 SQLite CLI（`sqlite3`）中的 `.backup` 命令来备份数据库文件。该命令使用 [Online Backup API](https://www.sqlite.org/backup.html)，SQLite 文档是备份可能正在被使用的数据库文件的[最佳方式](https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active)。如果你能确保数据库在备份运行时未被使用，你也可以使用其他方式，例如 `.dump` 命令，或者简单地复制所有 SQLite 数据库文件（包括 `-shm` 和 `-wal` 文件，如果存在）。
+您一般应使用 SQLite CLI（`sqlite3`）中的 `.backup` 命令来备份数据库文件。该命令使用 [Online Backup API](https://www.sqlite.org/backup.html)，SQLite 文档是备份可能正在被使用的数据库文件的[最佳方式](https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active)。如果你能确保数据库在备份运行时未被使用，你也可以使用其他方式，例如 `.dump` 命令，或者简单地复制所有 SQLite 数据库文件（包括 `-wal` 文件，如果存在的话）。
 
 假设你的数据文件夹是 `data`（默认），一个基本的备份命令看起来像这样：
 
-```python
+```sql
 sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sqlite3'"
+```
+
+您也可以使用 `VACUUM INTO`，这将压缩空闲空间，但需要更多的处理时间：：
+
+```sql
+sqlite3 data/db.sqlite3 "VACUUM INTO '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sqlite3'"
 ```
 
 假设此命令在 2021 年 1 月 1 日中午 12:34（当地时间）运行，这将备份你的 SQLite 数据库文件到 `/path/to/backups/db-20210101-1234.sqlite3`。
@@ -102,6 +108,8 @@ _**可选备份。**_
 
 确保 bitwarden\_rs 已经停止，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
 
+当恢复使用 `.backup` 或 `VACUUM INTO` 创建的备份时，确保首先删除任何已存在的 `db.sqlite3-wal` 文件，因为当 SQLite 试图使用陈旧/不匹配的 WAL 文件恢复 `db.sqlite3` 时，有可能导致数据库损坏。然而，如果你直接拷贝 `db.sqlite3` 文件和其匹配的 `db.sqlite3-wal` 文件的方式来备份数据库，那么你必须将两个文件作为一对来恢复。不需要备份或恢复 `db.sqlite3-shm` 文件。
+
 为了验证你的备份是否能正常工作，定期运行从备份中恢复的过程是个好主意。这样做的时候，请确保移动或保留原始数据的副本，以防备份实际上不能正常工作。
 
 ## 示例 <a id="examples"></a>
@@ -112,5 +120,5 @@ _**可选备份。**_
 * [https://github.com/shivpatel/bitwarden\_rs-local-backup](https://github.com/shivpatel/bitwarden_rs-local-backup)
 * [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)
 * [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup)
-* [https://github.com/jjlin/bitwardenrs-backup](https://github.com/jjlin/bitwardenrs-backup)
+* [https://github.com/jjlin/vaultwarden-backup](https://github.com/jjlin/vaultwarden-backup)
 
