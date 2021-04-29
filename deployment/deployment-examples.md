@@ -30,7 +30,8 @@
 
 ## 共享主机 <a id="shared-hosting"></a>
 
-* [https://github.com/jjlin/bitwardenrs-shared-hosting](https://github.com/jjlin/bitwardenrs-shared-hosting)
+* [https://github.com/jjlin/vaultwarden-shared-hosting  ](https://github.com/jjlin/vaultwarden-shared-hosting
+  )
 
 在 [DreamHost](https://www.dreamhost.com/) 上运行 `bitwarden_rs` 的配置示例，但应该同样适用于许多其他共享主机服务。
 
