@@ -1,4 +1,4 @@
-# 关于
+# bitwarden\_rs wiki 中文版
 
 这里是 [bitwarden\_rs wiki](https://github.com/dani-garcia/bitwarden_rs/wiki) 页面的中文翻译版。
 
@@ -11,6 +11,10 @@
 {% hint style="warning" %}
 个人能力有限，具体请以 [bitwarden\_rs](https://github.com/dani-garcia/bitwarden_rs) 官方页面为准。使用本手册所产生的一切后果，与 @wcjxixi 无关。Use at your own risk！！！
 {% endhint %}
+
+> ### 大事记
+>
+> 2021-04-28：名称由 bitwarden\_rs 更改为 vaultwarden。
 
 ## bitwarden\_rs 是什么
 
