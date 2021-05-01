@@ -57,7 +57,7 @@ bitwarden\_rs 实现大多数功能所需的 Bitwarden API，其中包括：
 
 ### 保持联系
 
-要提出问题、提供建议、请求新功能或获得有关配置或安装软件的帮助，请[使用论坛](https://bitwardenrs.discourse.group/)。
+要提出问题、提供建议、请求新功能或获得有关配置或安装软件的帮助，请[使用论坛](https://vaultwarden.discourse.group/)。
 
 如果您发现任何与 bitwarden\_rs 本身有关的 bug 或崩溃，请[创建一个话题](https://github.com/dani-garcia/bitwarden_rs/issues/)。并先确保不存在任何类似的话题！
 
