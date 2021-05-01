@@ -14,7 +14,7 @@
 
 > ### 大事记
 >
-> [2021-04-27](https://github.com/dani-garcia/vaultwarden/commit/34ea10475d316ccb2ca4cd2cac67b61c4cdfb62a)：更名，由 bitwarden\_rs 更改为 [vaultwarden](https://github.com/dani-garcia/vaultwarden)。Reddit 上的[讨论](https://www.reddit.com/r/selfhosted/comments/n0m6pu/looks_like_bitwarden_rs_is_being_renamed_to/)。
+> [2021-04-27](https://github.com/dani-garcia/vaultwarden/commit/34ea10475d316ccb2ca4cd2cac67b61c4cdfb62a)：名称由原来的 bitwarden\_rs 更名为 vaultwarden。
 
 ## bitwarden\_rs 是什么
 
