@@ -63,7 +63,7 @@ ALTER USER 'bitwarden_rs'@'localhost' IDENTIFIED WITH mysql_native_password BY '
 
 ## 我在 FAQ 中找不到答案，下一步该怎么做？ <a id="i-did-not-find-my-answer-here-in-the-faq-what-to-do-next"></a>
 
-那么，请尝试在我们精彩的 [Wiki](./) 中搜索和点击。如果这对你没有帮助，请尝试查看 [Github 讨论](https://github.com/dani-garcia/bitwarden_rs/discussions)或 [Vaultwarden 论坛](https://bitwardenrs.discourse.group/)。如果这也没有解决，你可以尝试搜索开放的和已关闭的[话题](https://github.com/dani-garcia/bitwarden_rs/issues)。
+那么，请尝试在我们精彩的 [Wiki](./) 中搜索和点击。如果这对你没有帮助，请尝试查看 [Github 讨论](https://github.com/dani-garcia/bitwarden_rs/discussions)或 [Bitwarden\_RS 论坛](https://bitwardenrs.discourse.group/)。如果这也没有解决，你可以尝试搜索开放的和已关闭的[话题](https://github.com/dani-garcia/bitwarden_rs/issues)。
 
-如果你仍然没有找到答案，你可以在 [Github 讨论](https://github.com/dani-garcia/bitwarden_rs/discussions)或 [Vaultwarden 论坛](https://bitwardenrs.discourse.group/)上发起一个主题，或者加入我们的[聊天室](https://matrix.to/#/#bitwarden_rs:matrix.org)。
+如果你仍然没有找到答案，你可以在 [Github 讨论](https://github.com/dani-garcia/bitwarden_rs/discussions)或 [Bitwarden\_RS 论坛](https://bitwardenrs.discourse.group/)上发起一个主题，或者加入我们的[聊天室](https://matrix.to/#/#bitwarden_rs:matrix.org)。
 

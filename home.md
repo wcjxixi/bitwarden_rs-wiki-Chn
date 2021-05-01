@@ -35,7 +35,7 @@ bitwarden\_rs 实现大多数功能所需的 Bitwarden API，其中包括：
 
 ### 缺少的特性
 
-话题 [\#246](https://github.com/dani-garcia/bitwarden_rs/issues/246) 包含了完整的功能请求列表，既有官方服务器中缺少的功能，也有 bitwarden\_rs 中特有的增强功能。
+话题 [\#246](https://github.com/dani-garcia/vaultwarden/issues/246) 包含了完整的功能请求列表，既有官方服务器中缺少的功能，也有 bitwarden\_rs 中特有的增强功能。
 
 为了与官方服务器做简单的比较，本章节总结了官方服务器中已经实现但在 bitwarden\_rs 中目前还没有实现的功能。
 
@@ -59,7 +59,7 @@ bitwarden\_rs 实现大多数功能所需的 Bitwarden API，其中包括：
 
 要提出问题、提供建议、请求新功能或获得有关配置或安装软件的帮助，请[使用论坛](https://vaultwarden.discourse.group/)。
 
-如果您发现任何与 bitwarden\_rs 本身有关的 bug 或崩溃，请[创建一个话题](https://github.com/dani-garcia/bitwarden_rs/issues/)。并先确保不存在任何类似的话题！
+如果您发现任何与 bitwarden\_rs 本身有关的 bug 或崩溃，请[创建一个话题](https://github.com/dani-garcia/vaultwarden/issues)。并先确保不存在任何类似的话题！
 
-我们通常在 [\#bitwarden\_rs:matrix.org](https://matrix.to/#/#bitwarden_rs:matrix.org) 房间闲逛，如果您喜欢聊天，欢迎随时加入我们！
+我们通常在 [\#vaultwarden:matrix.org](https://matrix.to/#/#vaultwarden:matrix.org) 房间闲逛，如果您喜欢聊天，欢迎随时加入我们！
 

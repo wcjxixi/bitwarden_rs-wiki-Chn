@@ -77,37 +77,20 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
   # 如果你想通过 ACME（Let's Encrypt 或 ZeroSSL）获获取证书，请取消注释
   # tls {$EMAIL}
 
-  # 或者如果你提供自己的证书，请取消注释
-  # 如果你在 Cloudflare 后面运行，你也会使用此选项
+  # 或者如果你提供自己的证书，请取消注释。
+  # 如果你在 Cloudflare 后面运行，你也会使用此选项。
   # tls {$SSL_CERT_PATH} {$SSL_KEY_PATH}
 
   # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）
   # 如果遇到问题，请尝试禁用此功能
   encode gzip
   
-  # 取消注释以提高安全性（警告：只有在你了解其影响的情况下才能使用！）
-  # header {
-  #      # 启用 HTTP Strict Transport Security (HSTS)
-  #      Strict-Transport-Security "max-age=31536000;"
-  #      # 启用 cross-site filter (XSS) 并告诉浏览器阻止检测到的攻击
-  #      X-XSS-Protection "1; mode=block"
-  #      # 禁止在框架内呈现网站（clickjacking protection）
-  #      X-Frame-Options "DENY"
-  #      # 防止搜索引擎编制索引（可选）
-  #      X-Robots-Tag "none"
-  #      # 服务器名称移除
-  #      -Server
-  # }
-  
-  # 取消注释以仅允许从本地网络访问管理界面
-  # @insecureadmin {
-  #   not remote_ip 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8
-  #   path /admin*
-  # }
-  # redir @insecureadmin /
-  
-  # 协商端点也代理到 Rocket
-  reverse_proxy /notifications/hub/negotiate <SERVER>:8081
+  # （可选）仅允许从本地网络访问管理界面
+  @insecureadmin {
+    not remote_ip 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8
+    path /admin*
+  }
+  redir @insecureadmin /
 
   # Notifications 重定向到 websockets 服务器
   reverse_proxy /notifications/hub <SERVER>:3012

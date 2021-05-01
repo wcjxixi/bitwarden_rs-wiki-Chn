@@ -22,11 +22,11 @@ docker rm bwrs
 
 ```python
 docker pull --platform linux/arm/v7 bitwardenrs/server:alpine
-# 按照上面的方法运行其余的命令。
-# 注意， `docker create` 命令可能会打印出如下类似的信息：
+# Run remaining commands as above.
+# Note that the `docker create` command may print a message like:
 #   WARNING: The requested image's platform (linux/arm/v7) does not match the detected host platform (linux/amd64)
 #   and no specific platform was requested
-# 这是预料之中的，不用担心。
+# This is expected, and isn't cause for concern.
 ```
 
 ## 在未安装 Docker 情况下提取二进制文件 <a id="extracting-binaries-without-docker-installed"></a>
