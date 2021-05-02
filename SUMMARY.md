@@ -1,12 +1,12 @@
 # Table of contents
 
-* [bitwarden\_rs wiki 中文版](README.md)
+* [vaultwarden wiki 中文版](README.md)
 * [主页](home.md)
 * [FAQ](faqs.md)
 * [容器镜像的用法](container-image-usage/README.md)
   * [1.容器镜像的选择](container-image-usage/which-container-image-to-use.md)
   * [2.启动容器](container-image-usage/starting-a-container.md)
-  * [3.更新 Bitwarden 镜像](container-image-usage/updating-the-bitwarden-image.md)
+  * [3.更新 vaultwarden 镜像](container-image-usage/updating-the-vaultwarden-image.md)
   * [4.使用 Docker Compose](container-image-usage/using-docker-compose.md)
   * [5.使用 Podman](container-image-usage/using-podman.md)
 * [部署](deployment/README.md)

@@ -11,9 +11,9 @@
 由于 Podman 的无守护程序架构，因此它比 Docker 更容易在 systemd 中运行。它带有一个便捷的 [generate syetemd 命令](http://docs.podman.io/en/latest/markdown/podman-generate-systemd.1.html)，该命令可以生成 systemd 文件，这里有[一篇不错的文章详细介绍了它](https://www.redhat.com/sysadmin/podman-shareable-systemd-services)，还有[这篇文章也详细介绍了一些最新的更新](https://www.redhat.com/sysadmin/improved-systemd-podman)。
 
 ```python
-$ podman run -d --name bitwarden -v /bw-data/:/data/:Z -e ROCKET_PORT=8080 -p 8080:8080 bitwardenrs/server:latest
+$ podman run -d --name vaultwarden -v /bw-data/:/data/:Z -e ROCKET_PORT=8080 -p 8080:8080 vaultwarden/server:latest
 54502f309f3092d32b4c496ef3d099b270b2af7b5464e7cb4887bc16a4d38597
-$ podman generate systemd --name bitwarden
+$ podman generate systemd --name vaultwarden
 # container-foo.service
 # 由 Podman 1.6.2 自动生成
 # Tue Nov 19 15:49:15 CET 2019
@@ -24,8 +24,8 @@ Documentation=man:podman-generate-systemd(1)
 
 [Service]
 Restart=on-failure
-ExecStart=/usr/bin/podman start bitwarden
-ExecStop=/usr/bin/podman stop -t 10 bitwarden
+ExecStart=/usr/bin/podman start vaultwarden
+ExecStop=/usr/bin/podman stop -t 10 vaultwarden
 KillMode=none
 Type=forking
 PIDFile=/run/user/1000/overlay-containers/54502f309f3092d32b4c496ef3d099b270b2af7b5464e7cb4887bc16a4d38597/userdata/conmon.pid
@@ -37,8 +37,8 @@ WantedBy=multi-user.target default.target
 您可以提供一个 `--files` 标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们就可以将容器作为任何常规服务文件来启用和启动。
 
 ```python
-$ systemctl --user enable /etc/systemd/system/container-bitwarden.service
-$ systemctl --user start container-bitwarden.service
+$ systemctl --user enable /etc/systemd/system/container-vaultwarden.service
+$ systemctl --user start container-vaultwarden.service
 ```
 
 ### 每次重启时新建容器 <a id="new-container-every-restart"></a>
@@ -47,7 +47,7 @@ $ systemctl --user start container-bitwarden.service
 
 ```python
 [Unit]
-Description=Podman container-bitwarden.service
+Description=Podman container-vaultwarden.service
 
 [Service]
 Restart=on-failure

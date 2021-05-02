@@ -1,4 +1,4 @@
-# 3.更新 Bitwarden 镜像
+# 3.更新 vaultwarden 镜像
 
 {% hint style="success" %}
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Updating-the-bitwarden-image)
@@ -8,14 +8,14 @@
 
 ```python
 # 拉取最新版本的镜像
-docker pull bitwardenrs/server:latest
+docker pull vaultwarden/server:latest
 
 # 停止并移除旧版本容器
-docker stop bitwarden
-docker rm bitwarden
+docker stop vaultwarden
+docker rm vaultwarden
 
 # 使用已挂载的数据启动容器
-docker run -d --name bitwarden -v /bw-data/:/data/ -p 80:80 bitwardenrs/server:latest
+docker run -d --name vaultwarden -v /bw-data/:/data/ -p 80:80 vaultwarden/server:latest
 ```
 
 然后访问 [http://localhost:80](http://localhost/)
@@ -24,20 +24,20 @@ docker run -d --name bitwarden -v /bw-data/:/data/ -p 80:80 bitwardenrs/server:l
 
 ```python
 # 拉取最新版本的镜像
-docker pull bitwardenrs/server:latest
+docker pull vaultwarden/server:latest
 
 # 创建中间容器以保留数据
-docker run --volumes-from bitwarden --name bitwarden_data busybox true
+docker run --volumes-from vaultwarden --name vaultwarden_data busybox true
 
 # 停止并移除旧版本容器
-docker stop bitwarden
-docker rm bitwarden
+docker stop vaultwarden
+docker rm vaultwarden
 
 # 使用已挂载的数据启动容器
-docker run -d --volumes-from bitwarden_data --name bitwarden -p 80:80 bitwardenrs/server:latest
+docker run -d --volumes-from vaultwarden_data --name vaultwarden -p 80:80 vaultwarden/server:latest
 
 # 移除中间容器（可选）
-docker rm bitwarden_data
+docker rm vaultwarden_data
 
 # 您可以保留数据容器以用于将来的更新，这样的话，可以跳过最后一步。
 ```
@@ -55,9 +55,9 @@ docker-compose start
 ## 使用 systemd 服务时的更新（在本例中为 Debian/Raspbian） <a id="updating-when-using-systemd-service-in-this-case-debian-raspbian"></a>
 
 ```python
-sudo systemctl restart bitwarden.service
+sudo systemctl restart vaultwarden.service
 sudo docker system prune -f
-# 警告！这将删除已停止或未使用的容器，例如与 bitwarden_rs 不关联的容器
+# 警告！这将删除已停止或未使用的容器，例如与 vaultwarden 不关联的容器
 # 请仔细查看哪个容器是你需要的
 
 docker ps -a
@@ -80,7 +80,7 @@ docker images
 
 ```python
 $ sudo crontab -e
-0 2 * * * sudo systemctl restart bitwarden.service
+0 2 * * * sudo systemctl restart vaultwarden.service
 
 0 3 * * * sudo /usr/bin/docker system prune -f
 ```

@@ -4,11 +4,11 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose)
 {% endhint %}
 
-[Docker Compose](https://docs.docker.com/compose/) 是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望 Bitwarden\_rs 服务器和代理都将 WebSocket 请求重定向到正确的地方。
+[Docker Compose](https://docs.docker.com/compose/) 是一个用于定义和配置多容器应用程序的工具。在我们的例子中，我们希望 vaultwarden 服务器和代理都将 WebSocket 请求重定向到正确的地方。
 
 ## 带有 HTTP 验证的 Caddy <a id="caddy-with-http-challenge"></a>
 
-本示例假定您已[安装](https://docs.docker.com/compose/install/) Docker Compose，并且您的 bitwarden\_rs 实例具有一个可以公开访问的域名（比如 `bitwarden.example.com`）。
+本示例假定您已[安装](https://docs.docker.com/compose/install/) Docker Compose，并且您的 vaultwarden 实例具有一个可以公开访问的域名（比如 `vaultwarden.example.com`）。
 
 首先创建一个新目录，并切换到该目录。接下来，创建下面的 `docker-compose.yml` 文件，确保将 `DOMAIN` 和 `EMAIL` 变量替换为适当的值。
 
@@ -17,8 +17,8 @@ version: '3'
 
 services:
   bitwarden:
-    image: bitwardenrs/server:latest
-    container_name: bitwarden
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
     restart: always
     environment:
       - WEBSOCKET_ENABLED=true  # 启用 WebSocket 通知
@@ -37,7 +37,7 @@ services:
       - ./caddy-config:/config
       - ./caddy-data:/data
     environment:
-      - DOMAIN=bitwarden.example.com  # 您的域名
+      - DOMAIN=vaultwarden.example.com  # 您的域名
       - EMAIL=admin@example.com       # 用于 ACME 注册的电子邮件地址
       - LOG_FILE=/data/access.log
 ```
@@ -62,11 +62,11 @@ services:
   encode gzip
 
   # Notifications 重定向到 WebSocket 服务器
-  reverse_proxy /notifications/hub bitwarden:3012
+  reverse_proxy /notifications/hub vaultwarden:3012
 
   # 将任何其他东西代理到 Rocket
-  reverse_proxy bitwarden:80 {
-       # 把真实的远程 IP 发送给 Rocket，让 bitwarden_rs 把其放在日志中
+  reverse_proxy vaultwarden:80 {
+       # 把真实的远程 IP 发送给 Rocket，让 vaultwarden 把其放在日志中
        # 这样 fail2ban 就可以阻止正确的 IP 了
        header_up X-Real-IP {remote_host}
   }
@@ -89,7 +89,7 @@ docker-compose down
 
 ## 带有 DNS 验证的 Caddy <a id="caddy-with-dns-challenge"></a>
 
-这个示例和上一个示例一样，但适用于您不希望您的实例被公开访问的情况（即您只能从您的本地网络访问它）。这个示例使用 Duck DNS 作为 DNS 提供商。更多的背景资料，以及如何设置 Duck DNS 的细节，请参考[使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)。
+这个示例和上一个示例一样，但适用于您不希望您的实例被公开访问的情况（即您只能从您的本地网络访问它）。这个示例使用 Duck DNS 作为 DNS 提供商。更多的背景资料，以及如何设置 Duck DNS 的细节，请参考[使用 Let's Encrypt 证书运行私有 vaultwarden 实例](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)。
 
 首先创建一个新目录，并切换到该目录。接下来，创建下面的 `docker-compose.yml` 文件，确保将 `DOMAIN` 和 `EMAIL` 变量替换为适当的值。
 
@@ -98,8 +98,8 @@ version: '3'
 
 services:
   bitwarden:
-    image: bitwardenrs/server:latest
-    container_name: bitwarden
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
     restart: always
     environment:
       - WEBSOCKET_ENABLED=true  # 启用 WebSocket 通知。
@@ -119,7 +119,7 @@ services:
       - ./caddy-config:/config
       - ./caddy-data:/data
     environment:
-      - DOMAIN=bitwarden.example.com  # 您的域名
+      - DOMAIN=vaultwarden.example.com  # 您的域名
       - EMAIL=admin@example.com       # 用于 ACME 注册的电子邮件地址
       - DUCKDNS_TOKEN=<token>         # 您的 Duck DNS 令牌
       - LOG_FILE=/data/access.log
@@ -149,10 +149,10 @@ services:
   encode gzip
 
   # Notifications 重定向到 WebSocket 服务器
-  reverse_proxy /notifications/hub bitwarden:3012
+  reverse_proxy /notifications/hub vaultwarden:3012
 
   # 代理所有，但除了 Rocket
-  reverse_proxy bitwarden:80
+  reverse_proxy vaultwarden:80
 }
 ```
 
