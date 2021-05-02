@@ -20,16 +20,16 @@ Requires=docker.service
 
 [Service]
 TimeoutStartSec=0
-ExecStartPre=-/usr/bin/docker pull bitwardenrs/server:latest
-ExecStartPre=-/usr/bin/docker stop bitwarden
-ExecStartPre=-/usr/bin/docker rm bitwarden
+ExecStartPre=-/usr/bin/docker pull vaultwarden/server:latest
+ExecStartPre=-/usr/bin/docker stop vaultwarden
+ExecStartPre=-/usr/bin/docker rm vaultwarden
 ExecStart=/usr/bin/docker run \
   -p 8080:80 \
   -p 8081:3012 \
-  --env-file /opt/.bitwarden.env \
-  -v /opt/bw-data:/data/ \
-  --rm --name bitwarden bitwardenrs/server:latest
-ExecStopPost=-/usr/bin/docker rm bitwarden
+  --env-file /opt/.vaultwarden.env \
+  -v /opt/vw-data:/data/ \
+  --rm --name vaultwardenvaultwarden/server:latest
+ExecStopPost=-/usr/bin/docker rm vaultwarden
 Restart=Always
 RestartSec=30s
 Type=notify
@@ -56,7 +56,7 @@ WantedBy=multi-user.target
 * 在 `[Service]` 块中使用 `Environment` 指令。
 * 使用 `docker` 的 `-e` 选项。此时，您可以省略上面示例中显示的 `--env` 选项。
 
-要验证是否正确设置了环境变量，请检查 `systemctl show bitwarden.service`  的输出中是否存在 `Environment` 行。
+要验证是否正确设置了环境变量，请检查 `systemctl show vaultwarden.service`  的输出中是否存在 `Environment` 行。
 
 也可以在单元文件中使用 `EnvironmentFile` 指令将环境变量存储在单独的文件中。在这种情况下，请如上面示例中所示在 docker 命令行中设置 `--env` 选项，否则将不会处理环境文件。
 
@@ -70,29 +70,29 @@ Key="Value"
 
 但是，systemd 项目并没有规定该文件的存储位置。有关此文件的最佳存储位置，请查阅发行版文档。例如，基于 RedHat 的发行版通常将这些文件放在 `/etc/sysconfig/` 中。
 
-如果你不确定，只需使用 root 权限在 `/etc/` 中创建一个文件即可，比如 `/etc/bitwarden.service.conf`。
+如果你不确定，只需使用 root 权限在 `/etc/` 中创建一个文件即可，比如 `/etc/vaultwarden.service.conf`。
 
 在您的单元文件中的 `[Service]` 块中添加一个 `EnvironmentFile` 指令，其值是上面创建的文件的完整路径。例如：
 
 ```python
 [Unit]
-Description=Bitwarden
+Description=Vaultwarden
 After=docker.service
 Requires=docker.service
 
 [Service]
-EnvironmentFile=/etc/bitwarden.service.conf
+EnvironmentFile=/etc/vaultwarden.service.conf
 TimeoutStartSec=0
 -snip-
 ```
 
 ## 运行服务 <a id="running-the-service"></a>
 
-完成上述安装和配置后，使用 `sudo systemctl daemon-reload` 命令重新加载systemd 。然后，使用 `sudo systemctl start bitwarden` 命令启动 Bitwarden 服务。
+完成上述安装和配置后，使用 `sudo systemctl daemon-reload` 命令重新加载systemd 。然后，使用 `sudo systemctl start vaultwarden` 命令启动 Vaultwarden 服务。
 
-要使服务跟随系统启动，使用 `sudo systemctl enable bitwarden`。
+要使服务跟随系统启动，使用 `sudo systemctl enable vaultwarden`。
 
-使用 `systemctl status bitwarden` 来验证容器是否已经启动。
+使用 `systemctl status vaultwarden` 来验证容器是否已经启动。
 
 如果在启动服务时遇到 `json: cannot unmarshal object into Go value of type string` 错误，则应使用最新版本的 Go 来自己编译 systemd-docker 二进制，请参阅此[话题](https://github.com/ibuildthecloud/systemd-docker/issues/50)。
 

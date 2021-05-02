@@ -14,7 +14,7 @@
 DATABASE_URL=postgresql://[[user]:[password]@]host[:port][/database]
 ```
 
-docker 运行环境变量的一个示例：`-e 'DATABASE_URL=postgresql://postgresadmin:strongpassword@postgres:5432/bitwardenrs'`。
+docker 运行环境变量的一个示例：`-e 'DATABASE_URL=postgresql://postgresadmin:strongpassword@postgres:5432/vaultwarden'`。
 
 如果密码包含特殊字符，则需要使用百分号编码。
 
@@ -28,38 +28,38 @@ docker 运行环境变量的一个示例：`-e 'DATABASE_URL=postgresql://postgr
 
 从 SQLite 迁移到 PostgreSQL 或 MySQL的方法比较简单，但请注意，**使用此方法风险自负，并且强烈建议备份您的安装和数据**！这**没有得到支持**，也没有经过强有力的测试。
 
-1、为 bitwarden\_rs 创建一个新的（空）数据库： 
+1、为 vaultwarden 创建一个新的（空）数据库： 
 
-```python
-CREATE DATABASE bitwarden_rs;
+```sql
+CREATE DATABASE vaultwarden;
 ```
 
 2、创建一个新的数据库用户并授予数据库权限：
 
-```python
-CREATE USER bitwarden_rs WITH ENCRYPTED PASSWORD 'yourpassword';
-GRANT all privileges ON database bitwarden_rs TO bitwarden_rs;
+```sql
+CREATE USER vaultwarden WITH ENCRYPTED PASSWORD 'yourpassword';
+GRANT all privileges ON database vaultwarden TO vaultwarden;
 ```
 
-3、配置 bitwarden\_rs 并启动它，以便 [diesel](http://diesel.rs/) 可以运行迁移并正确设置模式。除此之外不要做别的。
+3、配置 vaultwarden 并启动它，以便 [diesel](http://diesel.rs/) 可以运行迁移并正确设置模式。除此之外不要做别的。
 
-4、停止 bitwarden\_rs。
+4、停止 vaultwarden。
 
 5、安装 [pgloader](http://pgloader.io/) 。
 
 6、使用如下内容创建 bitwarden.load 文件：
 
-```python
+```sql
 load database
-     from sqlite://yoursqliteuser:yoursqlitepassword@yoursqliteserver:yoursqliteport/yoursqlitedatabase
-     into postgresql://yourpgsqluser:yourpgsqlpassword:yourpgsqlserver:yourpgsqlport/yourpgsqldatabase
+     from sqlite:///where/you/keep/your/vaultwarden/db.sqlite3 
+     into postgresql://yourpgsqluser:yourpgsqlpassword@yourpgsqlserver:yourpgsqlport/yourpgsqldatabase
      WITH data only, include no drop, reset sequences
-     EXCLUDING TABLE NAMES MATCHING '__diesel_schema_migrations'
+     EXCLUDING TABLE NAMES LIKE '__diesel_schema_migrations'
      ALTER SCHEMA 'bitwarden' RENAME TO 'public'
 ;
 ```
 
 7、运行 `pgloader bitwarden.load` 命令，你可能会看到一些警告，（不用理会）迁移会成功完成。
 
-8、重新启动 bitwarden\_rs。
+8、重新启动 vaultwarden。
 

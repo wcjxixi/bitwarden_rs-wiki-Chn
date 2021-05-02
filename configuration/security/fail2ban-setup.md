@@ -25,11 +25,11 @@
 ## 预先说明 <a id="pre-requisite"></a>
 
 * 文件名位于每个代码块的顶部。
-* 从 1.5.0 版开始，Bitwarden\_rs 支持记录到文件。请设置[日志记录](../logging.md)。
+* 从 1.5.0 版开始，Vaultwarden 支持记录到文件。请设置[日志记录](../logging.md)。
 * 尝试使用错误的帐户信息登录到网页版密码库，并检查日志文件中如下格式的记录项：
 
 ```python
-[YYYY-MM-DD hh:mm:ss][bitwarden_rs::api::identity][ERROR] Username or password is incorrect. Try again. IP: XXX.XXX.XXX.XXX. Username: email@domain.com.
+[YYYY-MM-DD hh:mm:ss][vaultwarden::api::identity][ERROR] Username or password is incorrect. Try again. IP: XXX.XXX.XXX.XXX. Username: email@domain.com.
 ```
 
 ## 安装 <a id="installation"></a>
@@ -105,7 +105,7 @@ services:
 
 		volumes:
 		- /volumeX/docker/fail2ban:/data
-		- /volumeX/docker/bw-data:/bitwarden:ro
+		- /volumeX/docker/vw-data:/vaultwarden:ro
 
 		network_mode: "host"
 
@@ -133,7 +133,7 @@ docker-compose up -d
 使用如下内容创建文件：
 
 ```python
-# path_f2b/filter.d/bitwarden_rs.local
+# path_f2b/filter.d/vaultwarden.local
 
 [INCLUDES]
 before = common.conf
@@ -145,15 +145,15 @@ ignoreregex =
 
 **提示：**如果在 `fail2ban.log` 中出现以下错误消息（CentOS 7，fail2ban v0.9.7）  
 `fail2ban.filter [5291]: ERROR No 'host' group in '^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$'`  
-请将 `bitwarden.local` 中的 `<ADDR>` 改为 `<HOST>`。
+请将 `vaultwarden.local` 中的 `<ADDR>` 改为 `<HOST>`。
 
-**提示：**如果您在 `bitwarden.log` 中看到 127.0.0.1 是登录失败的 IP 地址，那么您可能正在使用反向代理，而 fail2ban 无法正常工作：
+**提示：**如果您在 `vaultwarden.log` 中看到 127.0.0.1 是登录失败的 IP 地址，那么您可能正在使用反向代理，而 fail2ban 无法正常工作：
 
 ```python
-[YYYY-MM-DD hh:mm:ss][bitwarden_rs::api::identity][ERROR] Username or password is incorrect. Try again. IP: 127.0.0.1. Username: email@example.com.
+[YYYY-MM-DD hh:mm:ss][vaultwarden::api::identity][ERROR] Username or password is incorrect. Try again. IP: 127.0.0.1. Username: email@example.com.
 ```
 
-要解决这个问题，需要通过 X-Real-IP 头将真实的远程地址转发给 bitwarden\_rs。如何操作呢？根据你使用的代理服务器不同而不同。例如，在 Caddy 2.x 中，当你定义反向代理时，同时定义 `header_up X-Real-IP {remote_host}`。更多信息请参阅[代理示例](../../deployment/proxy-examples.md)。
+要解决这个问题，需要通过 X-Real-IP 头将真实的远程地址转发给 vaultwarden。如何操作呢？根据你使用的代理服务器不同而不同。例如，在 Caddy 2.x 中，当你定义反向代理时，同时定义 `header_up X-Real-IP {remote_host}`。更多信息请参阅[代理示例](../../deployment/proxy-examples.md)。
 
 ### Jail
 
@@ -162,14 +162,14 @@ ignoreregex =
 使用如下内容创建文件：
 
 ```python
-# path_f2b/jail.d/bitwarden_rs.local
+# path_f2b/jail.d/vaultwarden.local
 
-[bitwarden_rs]
+[vaultwarden]
 enabled = true
 port = 80,443,8081
-filter = bitwarden_rs
+filter = vaultwarden
 banaction = %(banaction_allports)s
-logpath = /path/to/bitwarden.log
+logpath = /path/to/vaultwarden.log
 maxretry = 3
 bantime = 14400
 findtime = 14400
@@ -178,7 +178,7 @@ findtime = 14400
 请注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 行替换 `banaction` 行：
 
 ```python
-action = iptables-allports[name=bitwarden_rs, chain=FORWARD]
+action = iptables-allports[name=vaultwarden, chain=FORWARD]
 ```
 
 **注意**：  
@@ -204,7 +204,7 @@ sudo systemctl reload fail2ban
 使用如下内容创建文件：
 
 ```python
-# path_f2b/filter.d/bitwarden-admin.local
+# path_f2b/filter.d/vaultwarden-admin.local
 
 [INCLUDES]
 before = common.conf
@@ -214,21 +214,21 @@ failregex = ^.*Invalid admin token\. IP: <ADDR>.*$
 ignoreregex =
 ```
 
-**提示：**如果在 `fail2ban.log` 中出现以下错误消息：`ERROR NOK: ("No 'host' group in '^.*Invalid admin token\\. IP: <ADDR>.*$'")`，请将 `bitwarden_rs-admin.local` 中的 `<ADDR>` 改为 `<HOST>`
+**提示：**如果在 `fail2ban.log` 中出现以下错误消息：`ERROR NOK: ("No 'host' group in '^.*Invalid admin token\\. IP: <ADDR>.*$'")`，请将 `vaultwarden-admin.local` 中的 `<ADDR>` 改为 `<HOST>`
 
 ### Jail
 
 使用如下内容创建文件：
 
 ```python
-# path_f2b/jail.d/bitwarden_rs-admin.local
+# path_f2b/jail.d/vaultwarden-admin.local
 
-[bitwarden_rs-admin]
+[vaultwarden-admin]
 enabled = true
 port = 80,443
-filter = bitwarden_rs-admin
+filter = vaultwarden-admin
 banaction = %(banaction_allports)s
-logpath = /path/to/bitwarden.log
+logpath = /path/to/vaultwarden.log
 maxretry = 3
 bantime = 14400
 findtime = 14400
@@ -237,7 +237,7 @@ findtime = 14400
 注意：Docker 使用 FORWARD 链而不是默认的 INPUT 链。因此，当使用 Docker 时，请用下面的 `action` 行替换 `banaction` 行：
 
 ```python
-action = iptables-allports[name=bitwarden_rs, chain=FORWARD]
+action = iptables-allports[name=vaultwarden, chain=FORWARD]
 ```
 
 重新加载 fail2ban 使更改生效：
@@ -248,16 +248,16 @@ sudo systemctl reload fail2ban
 
 ## 测试 Fail2Ban <a id="testing-fail-2-ban"></a>
 
-现在，尝试使用任何电子邮件地址登录 Bitwarden（不必是有效电子邮件，只需是电子邮件格式即可）。如果它可以正常工作，您的 IP 将被阻止。运行以下命令来取消阻止的 IP：
+现在，尝试使用任何电子邮件地址登录 Vaultwarden （不必是有效电子邮件，只需是电子邮件格式即可）。如果它可以正常工作，您的 IP 将被阻止。运行以下命令来取消阻止的 IP：
 
 ```python
 # 使用 Docker
-sudo docker exec -t fail2ban fail2ban-client set bitwarden_rs unbanip XX.XX.XX.XX
+sudo docker exec -t fail2ban fail2ban-client set vaultwarden unbanip XX.XX.XX.XX
 # 未使用 Docker
-sudo fail2ban-client set bitwarden_rs unbanip XX.XX.XX.XX
+sudo fail2ban-client set vaultwarden unbanip XX.XX.XX.XX
 ```
 
-如果 Fail2Ban 无法正常运行，请检查 Bitwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/bw-data/:/data/` 时，日志文件应位于容器外部的 `/data/...` 中）。
+如果 Fail2Ban 无法正常运行，请检查 Vaultwarden 日志文件的路径是否正确。对于 Docker：如果指定的日志文件未生成和/或更新，请确保将 `EXTENDED_LOGGING` 变量设置为 true（默认值），并且日志文件的路径是 Docker 内部的路径（当您使用 `/vw-data/:/data/` 时，日志文件应位于容器外部的 `/data/...` 中）。
 
 还要确认 Docker 容器的时区与主机的时区是否一致。通过将日志文件中显示的时间与主机操作系统的时间进行比较来进行检查。如果它们不一致，则有多种解决方法。一种是使用 `-e "TZ = <timezone>"` 选项启动 docker 。可用的时区（比如 `-e TZ = "Australia/Melbourne"`）列表在[这里](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)查看。
 

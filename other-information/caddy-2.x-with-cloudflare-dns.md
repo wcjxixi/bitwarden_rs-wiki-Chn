@@ -44,14 +44,14 @@ https://[YOUR-DOMAIN]:443 {
        -Server
    }
   # 协商端点也代理到 Rocket
-  reverse_proxy /notifications/hub/negotiate bitwarden:80
+  reverse_proxy /notifications/hub/negotiate vaultwarden:80
 
   # 通知重定向到 websockets 服务器
-  reverse_proxy /notifications/hub bitwarden:3012
+  reverse_proxy /notifications/hub vaultwarden:3012
 
   # 将 Root 目录代理到 Rocket
-  reverse_proxy bitwarden:80 {
-       # 将真正的远程 IP 发送给 Rocket，以便 bitwarden_rs 可以将其
+  reverse_proxy vaultwarden:80 {
+       # 将真正的远程 IP 发送给 Rocket，以便 vaultwarden 可以将其
        # 放入日志，以便 fail2ban 可以禁止正确的 IP。
        header_up X-Real-IP {remote_host}
   }
@@ -64,11 +64,11 @@ docker-compose.yml：
 version: '3'
 
 services:
-  bitwarden:
-    image: bitwardenrs/server
+  vaultwarden:
+    image: vaultwarden/server
     restart: always
     volumes:
-      - $PWD/bw-data:/data
+      - $PWD/vw-data:/data
     environment:
       WEBSOCKET_ENABLED: 'true' # 启用 websockets
       SIGNUPS_ALLOWED: 'false'   # 设置为 false 以禁用注册

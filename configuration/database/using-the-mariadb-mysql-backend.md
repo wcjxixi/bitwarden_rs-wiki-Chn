@@ -14,7 +14,7 @@ Alpine 目前不支持 MariaDB（MySQL）。在 amd64 上 Alpine 支持 SQLite �
 
 要使用 MySQL 后端，你可以使用[官方 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以构建你自己的启用了 [MySQL](../../deployment/building-binary.md#mysql-backend) 的二进制。
 
-要运行二进制或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/bitwarden'`）。
+要运行二进制或容器，请确保已设置 `DATABASE_URL` 环境变量（即 `DATABASE_URL='mysql://<user>:<password>@mysql/vaultwarden'`）。
 
 **连接字符串语法：**
 
@@ -36,24 +36,24 @@ DATABASE_URL=mysql://[[user]:[password]@]host[:port][/database]
 # 启动 mysql 容器
 docker run --name mysql --net <some-docker-network>\
  -e MYSQL_ROOT_PASSWORD=<my-secret-pw>\
- -e MYSQL_DATABASE=bitwarden\
- -e MYSQL_USER=<bitwarden_user>\
- -e MYSQL_PASSWORD=<bitwarden_pw> -d mysql:5.7
+ -e MYSQL_DATABASE=vaultwarden\
+ -e MYSQL_USER=<vaultwarden_user>\
+ -e MYSQL_PASSWORD=<vaultwarden_pw> -d mysql:5.7
 
-# 使用 MySQL 环境变量值启动 bitwarden_rs
-docker run -d --name bitwarden --net <some-docker-network>\
- -v $(pwd)/bw-data/:/data/ -v <Path to ssl certs>:/ssl/\
+# 使用 MySQL 环境变量值启动 vaultwarden
+docker run -d --name vaultwarden --net <some-docker-network>\
+ -v $(pwd)/vw-data/:/data/ -v <Path to ssl certs>:/ssl/\
  -p 443:80 -e ROCKET_TLS='{certs="/ssl/<your ssl cert>",key="/ssl/<your ssl key>"}'\
- -e RUST_BACKTRACE=1 -e DATABASE_URL='mysql://<bitwarden_user>:<bitwarden_pw>@mysql/bitwarden'\
+ -e RUST_BACKTRACE=1 -e DATABASE_URL='mysql://<vaultwarden_user>:<vaultwarden_pw>@mysql/vaultwarden'\
  -e ADMIN_TOKEN=<some_random_token_as_per_above_explanation>\
- -e ENABLE_DB_WAL='false' <you bitwarden_rs image name>
+ -e ENABLE_DB_WAL='false' <you vaultwarden image name>
 ```
 
 ### 使用非 Docker MySQL 服务器的示例 <a id="example-using-non-docker-mysql-server"></a>
 
 ```python
-Server IP/Port 192.168.1.10:3306 UN: dbuser / PW: yourpassword / DB: bitwarden
-mysql://dbuser:yourpassword@192.168.1.10:3306/bitwarden
+Server IP/Port 192.168.1.10:3306 UN: dbuser / PW: yourpassword / DB: vaultwarden
+mysql://dbuser:yourpassword@192.168.1.10:3306/vaultwarden
 ```
 
 ### 使用 docker-compose 的示例 <a id="example-using-docker-compose"></a>
@@ -73,22 +73,22 @@ services:
    - "/etc/localtime:/etc/localtime:ro"
   environment:
    - "MYSQL_ROOT_PASSWORD=<my-secret-pw>"
-   - "MYSQL_PASSWORD=<bitwarden_pw>"
-   - "MYSQL_DATABASE=bitwarden_db"
-   - "MYSQL_USER=<bitwarden_user>"
+   - "MYSQL_PASSWORD=<vaultwarden_pw>"
+   - "MYSQL_DATABASE=vaultwarden_db"
+   - "MYSQL_USER=<vaultwarden_user>"
 
- bitwarden:
-  image: "bitwardenrs/server-mysql:latest"
-  container_name: "bitwarden"
-  hostname: "bitwarden"
+ vaultwarden:
+  image: "vaultwarden/server-mysql:latest"
+  container_name: "vaultwarden"
+  hostname: "vaultwarden"
   restart: always
   env_file:
    - ".env"
   volumes:
-   - "bitwarden_vol:/data/"
+   - "vaultwarden_vol:/data/"
   environment:
 ## 当在 mysql URL 周围使用单括号时会出现问题，就像在普通的 docker 例子中的一样
-   - "DATABASE_URL=mysql://<bitwarden_user>:<bitwarden_pw>@mariadb/bitwarden_db"
+   - "DATABASE_URL=mysql://<vaultwarden_user>:<vaultwarden_pw>@mariadb/vaultwarden_db"
    - "ADMIN_TOKEN=<some_random_token_as_per_above_explanation>"
    - "RUST_BACKTRACE=1"
   ports:
@@ -101,17 +101,17 @@ volumes:
 
 ### 创建数据库和用户 <a id="create-database-and-user"></a>
 
-1、为 bitwarden\_rs 创建一个新的（空）数据库（确保字符集和排序规则正确！）：
+1、为 vaultwarden 创建一个新的（空）数据库（确保字符集和排序规则正确！）：
 
 ```sql
-CREATE DATABASE bitwarden_rs CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE vaultwarden CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 2a、创建一个新的数据库用户并授予数据库权限（对于 MariaDB，版本低于 v8 的 MySQL）：
 
 ```sql
-CREATE USER 'bitwarden_rs'@'localhost' IDENTIFIED BY 'yourpassword';
-GRANT ALL ON `bitwarden_rs`.* TO 'bitwarden_rs'@'localhost';
+CREATE USER 'vaultwarden'@'localhost' IDENTIFIED BY 'yourpassword';
+GRANT ALL ON `vaultwarden`.* TO 'vaultwarden'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
@@ -119,8 +119,8 @@ FLUSH PRIVILEGES;
 
 ```sql
 -- 在 MySQLv8 安装上这样使用
-CREATE USER 'bitwarden_rs'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourpassword';
-GRANT ALL ON `bitwarden_rs`.* TO 'bitwarden_rs'@'localhost';
+CREATE USER 'vaultwarden'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourpassword';
+GRANT ALL ON `vaultwarden`.* TO 'vaultwarden'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
@@ -128,25 +128,25 @@ FLUSH PRIVILEGES;
 
 ```sql
 -- 密码类型由 caching_sha2_password 更改未原生
-ALTER USER 'bitwarden_rs'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourpassword';
+ALTER USER 'vaultwarden'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourpassword';
 ```
 
 您可能想尝试一组受限的授权：
 
 ```sql
-GRANT ALTER, CREATE, DELETE, DROP, INDEX, INSERT, SELECT, UPDATE ON `bitwarden_rs`.* TO 'bitwarden_rs'@'localhost';
+GRANT ALTER, CREATE, DELETE, DROP, INDEX, INSERT, SELECT, UPDATE ON `vaultwarden`.* TO 'vaultwarden'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
 ### 从 SQLite 迁移到 MySQL <a id="migrating-from-sqlite-to-mysql"></a>
 
-此[话题评论](https://github.com/dani-garcia/bitwarden_rs/issues/497#issuecomment-511827057)中描述了一种从 SQLite 迁移到 MySQL 的简单方法。下面重复这些步骤。请注意，使用此方法风险自负，强烈建议备份您的安装和数据！
+此[话题评论](https://github.com/dani-garcia/vaultwarden/issues/497#issuecomment-511827057)中描述了一种从 SQLite 迁移到 MySQL 的简单方法。下面重复这些步骤。请注意，使用此方法风险自负，强烈建议备份您的安装和数据！
 
 1、首先遵循上面的步骤 1 和步骤 2
 
-2、配置 bitwarden\_rs 并启动它，以便 [diesel](http://diesel.rs/) 可以运行迁移并正确设置模式。除此之外不要做别的。
+2、配置 vaultwarden 并启动它，以便 [diesel](http://diesel.rs/) 可以运行迁移并正确设置模式。除此之外不要做别的。
 
-3、停止 bitwarden\_rs。
+3、停止 vaultwarden。
 
 4、使用下面的命令转储你现有的 SQLite 数据库。再次检查你的 sqlite 数据库的名称，默认应该是 db.sqlite。
 
@@ -171,10 +171,10 @@ cat sqlitedump.sql >> mysqldump.sql
 5、加载 MySQL 转储：
 
 ```sql
-mysql --force --password --user=bitwarden_rs --database=bitwarden_rs < mysqldump.sql
+mysql --force --password --user=vaultwarden --database=vaultwarden < mysqldump.sql
 ```
 
-6、重新启动 bitwarden\_rs。
+6、重新启动 vaultwarden。
 
 _注意：使用_ _`--show-warnings`_ _加载_ _MySQL_ _转储时，会突出显示 datetime_ _字段在导入期间被截断了，这**似乎**还可以。_
 
@@ -196,9 +196,9 @@ sed -i s#\"#\#g mysqldump.sql
 ```
 
 ```python
-mysql --password --user=bitwarden_rs
-use bitwarden_rs
-source /bw-data/mysqldump.sql
+mysql --password --user=vaultwarden
+use vaultwarden
+source /vw-data/mysqldump.sql
 exit
 ```
 

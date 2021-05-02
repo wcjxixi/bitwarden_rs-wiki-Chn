@@ -6,7 +6,7 @@
 
 > WAL 是仅用于 SQLite 的设置，它在 Postgres 或 MySQL 上不起作用。
 
-默认情况下，`bitwarden_rs` 在启动期间将尝试为数据库启用 [WAL](https://sqlite.org/wal.html)。添加此功能可以提高性能，并且在某些情况下有助于避免请求失败。
+默认情况下，`vaultwarden` 在启动期间将尝试为数据库启用 [WAL](https://sqlite.org/wal.html)。添加此功能可以提高性能，并且在某些情况下有助于避免请求失败。
 
 ## 关闭 WAL 的原因 <a id="reasons-to-turn-wal-off"></a>
 
@@ -28,7 +28,7 @@
 
 如果您使用启用了 WAL 的低版本数据库，则需要使用 sqlite 来禁用它：
 
-1）停止 `bitwarden_rs`
+1）停止 `vaultwarden`
 
 2）定位您的[数据文件夹](../changing-persistent-data-location.md)。除非您指定了其他名称，否则这里通常会有一个名为 `db.sqlite3` 的文件。
 
@@ -49,25 +49,25 @@ delete
 
 ### 2、在 `bitwarden_rs` 中禁用 WAL  <a id="2-disable-wal-in-bitwarden_rs"></a>
 
-要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `false` 以启动 `bitwarden_rs`。
+要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `false` 以启动 `vaultwarden`。
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e ENABLE_DB_WAL=false \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 80:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 
 确保在启动前始终使用了此变量，否则一旦没有此变量将会再次启用 WAL（如果发生这种情况，请从[第 1 步](running-without-wal-enabled.md#1-disable-wal-on-old-db)开始再次禁用它）。
 
 ## 如何开启 WAL <a id="how-to-turn-wal-on"></a>
 
-通常来说，只要您在未将 `ENABLE_DB_WAL` 变量的值设置为 `false` 的情况下启动 `bitarden_rs`，服务器将自动为您启用 WAL。您可以通过运行以下命令进行验证：
+通常来说，只要您在未将 `ENABLE_DB_WAL` 变量的值设置为 `false` 的情况下启动 `vaultwarden`，服务器将自动为您启用 WAL。您可以通过运行以下命令进行验证：
 
 ```python
 sqlite3 db.sqlite3 'PRAGMA journal_mode'
 ```
 
-`db.sqlite3` 是 `bitwarden_rs` 所使用的数据库文件。此命令将报告当前使用的模式，在我们的例子中将返回 `wal`。如果已禁用 WAL，通常默认返回 `delete` 。
+`db.sqlite3` 是 `vaultwarden` 所使用的数据库文件。此命令将报告当前使用的模式，在我们的例子中将返回 `wal`。如果已禁用 WAL，通常默认返回 `delete` 。
 
