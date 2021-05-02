@@ -108,7 +108,7 @@ export WEBSOCKET_ENABLED=true
 创建一个名为 `caddy.env` 的文件，内容如下（替换相应的值）：
 
 ```python
-DOMAIN=.example.com
+DOMAIN=vw.example.com
 CLOUDFLARE_API_TOKEN=<your-api-token>
 ```
 
@@ -127,7 +127,7 @@ export WEBSOCKET_ENABLED=true
 ./bitwarden_rs
 ```
 
-您现在应该可以通过 `https://bwrs.example.com` 访问到您的实例了。
+您现在应该可以通过 `https://vw.example.com` 访问到您的实例了。
 
 ## 使用 `lego` CLI 获取证书 <a id="getting-certs-using-the-lego-cli"></a>
 
@@ -136,17 +136,17 @@ export WEBSOCKET_ENABLED=true
 下面是一个如何做到这一点的例子。
 
 1. 从 [https://github.com/go-acme/lego/releases](https://github.com/go-acme/lego/releases) 下载预建的 `lego` 二进制文件到您的系统中。解压内容到某个目录，比如 `/usr/local/lego`。
-2. 从那个目录中，运行 `DUCKDNS_TOKEN=<token> ./lego -a --dns duckdns -d my-bwrs.duckdns.org -m me@example.com run`（用合适的值替换令牌、域名和电子邮件地址）。这将使你在 Let's Encrypt 注册，并为你的域名获取一个证书。
-3. 设置一个每周的 cron 作业来运行 `DUCKDNS_TOKEN=<token> ./lego --dns duckdns -d my-bwrs.duckdns.org -m me@example.com renew`。这将在你的证书即将到期时更新它。
+2. 从那个目录中，运行 `DUCKDNS_TOKEN=<token> ./lego -a --dns duckdns -d my-vm.duckdns.org -m me@example.com run`（用合适的值替换令牌、域名和电子邮件地址）。这将使你在 Let's Encrypt 注册，并为你的域名获取一个证书。
+3. 设置一个每周的 cron 作业来运行 `DUCKDNS_TOKEN=<token> ./lego --dns duckdns -d my-vw.duckdns.org -m me@example.com renew`。这将在你的证书即将到期时更新它。
 
 {% hint style="warning" %}
-`lego` 默认请求 ECC/ECDSA 证书。如果你使用 bitwarden\_rs 中内置的 [Rocket HTTPS 服务器](enabling-https.md#via-rocket)，你需要请求 RSA 证书。在上面的 `lego` 命令中，添加选项 `--key-type rsa2048`。
+`lego` 默认请求 ECC/ECDSA 证书。如果你使用 vaultwarden 中内置的 [Rocket HTTPS 服务器](enabling-https.md#via-rocket)，你需要请求 RSA 证书。在上面的 `lego` 命令中，添加选项 `--key-type rsa2048`。
 {% endhint %}
 
 在这个例子中，用于配置您的反向代理所生成的输出为：
 
-* `/usr/local/lego/.lego/certificates/my-bwrs.duckdns.org.crt` （证书）
-* `/usr/local/lego/.lego/certificates/my-bwrs.duckdns.org.key` （私钥）
+* `/usr/local/lego/.lego/certificates/my-vw.duckdns.org.crt` （证书）
+* `/usr/local/lego/.lego/certificates/my-vw.duckdns.org.key` （私钥）
 
 ## 参考 <a id="references"></a>
 

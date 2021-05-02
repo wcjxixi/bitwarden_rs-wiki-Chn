@@ -14,11 +14,11 @@
 * 由于上游的问题，服务器版本为 1.6.0 或更低的 aarch64 不支持 Yubikey 功能（请参阅 [＃262](https://github.com/dani-garcia/bitwarden_rs/issues/262)）。
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e YUBICO_CLIENT_ID=12345 \
   -e YUBICO_SECRET_KEY=ABCDEABCDEABCDEABCDE= \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 80:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 

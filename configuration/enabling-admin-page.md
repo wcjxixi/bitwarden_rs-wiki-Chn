@@ -13,11 +13,11 @@
 要设置令牌，请使用 `ADMIN_TOKEN` 变量：
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e ADMIN_TOKEN=some_random_token_as_per_above_explanation \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 80:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 
 此后，管理页面将在 `/admin` 子目录中可用。
@@ -26,5 +26,5 @@ docker run -d --name bitwarden \
 
 需要注意的是，管理页面中的配置更改在你点击 `Save` 按钮之前是不会生效的。例如，如果您正在测试 SMTP 设置，您更改了 `SMTP Auth mechanism` 设置，然后点击 `Send test email` 来测试更改，这将不会像预期的那样工作 -- 因为您没有点击 `Save`，`SMTP Auth mechanism` 的更改将不会生效。
 
-**注意：**更改 `ADMIN_TOKEN` 后，当前已登录管理页面的人仍可以使用旧的登录令牌[长达 20 分钟时间](https://github.com/dani-garcia/bitwarden_rs/blob/master/src/api/admin.rs#L87)。
+**注意：**更改 `ADMIN_TOKEN` 后，当前已登录管理页面的人仍可以使用旧的登录令牌[长达 20 分钟时间](https://github.com/dani-garcia/vaultwarden/blob/main/src/api/admin.rs#L87)。
 

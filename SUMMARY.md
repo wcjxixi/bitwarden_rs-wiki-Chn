@@ -36,7 +36,7 @@
   * [13.密码提示显示](configuration/password-hint-display.md)
   * [14.禁用或覆盖密码库接口托管](configuration/disabling-or-overriding-the-vault-interface-hosting.md)
   * [15.日志记录](configuration/logging.md)
-  * [16.设置为系统服务](configuration/creating-a-systemd-service.md)
+  * [16.设置为 systemd 服务](configuration/creating-a-systemd-service.md)
   * [17.使用 systemd docker 运行](configuration/running-with-systemd-docker.md)
   * [18.从 LDAP 同步用户](configuration/syncing-users-from-ldap.md)
   * [19.使用备用基本目录（子目录/子路径）](configuration/using-an-alternate-base-dir-subdir-subpath.md)

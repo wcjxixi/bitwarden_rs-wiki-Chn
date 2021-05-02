@@ -10,11 +10,11 @@
 
 有关完整介绍和配置选项，请参阅 [Github 仓库](https://github.com/ibuildthecloud/systemd-docker)。
 
-以 root 身份，使用你喜欢的编辑器用以下内容创建 `/etc/systemd/system/bitwarden.service` 文件：
+以 root 身份，使用你喜欢的编辑器用以下内容创建 `/etc/systemd/system/vaultwarden.service` 文件：
 
 ```python
 [Unit]
-Description=Bitwarden
+Description=aultwarden
 After=docker.service
 Requires=docker.service
 

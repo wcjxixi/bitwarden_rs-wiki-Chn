@@ -7,11 +7,11 @@
 默认情况下，可以访问实例的任何人均可以注册新账户。要禁用该功能，请将 `SIGNUPS_ALLOWED` 环境变量设置为 `false`：
 
 ```php
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e SIGNUPS_ALLOWED=false \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 80:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 
 ## 禁用组织邀请 <a id="disabling-organization-invitations"></a>
@@ -33,5 +33,5 @@ docker run -d --name bitwarden \
 
 ## 通过管理页面发出邀请 <a id="invitations-via-the-admin-page"></a>
 
-bitwarden\_rs 管理员可以通过[管理页面](enabling-admin-page.md)邀请任何人，不受以上限制。
+vaultwarden 管理员可以通过[管理页面](enabling-admin-page.md)邀请任何人，不受以上限制。
 

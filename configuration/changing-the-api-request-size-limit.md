@@ -9,10 +9,10 @@
 要设置限制，可以使用 `ROCKET_LIMITS` 变量。此处的示例设置为限制为 10MB（这是默认设置）：
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e ROCKET_LIMITS={json=10485760} \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 80:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 

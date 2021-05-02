@@ -11,10 +11,10 @@
 在下面的示例中，我们设置为 20 个 worker：
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e ROCKET_WORKERS=20 \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 80:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 

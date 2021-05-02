@@ -14,15 +14,15 @@
 
 在[代理示例](../deployment/proxy-examples.md)页面查看配置示例。
 
-然后，您需要通过将 `WEBSOCKET_ENABLED` 变量设置为 `true` 以在 bitwarden\_rs 端启用 WebSocket 协商：
+然后，您需要通过将 `WEBSOCKET_ENABLED` 变量设置为 `true` 以在 vaultwarden 端启用 WebSocket 协商：
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e WEBSOCKET_ENABLED=true \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 80:80 \
   -p 3012:3012 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 
 提示：有此解决方案的原因是由于 Rocket 缺乏对 WebSockets 的支持（尽管[这是计划的功能](https://github.com/SergioBenitez/Rocket/issues/90)），这迫使我们在单独的端口上启动辅助服务器。  
