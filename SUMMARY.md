@@ -19,7 +19,7 @@
   * [7.转储示例](deployment/logrotate-example.md)
   * [HTTPS](deployment/https/README.md)
     * [1.启用 HTTPS](deployment/https/enabling-https.md)
-    * [2.使用 Let's Encrypt 证书运行私有 bitwarden\_rs 实例](deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)
+    * [2.使用 Let's Encrypt 证书运行私有 vaultwarden 实例](deployment/https/running-a-private-vaultwarden-instance-with-lets-encrypt-certs.md)
 * [配置](configuration/README.md)
   * [1.总览](configuration/overview.md)
   * [2.禁用新用户注册](configuration/disable-registration-of-new-users.md)

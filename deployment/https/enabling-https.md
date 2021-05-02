@@ -4,12 +4,12 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-HTTPS)
 {% endhint %}
 
-现在几乎都需要启用 [HTTPS](https://en.wikipedia.org/wiki/HTTPS)，才能满足 bitwarden\_rs 的正常操作，这是因为 Bitwarden 网络密码库使用的 [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)，大多数浏览器只有在 HTTPS 环境下才能使用。
+现在几乎都需要启用 [HTTPS](https://en.wikipedia.org/wiki/HTTPS)，才能满足 vaultwarden 的正常操作，这是因为 Bitwarden 网络密码库使用的 [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)，大多数浏览器只有在 HTTPS 环境下才能使用。
 
 启用 HTTPS 的几种方式：
 
-* （推荐）把 bitwarden\_rs 放在一个[反向代理](https://en.wikipedia.org/wiki/Reverse_proxy)后面，代表 bitwarden\_rs 处理 HTTPS 连接。
-* （不推荐）启用 bitwarden\_rs 内置的 HTTPS 功能（通过 [Rocket](https://rocket.rs/) 网络框架）。Rocket 的 HTTPS 实现相对不成熟且有限。此方式也不支持 [WebSocket 通知](../../configuration/enabling-websocket-notifications.md)。
+* （推荐）把 vaultwarden 放在一个[反向代理](https://en.wikipedia.org/wiki/Reverse_proxy)后面，代表 vaultwarden 处理 HTTPS 连接。
+* （不推荐）启用 vaultwarden 内置的 HTTPS 功能（通过 [Rocket](https://rocket.rs/) 网络框架）。Rocket 的 HTTPS 实现相对不成熟且有限。此方式也不支持 [WebSocket 通知](../../configuration/enabling-websocket-notifications.md)。
 
 有关这些选项的更多细节，请参考[启用 HTTPS](enabling-https.md#enabling-https) 部分。
 
@@ -33,7 +33,7 @@
 不建议使用此方法。
 {% endhint %}
 
-要对 `bitwarden_rs` 本身启用 HTTPS，请设置如下格式的 `ROCKET_TLS` 环境变量：
+要对 `vaultwarden` 本身启用 HTTPS，请设置如下格式的 `ROCKET_TLS` 环境变量：
 
 ```python
 ROCKET_TLS={certs="/path/to/certs.pem",key="/path/to/key.pem"}
@@ -53,7 +53,7 @@ ROCKET_TLS={certs="/path/to/certs.pem",key="/path/to/key.pem"}
 
   （环境变量本身的格式没有错误；只是因为 Rocket 无法解析证书/密钥内容。）
 
-* 如果在 Docker 下运行，请记住，bitwarden\_rs 在容器内部运行时将解析 `ROCKET_TLS` 值 ，所以请确保 `certs` 和 `key` 路径是容器内部呈现的样子（可能与 Docker 主机系统上的路径不同）。
+* 如果在 Docker 下运行，请记住，vaultwarden 在容器内部运行时将解析 `ROCKET_TLS` 值 ，所以请确保 `certs` 和 `key` 路径是容器内部呈现的样子（可能与 Docker 主机系统上的路径不同）。
 
 ```python
 docker run -d --name bitwarden \
@@ -61,7 +61,7 @@ docker run -d --name bitwarden \
   -v /ssl/keys/:/ssl/ \
   -v /bw-data/:/data/ \
   -p 443:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 
 您需要挂载 ssl 文件夹（使用 -v 参数），同时需要转发适当的端口（使用 -p 参数），通常是用于 HTTPS 连接的 443 端口。如果您选择的端口号不是 443，例如 3456，请记住在连接到服务时明确提供该端口号，例如：`https://bitwarden.local:3456`。
@@ -86,12 +86,12 @@ docker run -d --name bitwarden \
   -v /etc/letsencrypt/:/ssl/ \
   -v /bw-data/:/data/ \
   -p 443:80 \
-  bitwardenrs/server:latest
+  vaultwarden/server:latest
 ```
 
 #### 检查证书是否有效 <a id="check-if-certificate-is-valid"></a>
 
-当您的 bitwarden\_rs 服务器对外界可用时，您可以使用 [https://comodosslstore.com/ssltools/ssl-checker.php](https://comodosslstore.com/ssltools/ssl-checker.php) 网站来检查 SSL 证书是否包含证书链。缺少证书链，Android 设备将无法连接。
+当您的 vaultwarden 服务器对外界可用时，您可以使用 [https://comodosslstore.com/ssltools/ssl-checker.php](https://comodosslstore.com/ssltools/ssl-checker.php) 网站来检查 SSL 证书是否包含证书链。缺少证书链，Android 设备将无法连接。
 
 您也可以使用 [https://www.ssllabs.com/ssltest/analyze.html](https://www.ssllabs.com/ssltest/analyze.html) 网站进行检查，但是它不支持自定义端口。另外，请记住选中“Do not show the results on the boards”复选框，否则您的系统将在「Recently Seen」列表中可见。
 
@@ -126,9 +126,9 @@ verify return:1
 
 [Let's Encrypt](https://letsencrypt.org/) 免费发放 SSL/TLS 证书。
 
-为了使之工作，你的 bitwarden\_rs 实例必须拥有一个 DNS 名称（即你不能简单地使用 IP 地址）。如果你的 bitwarden\_rs 可以在公共互联网上访问，那么设置 Let's Encrypt 就比较容易，但即使你的实例是私有的（即只能在你的局域网上访问），也可以通过 [DNS 挑战](running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)获取 Let's Encrypt 证书。
+为了使之工作，你的 vaultwarden 实例必须拥有一个 DNS 名称（即你不能简单地使用 IP 地址）。如果你的 vaultwarden 可以在公共互联网上访问，那么设置 Let's Encrypt 就比较容易，但即使你的实例是私有的（即只能在你的局域网上访问），也可以通过 [DNS 挑战](running-a-private-vaultwarden-instance-with-lets-encrypt-certs.md)获取 Let's Encrypt 证书。
 
-如果你已经拥有或控制了一个域名，那么只需为你的 bitwarden\_rs 实例的 IP 地址添加一个 DNS 名称即可。如果你没有，你可以购买一个域名，尝试在 [Freenom](https://www.freenom.com/) 免费获得一个，或者使用像 [Duck DNS](https://www.duckdns.org/) 这样的服务来获取一个现有域名下的名称（例如，`my-bitwarden.duckdns.org`）。
+如果你已经拥有或控制了一个域名，那么只需为你的 vaultwarden 实例的 IP 地址添加一个 DNS 名称即可。如果你没有，你可以购买一个域名，尝试在 [Freenom](https://www.freenom.com/) 免费获得一个，或者使用像 [Duck DNS](https://www.duckdns.org/) 这样的服务来获取一个现有域名下的名称（例如，`my-bitwarden.duckdns.org`）。
 
 拥有了实例的 DNS 名称后，您就可以使用 [ACME 客户端](https://letsencrypt.org/docs/client-options/)为你的 DNS 名称获取证书。[Certbot](https://certbot.eff.org/) 和 [acme.sh](https://github.com/acmesh-official/acme.sh) 是两个最流行的独立客户端。一些反向代理（例如 [Caddy](https://caddyserver.com/)）也内置了 ACME 客户端。
 
@@ -136,9 +136,9 @@ verify return:1
 
 [Cloudflare](https://www.cloudflare.com/) 为个人提供免费服务。如果你信任他们代理你的流量，并作为你的 DNS 供应商，你也可以让他们处理你的 SSL/TLS 证书的发放。
 
-注册您的域名并为您的 bitwarden\_rs 实例添加了 DNS 记录后，登录 Cloudflare 仪表板并选择 `SSL/TLS`，然后选择 `Origin Server`。生成一个原始证书（你可以选择最长 15 年的有效期），并配置 bitwarden\_rs 来使用它。如果你选择了 15 年有效期，那么在可预见的未来，无需续签此原始证书。
+注册您的域名并为您的 vaultwarden 实例添加了 DNS 记录后，登录 Cloudflare 仪表板并选择 `SSL/TLS`，然后选择 `Origin Server`。生成一个原始证书（你可以选择最长 15 年的有效期），并配置 vaultwarden 来使用它。如果你选择了 15 年有效期，那么在可预见的未来，无需续签此原始证书。
 
-请注意，原始证书仅用于确保 Cloudflare 和 bitwarden\_rs 之间的通信。Cloudflare 将自动处理用于客户端和 Cloudflare 之间通信的证书的发放和更新。
+请注意，原始证书仅用于确保 Cloudflare 和 vaultwarden 之间的通信。Cloudflare 将自动处理用于客户端和 Cloudflare 之间通信的证书的发放和更新。
 
-另外，如果你使用的是 bitwarden\_rs 内置的 Rocket HTTPS 服务器，请确保选择 `RSA` 作为原始证书的私钥类型，因为 Rocket 目前不支持 ECC/ECDSA 证书。
+另外，如果你使用的是 vaultwarden 内置的 Rocket HTTPS 服务器，请确保选择 `RSA` 作为原始证书的私钥类型，因为 Rocket 目前不支持 ECC/ECDSA 证书。
 

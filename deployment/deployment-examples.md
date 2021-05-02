@@ -85,5 +85,5 @@
 }
 ```
 
-如果你有任何关于这部分的问题，请随时联系我。我在 matrix 的  @litschi:litschi.xyz 、以及 IRC（hackint 和 freenode）的 litschi，或简单地在 matrix.org 的 bitwarden\_rs 频道中询咨询我。
+如果你有任何关于这部分的问题，请随时联系我。我在 matrix 的  @litschi:litschi.xyz 、以及 IRC（hackint 和 freenode）的 litschi，或简单地在 matrix.org 的 vaultwarden 频道中询咨询我。
 

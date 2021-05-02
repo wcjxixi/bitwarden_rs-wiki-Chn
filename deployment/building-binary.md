@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Building-binary)
 {% endhint %}
 
-这个页面主要是给那些对 bitwarden\_rs 开发感兴趣，或者有特殊原因想要构建自己的二进制的人。
+这个页面主要是给那些对 vaultwarden 开发感兴趣，或者有特殊原因想要构建自己的二进制的人。
 
 普通用户应该使用从基于 Alpine 的 Docker 镜像中[提取的预构建二进制](pre-built-binaries.md)文件，[通过 Docker 部署](../container-image-usage/which-container-image-to-use.md)，或者[寻找第三方软件包](third-party-packages.md)。
 
@@ -25,7 +25,7 @@
 ```python
 # 使用所有后端编译并运行
 cargo run --features sqlite,mysql,postgresql --release
-# 或仅使用所有后端编译(二进制位于 target/release/bitwarden_rs)
+# 或仅使用所有后端编译(二进制位于 target/release/vaultwarden)
 cargo build --features sqlite,mysql,postgresql --release
 ```
 
@@ -34,7 +34,7 @@ cargo build --features sqlite,mysql,postgresql --release
 ```python
 # 使用 sqlite 后端编译并运行
 cargo run --features sqlite --release
-# 或仅使用 sqlite 编译(二进制位于 target/release/bitwarden_rs)
+# 或仅使用 sqlite 编译(二进制位于 target/release/vaultwarden)
 cargo build --features sqlite --release
 ```
 
@@ -43,7 +43,7 @@ cargo build --features sqlite --release
 ```python
 # 使用 mysql 后端编译并运行
 cargo run --features mysql --release
-# 或仅使用 mysql 编译(二进制位于 target/release/bitwarden_rs)
+# 或仅使用 mysql 编译(二进制位于 target/release/vaultwarden)
 cargo build --features mysql --release
 ```
 
@@ -52,7 +52,7 @@ cargo build --features mysql --release
 ```python
 # 使用 postgresql 后端编译并运行
 cargo run --features postgresql --release
-# 或仅使用 postgresql 编译(二进制位于 target/release/bitwarden_rs)
+# 或仅使用 postgresql 编译(二进制位于 target/release/vaultwarden)
 cargo build --features postgresql --release
 ```
 
@@ -66,7 +66,7 @@ cargo build --features postgresql --release
 
 如果您希望手动编译它，请遵循如下步骤：
 
-_**注意**：构建密码库需要约 1.5GB 的 RAM。在具有 1GB 或更小容量的 RaspberryPI 之类的系统上，请_[_启用交换功能_](https://www.tecmint.com/create-a-linux-swap-file/)_或在功能更强大的计算机上构建，然后从那里复制目录。仅构建时需要大量内存，而运行带密码库的 bitwarden\_rs 仅需要约 10MB 的 RAM。_
+_**注意**：构建密码库需要约 1.5GB 的 RAM。在具有 1GB 或更小容量的 RaspberryPI 之类的系统上，请_[_启用交换功能_](https://www.tecmint.com/create-a-linux-swap-file/)_或在功能更强大的计算机上构建，然后从那里复制目录。仅构建时需要大量内存，而运行带密码库的 vaultwarden 仅需要约 10MB 的 RAM。_
 
 1、克隆 [bitwarden/web](https://github.com/bitwarden/web) git 库，并检查最新的发行标签（例如 v2.1.1）：
 

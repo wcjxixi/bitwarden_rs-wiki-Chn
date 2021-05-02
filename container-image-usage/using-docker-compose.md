@@ -23,7 +23,7 @@ services:
     environment:
       - WEBSOCKET_ENABLED=true  # 启用 WebSocket 通知
     volumes:
-      - ./bw-data:/data
+      - ./vw-data:/data
 
   caddy:
     image: caddy:2
@@ -89,7 +89,7 @@ docker-compose down
 
 ## 带有 DNS 验证的 Caddy <a id="caddy-with-dns-challenge"></a>
 
-这个示例和上一个示例一样，但适用于您不希望您的实例被公开访问的情况（即您只能从您的本地网络访问它）。这个示例使用 Duck DNS 作为 DNS 提供商。更多的背景资料，以及如何设置 Duck DNS 的细节，请参考[使用 Let's Encrypt 证书运行私有 vaultwarden 实例](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)。
+这个示例和上一个示例一样，但适用于您不希望您的实例被公开访问的情况（即您只能从您的本地网络访问它）。这个示例使用 Duck DNS 作为 DNS 提供商。更多的背景资料，以及如何设置 Duck DNS 的细节，请参考[使用 Let's Encrypt 证书运行私有 vaultwarden 实例](../deployment/https/running-a-private-vaultwarden-instance-with-lets-encrypt-certs.md)。
 
 首先创建一个新目录，并切换到该目录。接下来，创建下面的 `docker-compose.yml` 文件，确保将 `DOMAIN` 和 `EMAIL` 变量替换为适当的值。
 
@@ -104,7 +104,7 @@ services:
     environment:
       - WEBSOCKET_ENABLED=true  # 启用 WebSocket 通知。
     volumes:
-      - ./bw-data:/data
+      - ./vw-data:/data
 
   caddy:
     image: caddy:2
@@ -125,7 +125,7 @@ services:
       - LOG_FILE=/data/access.log
 ```
 
-常规的 Caddy 构建（包括 Docker 映像中的构建）不包含 DNS 验证模块，因此接下来，您需要[获取自定义 Caddy 构建](../deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md#getting-a-custom-caddy-build)。将自定义构建重命名为 `caddy` 并将其移动到与 `docker-compose.yml` 相同的目录下。确保 `caddy` 文件是可执行的（例如 `chmod a + x caddy`）。上面的 `docker-compose.yml` 文件会将自定义构建绑定挂载到 `caddy:2` 容器中，并替换常规的构建。
+常规的 Caddy 构建（包括 Docker 映像中的构建）不包含 DNS 验证模块，因此接下来，您需要[获取自定义 Caddy 构建](../deployment/https/running-a-private-vaultwarden-instance-with-lets-encrypt-certs.md#getting-a-custom-caddy-build)。将自定义构建重命名为 `caddy` 并将其移动到与 `docker-compose.yml` 相同的目录下。确保 `caddy` 文件是可执行的（例如 `chmod a + x caddy`）。上面的 `docker-compose.yml` 文件会将自定义构建绑定挂载到 `caddy:2` 容器中，并替换常规的构建。
 
 在同一目录下，创建下面的 `Caddyfile` 文件（这个文件不需要做修改）。
 

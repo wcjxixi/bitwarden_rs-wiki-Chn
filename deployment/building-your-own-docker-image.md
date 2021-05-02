@@ -8,31 +8,31 @@
 
 ```python
 # 构建 docker 镜像:
-docker build -t bitwarden_rs .
+docker build -t vaultwarden .
 ```
 
 要使用 MySQL 后端构建，运行：
 
 ```python
 # 构建 docker 镜像:
-docker build -t bitwarden_rs --build-arg DB=mysql .
+docker build -t vaultwarden --build-arg DB=mysql .
 ```
 
 要使用 Postgresql 后端构建，运行：
 
 ```python
 # 构建 docker 镜像:
-docker build -t bitwarden_rs --build-arg DB=postgresql .
+docker build -t vaultwarden --build-arg DB=postgresql .
 ```
 
 在 docker-compose.yml 中它看起来像这样：
 
 ```python
-  bitwarden:
-    # image: bitwardenrs/server-postgresql:latest
-    image: bitwarden_rs
+  vaultwarden:
+    # image: vaultwarden/server-postgresql:latest
+    image: vaultwarden
     build: 
-      context: bitwarden_rs
+      context: vaultwarden
       args: 
         DB: postgresql
 ```

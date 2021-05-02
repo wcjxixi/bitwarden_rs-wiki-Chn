@@ -44,7 +44,7 @@ ALTER USER 'vaultwarden'@'localhost' IDENTIFIED WITH mysql_native_password BY 'y
 我们建议使用像 Let's Encrypt 这样的服务来提供一个有效的、被大多数设备默认接受的证书。 请参阅以下页面：
 
 * [启用 HTTPS](deployment/https/enabling-https.md)
-* [使用 Let's Encrypt 证书运行私有 vaultwarden 实例](deployment/https/running-a-private-bitwarden_rs-instance-with-lets-encrypt-certs.md)
+* [使用 Let's Encrypt 证书运行私有 vaultwarden 实例](deployment/https/running-a-private-vaultwarden-instance-with-lets-encrypt-certs.md)
 
 ## 为什么我的所有密码库项目都看不到图标？ <a id="why-do-i-see-no-icons-for-all-my-vault-items"></a>
 

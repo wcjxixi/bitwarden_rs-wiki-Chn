@@ -4,11 +4,11 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Third-party-packages)
 {% endhint %}
 
-本页面是一个第三方 bitwarden\_rs 软件包的索引。由于这些软件包不是由 bitwarden\_rs 维护或控制的，因此它们可能会比官方的发行版本滞后，有时甚至会很明显。如果你依赖这些软件包，你可能需要[启用监视](https://docs.github.com/en/github/managing-subscriptions-and-notifications-on-github/viewing-your-subscriptions#configuring-your-watch-settings-for-an-individual-repository)新的 bitwarden\_rs 发行版本，并让维护者知道该软件包未保持更新。
+本页面是一个第三方 vaultwarden 软件包的索引。由于这些软件包不是由 vaultwarden 维护或控制的，因此它们可能会比官方的发行版本滞后，有时甚至会很明显。如果你依赖这些软件包，你可能需要[启用监视](https://docs.github.com/en/github/managing-subscriptions-and-notifications-on-github/viewing-your-subscriptions#configuring-your-watch-settings-for-an-individual-repository)新的 vaultwarden 发行版本，并让维护者知道该软件包未保持更新。
 
 ## Arch Linux
 
-Bitwarden\_rs 已打包用于 Archlinux，感谢 @mqus。这里是可用的 [AUR 包](https://aur.archlinux.org/packages/bitwarden_rs)（可选带[网页密码库界面](https://aur.archlinux.org/packages/bitwarden_rs-vault/)）。
+可在[官方库](https://www.archlinux.org/packages/community/x86_64/bitwarden_rs/)中获取，同时包含了[网页密码库](https://www.archlinux.org/packages/community/any/bitwarden_rs-web/)。
 
 ## Debian
 

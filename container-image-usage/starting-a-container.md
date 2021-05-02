@@ -12,14 +12,14 @@
 
 ```python
 # 使用 Docker:
-docker run -d --name vaultwarden -v /w-data/:/data/ -p 80:80 vaultwarden/server:latest
+docker run -d --name vaultwarden -v /vw-data/:/data/ -p 80:80 vaultwarden/server:latest
 # 使用 Podman as non-root:
 podman run -d --name vaultwarden -v /vw-data/:/data/:Z -e ROCKET_PORT=8080 -p 8080:8080 vaultwarden/server:latest
 # 使用 Podman as root:
-sudo podman run -d --name vaultwarden -v vw-data:/data/:Z -p 80:80 vaultwarden/server:latest
+sudo podman run -d --name vaultwarden -v /vw-data:/data/:Z -p 80:80 vaultwarden/server:latest
 ```
 
-所有持久性数据将保存在 `/bw-data/` 路径下，您可以根据自己的需要调整此路径。
+所有持久性数据将保存在 `/vw-data/` 路径下，您可以根据自己的需要调整此路径。
 
 该服务将暴露在主机的 80 或 8080 端口上。
 
@@ -29,7 +29,7 @@ sudo podman run -d --name vaultwarden -v vw-data:/data/:Z -p 80:80 vaultwarden/s
 
 ```python
 # 使用 Docker:
-docker run -d --name vaultwarden -v /bw-data/:/data/ -p 192.168.0.2:80:80 vaultwarden/server:latest
+docker run -d --name vaultwarden -v /vw-data/:/data/ -p 192.168.0.2:80:80 vaultwarden/server:latest
 ```
 
 ## 启动容器 <a id="starting-the-container"></a>

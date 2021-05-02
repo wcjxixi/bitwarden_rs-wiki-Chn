@@ -15,7 +15,7 @@ docker stop vaultwarden
 docker rm vaultwarden
 
 # 使用已挂载的数据启动容器
-docker run -d --name vaultwarden -v /bw-data/:/data/ -p 80:80 vaultwarden/server:latest
+docker run -d --name vaultwarden -v /vw-data/:/data/ -p 80:80 vaultwarden/server:latest
 ```
 
 然后访问 [http://localhost:80](http://localhost/)
