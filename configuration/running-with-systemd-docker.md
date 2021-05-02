@@ -14,7 +14,7 @@
 
 ```python
 [Unit]
-Description=aultwarden
+Description=Vaultwarden
 After=docker.service
 Requires=docker.service
 

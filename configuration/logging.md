@@ -4,20 +4,18 @@
 对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging)
 {% endhint %}
 
-默认情况下，vaultwarden 仅记录到[标准输出](https://zh.wikipedia.org/wiki/%E6%A8%99%E6%BA%96%E4%B8%B2%E6%B5%81)（stdout）。您也可以将它配置为记录到文件。
-
 ## 记录到文件 <a id="logging-to-a-file"></a>
 
 从 1.5.0 版本开始支持记录到文件。您可以使用 `LOG_FILE` 环境变量来指定日志文件的路径：
 
 ```python
-docker run -d --name vaultwarden \
+docker run -d --name bitwarden \
 ...
-  -e LOG_FILE=/data/vaultwarden.log \
+  -e LOG_FILE=/data/bitwarden.log \
 ...
 ```
 
-当设置此环境变量时，日志消息将被记录到标准输出和日志文件中。如果您在 Docker 中运行，则需要使用从 Docker 主机挂载的文件路径（如 `data` 文件夹）；否则，如果容器被重新启动或移除，您的日志文件将丢失（或至少难以找到）。
+请注意，如果您使用的是 docker 镜像，则很可能需要使用从主机 OS 挂载的文件路径（例如 data 文件夹）。
 
 ## 更改日志级别 <a id="change-the-log-level"></a>
 
@@ -26,17 +24,9 @@ docker run -d --name vaultwarden \
 `LOG_LEVEL` 选项包括："trace"、"debug"、"info"、"warn"、"error"以及"off"。
 
 ```python
-docker run -d --name vaultwarden \
+docker run -d --name bitwarden \
 ...
   -e LOG_LEVEL=warn -e EXTENDED_LOGGING=true \
 ...
 ```
-
-## 查看日志记录 <a id="viewing-logs"></a>
-
-如果在 Docker 中运行：`docker logs <container-name>`
-
-如果使用 `systemd` 运行：`journalctl -u vaultwarden.service`（或你的服务名称）
-
-否则，请检查标准输出被重定向到的位置，或设置 `LOG_FILE` 环境变量并查看该文件。
 
