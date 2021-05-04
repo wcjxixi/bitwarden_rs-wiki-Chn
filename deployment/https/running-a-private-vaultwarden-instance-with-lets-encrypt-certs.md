@@ -118,7 +118,7 @@ CLOUDFLARE_API_TOKEN=<your-api-token>
 caddy run -envfile caddy.env
 ```
 
-运行命令以启动 `bitwarden_rs`：
+运行命令以启动 `vaultwarden`：
 
 ```python
 export ROCKET_PORT=8080

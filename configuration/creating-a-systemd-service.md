@@ -12,7 +12,7 @@
 
 ```python
 [Unit]
-Description=Bitwarden Server (Rust Edition)
+Description=aultwarden Server (Rust Edition)
 Documentation=https://github.com/dani-garcia/vaultwarden
 # 如果你使用 mariadb、mysql 或 postgresql 数据库， 
 # 你必须像下面这样添加它们，并去掉前面的 # 以取消注释。

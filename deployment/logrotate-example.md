@@ -7,13 +7,13 @@
 随着时间的流逝，Vaultwarden 日志文件的大小可能会增长到很大。使用 logrotate，我们可以定期转储日志。
 
 ```python
-sudo nano /etc/logrotate.d/bitwarden
+sudo nano /etc/logrotate.d/vaultwarden
 ```
 
 ```python
 /var/log/bitwarden/*.log {
     # 以 bitwarden 用户和群组的身份执行轮换
-    su bitwarden bitwarden
+    su bitwarden vaultwarden
     # 每天轮换
     daily
     # 当尺寸大于 5M 时轮换

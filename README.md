@@ -1,7 +1,7 @@
 # vaultwarden wiki 中文版
 
 {% hint style="danger" %}
-[2021-04-27](https://github.com/dani-garcia/vaultwarden/releases/tag/1.21.0)：`bitwarden_rs` 更名为 `vaultwarden`
+[2021-04-27](https://github.com/dani-garcia/vaultwarden/releases/tag/1.21.0)：bitwarden\_rs 更名为 vaultwarden
 {% endhint %}
 
 这里是 [vaultwarden wiki 页面](https://github.com/dani-garcia/vaultwarden/wiki)的中文翻译版。
