@@ -47,7 +47,7 @@ delete
 
 5）键入 `.quit` 并按 Enter 退出 sqlite 实用程序（注意前面的点）。
 
-### 2、在 `vaultwarden` 中禁用 WAL  <a id="2-disable-wal-in-vaultwarden"></a>
+### 2、在 `bitwarden_rs` 中禁用 WAL  <a id="2-disable-wal-in-bitwarden_rs"></a>
 
 要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `false` 以启动 `vaultwarden`。
 

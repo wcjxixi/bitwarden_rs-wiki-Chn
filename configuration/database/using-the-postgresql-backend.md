@@ -47,7 +47,7 @@ GRANT all privileges ON database vaultwarden TO vaultwarden;
 
 5、安装 [pgloader](http://pgloader.io/) 。
 
-6、使用如下内容创建 vaultwarden.load 文件：
+6、使用如下内容创建 bitwarden.load 文件：
 
 ```sql
 load database
@@ -55,11 +55,11 @@ load database
      into postgresql://yourpgsqluser:yourpgsqlpassword@yourpgsqlserver:yourpgsqlport/yourpgsqldatabase
      WITH data only, include no drop, reset sequences
      EXCLUDING TABLE NAMES LIKE '__diesel_schema_migrations'
-     ALTER SCHEMA 'vaultwarden' RENAME TO 'public'
+     ALTER SCHEMA 'bitwarden' RENAME TO 'public'
 ;
 ```
 
-7、运行 `pgloader vaultwarden.load` 命令，你可能会看到一些警告，（不用理会）迁移会成功完成。
+7、运行 `pgloader bitwarden.load` 命令，你可能会看到一些警告，（不用理会）迁移会成功完成。
 
 8、重新启动 vaultwarden。
 

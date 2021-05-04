@@ -95,7 +95,7 @@ services:
    - "80:80"
 
 volumes:
- vaultwarden_vol:
+ bitwarden_vol:
  mariadb_vol:
 ```
 

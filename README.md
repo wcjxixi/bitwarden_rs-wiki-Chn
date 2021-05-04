@@ -1,6 +1,6 @@
 # vaultwarden wiki 中文版
 
-{% hint style="danger" %}
+{% hint style="success" %}
 [2021-04-27](https://github.com/dani-garcia/vaultwarden/releases/tag/1.21.0)：bitwarden\_rs 更名为 vaultwarden
 {% endhint %}
 
