@@ -34,7 +34,7 @@ docker run -d --name vaultwarden -v /vw-data/:/data/ -p 192.168.0.2:80:80 vaultw
 
 ## 启动容器 <a id="starting-the-container"></a>
 
-如果运行了 `docker stop vaultwarden` 命令，或重启，亦或任何其他原因，容器停止了，则可以使用以下命令将其再次启动：
+如果运行了 `docker stop vaultwarden` 命令，或重启，亦或任何其他原因，容器停止了，则可以使用以下命令将其启动：
 
 ```python
 docker start vaultwarden
@@ -42,7 +42,7 @@ docker start vaultwarden
 
 ## 自定义容器启动 <a id="customizing-container-startup"></a>
 
-如果你想在容器启动时运行自定义启动脚本，你可以将 `/etc/vaultwarden.sh` 作为单个脚本和/或将 `/etc/vaultwarden.d` 作为脚本目录挂载到容器中。对于后一种情况，只有扩展名为 .sh 的文件才会运行，所以其他扩展名的文件（例如，data/config 文件）则可以驻留在同一个目录中。\(具体工作方式请参见 [start.sh](https://github.com/dani-garcia/vaultwarden/blob/main/docker/start.sh)\)。
+如果你想在容器启动时运行自定义启动脚本，你可以将 `/etc/vaultwarden.sh` 作为单个脚本和/或将 `/etc/vaultwarden.d` 作为脚本目录挂载到容器中。对于后一种情况，只有扩展名为 .sh 的文件才会运行，所以其他扩展名的文件（例如，data/config 文件）则可以驻留在同一个目录中（具体的工作方式请参见 [start.sh](https://github.com/dani-garcia/vaultwarden/blob/main/docker/start.sh)）。
 
 自定义启动脚本对于修补网页密码库文件或安装额外的包、CA 证书等非常有用，因为可以让您不必构建和维护您自己的 Docker 镜像。
 

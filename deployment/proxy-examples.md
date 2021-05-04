@@ -37,7 +37,7 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
   # 或使用 'tls self_signed' 生成自签名证书
 
   # 此设置可能会对某些浏览器产生兼容性问题
-  # （例如，在Firefox上下载附件时）。
+  # （例如，在 Firefox 上下载附件时）。
   # 如果遇到问题，请尝试禁用此功能。
   gzip
 
@@ -172,37 +172,37 @@ server {
 
 ## Nginx with sub-path \(by BlackDex\)
 
-在这个示例中，vaultwarden 的访问地址为 `https://bitwarden.example.tld/vault/`，如果您想使用任何其他的子路径，比如 `bitwarden` 或 `secret-vault`，您需要更改下面示例中相应的地方。
+在这个示例中，vaultwarden 的访问地址为 `https://vaultwarden.example.tld/vault/`，如果您想使用任何其他的子路径，比如 `vaultwarden` 或 `secret-vault`，您需要更改下面示例中相应的地方。
 
 为此，您需要配置 `DOMAIN` 变量以使其匹配，它应类似于：
 
 ```python
 ; Add the sub-path! Else this will not work!
-DOMAIN=https://bitwarden.example.tld/vault/
+DOMAIN=https://vaultwarden.example.tld/vault/
 ```
 
 ```python
 # 在这里定义服务器的 IP 和端口
-upstream bitwardenrs-default { server 127.0.0.1:8080; }
-upstream bitwardenrs-ws { server 127.0.0.1:3012; }
+upstream vaultwarden-default { server 127.0.0.1:8080; }
+upstream vaultwarden-ws { server 127.0.0.1:3012; }
 
 # 将 HTTP 重定向到 HTTPS
 server {
     listen 80;
     listen [::]:80;
-    server_name bitwardenrs.example.tld;
+    server_name vaultwarden.example.tld;
     return 301 https://$host$request_uri;
 }
 
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name bitwardenrs.example.tld;
+    server_name vaultwarden.example.tld;
 
     # 根据需要指定 SSL 配置
-    #ssl_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
-    #ssl_certificate_key /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/privkey.pem;
-    #ssl_trusted_certificate /path/to/certificate/letsencrypt/live/bitwardenrs.example.tld/fullchain.pem;
+    #ssl_certificate /path/to/certificate/letsencrypt/live/vaultwarden.example.tld/fullchain.pem;
+    #ssl_certificate_key /path/to/certificate/letsencrypt/live/vaultwarden.example.tld/privkey.pem;
+    #ssl_trusted_certificate /path/to/certificate/letsencrypt/live/vaultwarden.example.tld/fullchain.pem;
 
     client_max_body_size 128M;
 
@@ -246,7 +246,7 @@ server {
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
 
-      proxy_pass http://bitwardenrs-default;
+      proxy_pass http://vaultwarden-default;
     }
 
 }
@@ -261,14 +261,14 @@ bitwarden__fqdn: 'vault.example.org'
 
 nginx__upstreams:
 
-  - name: 'bitwarden'
+  - name: 'vaultwarden'
     type: 'default'
     enabled: True
     server: 'localhost:8000'
 
 nginx__servers:
 
-  - name: '{{ bitwarden__fqdn }}'
+  - name: '{{ vaultwarden__fqdn }}'
     filename: 'debops.bitwarden'
     by_role: 'debops.bitwarden'
     favicon: False
@@ -319,7 +319,7 @@ NixOS Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部署
   security.acme.certs = {
 
     "bw.example.com" = {
-      group = "bitwarden_rs";
+      group = "vaultwarden";
       keyType = "rsa2048";
       allowKeysForGroup = true;
     };
@@ -362,15 +362,15 @@ NixOS Nginx 配置示例。关于 NixOS 部署的更多信息，请参阅[部署
 ```python
 <VirtualHost *:443>
     SSLEngine on
-    ServerName bitwarden.$hostname.$domainname
+    ServerName vaultwarden.$hostname.$domainname
 
     SSLCertificateFile ${SSLCERTIFICATE}
     SSLCertificateKeyFile ${SSLKEY}
     SSLCACertificateFile ${SSLCA}
     ${SSLCHAIN}
 
-    ErrorLog \${APACHE_LOG_DIR}/bitwarden-error.log
-    CustomLog \${APACHE_LOG_DIR}/bitwarden-access.log combined
+    ErrorLog \${APACHE_LOG_DIR}/vaultwarden-error.log
+    CustomLog \${APACHE_LOG_DIR}/vaultwarden-access.log combined
 
     RewriteEngine On
     RewriteCond %{HTTP:Upgrade} =websocket [NC]
@@ -413,7 +413,7 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 
-    <Location /bitwarden> # 如果需要，调整此处
+    <Location /vaultwarden> # 如果需要，调整此处
         RewriteEngine On
         RewriteCond %{HTTP:Upgrade} =websocket [NC]
         RewriteRule /notifications/hub(.*) ws://<SERVER>:3012/$1 [P,L]
@@ -431,9 +431,9 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so`
 labels:
     - traefik.enable=true
     - traefik.docker.network=traefik
-    - traefik.web.frontend.rule=Host:bitwarden.domain.tld
+    - traefik.web.frontend.rule=Host:vaultwarden.domain.tld
     - traefik.web.port=80
-    - traefik.hub.frontend.rule=Host:bitwarden.domain.tld;Path:/notifications/hub
+    - traefik.hub.frontend.rule=Host:vaultwarden.domain.tld;Path:/notifications/hub
     - traefik.hub.port=3012
     - traefik.hub.protocol=ws
 ```
@@ -446,12 +446,12 @@ labels:
 labels:
   - traefik.enable=true
   - traefik.docker.network=traefik
-  - traefik.http.routers.bitwarden-ui.rule=Host(`bitwarden.domain.tld`)
-  - traefik.http.routers.bitwarden-ui.service=bitwarden-ui
-  - traefik.http.services.bitwarden-ui.loadbalancer.server.port=80
-  - traefik.http.routers.bitwarden-websocket.rule=Host(`bitwarden.domain.tld`) && Path(`/notifications/hub`)
-  - traefik.http.routers.bitwarden-websocket.service=bitwarden-websocket
-  - traefik.http.services.bitwarden-websocket.loadbalancer.server.port=3012
+  - traefik.http.routers.vaultwarden-ui.rule=Host(`vaultwarden.domain.tld`)
+  - traefik.http.routers.vaultwarden-ui.service=vaultwarden-ui
+  - traefik.http.services.vaultwarden-ui.loadbalancer.server.port=80
+  - traefik.http.routers.vaultwarden-websocket.rule=Host(`vaultwarden.domain.tld`) && Path(`/notifications/hub`)
+  - traefik.http.routers.vaultwarden-websocket.service=vaultwarden-websocket
+  - traefik.http.services.vaultwarden-websocket.loadbalancer.server.port=3012
 ```
 
 ### 迁移的标签加上 HTTP 到 HTTPS 重定向 <a id="migrated-labels-plus-http-to-https-redirect"></a>
@@ -466,24 +466,24 @@ labels:
   - traefik.docker.network=traefik
   - traefik.http.middlewares.redirect-https.redirectScheme.scheme=https
   - traefik.http.middlewares.redirect-https.redirectScheme.permanent=true
-  - traefik.http.routers.bitwarden-ui-https.rule=Host(`bitwarden.domain.tld`)
-  - traefik.http.routers.bitwarden-ui-https.entrypoints=websecure
-  - traefik.http.routers.bitwarden-ui-https.tls=true
-  - traefik.http.routers.bitwarden-ui-https.service=bitwarden-ui
-  - traefik.http.routers.bitwarden-ui-http.rule=Host(`bitwarden.domain.tld`)
-  - traefik.http.routers.bitwarden-ui-http.entrypoints=web
-  - traefik.http.routers.bitwarden-ui-http.middlewares=redirect-https
-  - traefik.http.routers.bitwarden-ui-http.service=bitwarden-ui
-  - traefik.http.services.bitwarden-ui.loadbalancer.server.port=80
-  - traefik.http.routers.bitwarden-websocket-https.rule=Host(`bitwarden.domain.tld`) && Path(`/notifications/hub`)
-  - traefik.http.routers.bitwarden-websocket-https.entrypoints=websecure
-  - traefik.http.routers.bitwarden-websocket-https.tls=true
-  - traefik.http.routers.bitwarden-websocket-https.service=bitwarden-websocket
-  - traefik.http.routers.bitwarden-websocket-http.rule=Host(`bitwarden.domain.tld`) && Path(`/notifications/hub`)
-  - traefik.http.routers.bitwarden-websocket-http.entrypoints=web
-  - traefik.http.routers.bitwarden-websocket-http.middlewares=redirect-https
-  - traefik.http.routers.bitwarden-websocket-http.service=bitwarden-websocket
-  - traefik.http.services.bitwarden-websocket.loadbalancer.server.port=3012
+  - traefik.http.routers.vaultwarden-ui-https.rule=Host(`vaultwarden.domain.tld`)
+  - traefik.http.routers.vaultwarden-ui-https.entrypoints=websecure
+  - traefik.http.routers.vaultwarden-ui-https.tls=true
+  - traefik.http.routers.vaultwarden-ui-https.service=vaultwarden-ui
+  - traefik.http.routers.vaultwarden-ui-http.rule=Host(`vaultwarden.domain.tld`)
+  - traefik.http.routers.vaultwarden-ui-http.entrypoints=web
+  - traefik.http.routers.vaultwarden-ui-http.middlewares=redirect-https
+  - traefik.http.routers.vaultwarden-ui-http.service=bitwarden-ui
+  - traefik.http.services.vaultwarden-ui.loadbalancer.server.port=80
+  - traefik.http.routers.vaultwarden-websocket-https.rule=Host(`vaultwarden.domain.tld`) && Path(`/notifications/hub`)
+  - traefik.http.routers.vaultwarden-websocket-https.entrypoints=websecure
+  - traefik.http.routers.vaultwarden-websocket-https.tls=true
+  - traefik.http.routers.vaultwardenarden-websocket-https.service=vaultwarden-websocket
+  - traefik.http.routers.vaultwarden-websocket-http.rule=Host(`vaultwarden.domain.tld`) && Path(`/notifications/hub`)
+  - traefik.http.routers.vaultwarden-websocket-http.entrypoints=web
+  - traefik.http.routers.vaultwarden-websocket-http.middlewares=redirect-https
+  - traefik.http.routers.vaultwarden-websocket-http.service=vaultwarden-websocket
+  - traefik.http.services.vaultwarden-websocket.loadbalancer.server.port=3012
 ```
 
 ## HAproxy \(by BlackDex\)
@@ -491,20 +491,20 @@ labels:
 将这些行添加到您的 HAproxy 配置中。
 
 ```python
-frontend bitwarden_rs
+frontend vaultwarden
     bind 0.0.0.0:80
     option forwardfor header X-Real-IP
     http-request set-header X-Real-IP %[src]
     default_backend bitwarden_rs_http
-    use_backend bitwarden_rs_ws if { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
+    use_backend vaultwarden_ws if { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
-backend bitwarden_rs_http
+backend vaultwarden_http
     # 启用压缩（如果您需要）
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     server bwrshttp 0.0.0.0:8080
 
-backend bitwarden_rs_ws
+backend vaultwarden_ws
     server bwrsws 0.0.0.0:3012
 ```
 
@@ -526,20 +526,20 @@ frontend http-in
     default_backend static-success-default
 
     # 定义主机
-    acl host_bitwarden_domain_tld hdr_dom(Host) -i bitwarden.domain.tld
+    acl host_vaultwarden_domain_tld hdr_dom(Host) -i vaultwarden.domain.tld
 
     ## 找出要使用哪一个
-    use_backend bitwarden_rs_http if host_bitwarden_domain_tld !{ path_beg /notifications/hub } or { path_beg /notifications/hub/negotiate }
-    use_backend bitwarden_rs_ws if host_bitwarden_domain_tld { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
+    use_backend vaultwarden_http if host_vaultwarden_domain_tld !{ path_beg /notifications/hub } or { path_beg /notifications/hub/negotiate }
+    use_backend vaultwarden_ws if host_vaultwarden_domain_tld { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
-backend bitwarden_rs_http
+backend vaultwarden_http
     # 启用压缩（如果您需要）
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名
     server bwrs_http 0.0.0.0:8080
 
-backend bitwarden_rs_ws
+backend vaultwarden_ws
     # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名
     server bwrs_ws 0.0.0.0:3012
 ```

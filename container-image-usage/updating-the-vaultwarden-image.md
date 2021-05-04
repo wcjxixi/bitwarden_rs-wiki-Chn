@@ -1,7 +1,7 @@
 # 3.更新 vaultwarden 镜像
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Updating-the-bitwarden-image)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Updating-the-vaultwarden-image)
 {% endhint %}
 
 更新非常简单，你只需确保保留了已挂载的卷。如果您使用[此处](starting-a-container.md)示例中的 bind-mounted 路径（绑定挂载路径）的方式，则只需使用 `pull` 拉取最新版的镜像，使用 `stop` 和 `rm` 停止和移除当前容器，然后与之前相同的方式启动一个新容器即可：
@@ -63,7 +63,7 @@ sudo docker system prune -f
 docker ps -a
 # 查看已停止的容器
 
-# WARNING! This will remove:
+#WARNING! This will remove:
 #        - all stopped #containers
 #        - all networks not used by at least one container
 #        - all dangling images

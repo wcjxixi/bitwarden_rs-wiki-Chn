@@ -65,7 +65,7 @@ drwx------ 8 user user     4096 Feb  6 21:46 output/web-vault/
 
 如果你想获取 ARMv7 镜像，目前必须通过摘要下载。
 
-转到 [https://hub.docker.com/r/vaultwarden/server/tags?name=alpine](https://hub.docker.com/r/bitwardenrs/server/tags?name=alpine)，找到 `alpine` 标签的条目，点击 `linux/arm/v7` 镜像的部分摘要：
+转到 [https://hub.docker.com/r/vaultwarden/server/tags?name=alpine](https://hub.docker.com/r/bitwardenrs/server/tags?name=alpine)，找到 `alpine` 标签的条目，点击 `linux/arm/v7` 镜像的摘要：
 
 ![](https://camo.githubusercontent.com/6731521b884406abc6bcae6a32cc7f09d7901be0ebbae538dfb434dbeea5ba61/68747470733a2f2f692e696d6775722e636f6d2f543557647774532e706e67)
 
