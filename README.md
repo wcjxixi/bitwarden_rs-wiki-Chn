@@ -1,10 +1,10 @@
-# Vaultwarden wiki 中文版
+# vaultwarden wiki 中文版
 
 {% hint style="success" %}
 [2021-04-27](https://github.com/dani-garcia/vaultwarden/releases/tag/1.21.0)：bitwarden\_rs 更名为 vaultwarden
 {% endhint %}
 
-这里是 [vaultwarden wiki ](https://github.com/dani-garcia/vaultwarden/wiki)的中文翻译版。
+这里是 [vaultwarden wiki 页面](https://github.com/dani-garcia/vaultwarden/wiki)的中文翻译版。
 
 原文有太多口语化内容，翻译起来比较费脑，这里我尽力翻译准确并使之不那么生硬。
 
