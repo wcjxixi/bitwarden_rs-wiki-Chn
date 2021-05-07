@@ -106,7 +106,7 @@ _**可选备份。**_
 
 ## 恢复备份数据 <a id="restoring-backup-data"></a>
 
-确保 bitwarden\_rs 已经停止，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
+确保 vaultwarden 已经停止，然后简单地将 `data` 文件夹中的每个文件或目录替换为它的备份版本即可。
 
 当恢复使用 `.backup` 或 `VACUUM INTO` 创建的备份时，确保首先删除任何已存在的 `db.sqlite3-wal` 文件，因为当 SQLite 试图使用陈旧/不匹配的 WAL 文件恢复 `db.sqlite3` 时，有可能导致数据库损坏。然而，如果你直接拷贝 `db.sqlite3` 文件和其匹配的 `db.sqlite3-wal` 文件的方式来备份数据库，那么你必须将两个文件作为一对来恢复。不需要备份或恢复 `db.sqlite3-shm` 文件。
 
@@ -114,9 +114,9 @@ _**可选备份。**_
 
 ## 示例 <a id="examples"></a>
 
-本节包含第三方备份示例的索引。在使用示例之前，您应该彻底阅读示例并了解其功能。
+本部分是第三方备份示例的索引。在使用示例之前，您应该彻底阅读示例并了解其功能。
 
-* [https://github.com/ttionya/BitwardenRS-Backup](https://github.com/ttionya/BitwardenRS-Backup)
+* [https://github.com/ttionya/vaultwarden-backup](https://github.com/ttionya/vaultwarden-backup)
 * [https://github.com/shivpatel/bitwarden\_rs-local-backup](https://github.com/shivpatel/bitwarden_rs-local-backup)
 * [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)
 * [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup)
