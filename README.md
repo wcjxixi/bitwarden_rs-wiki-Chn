@@ -1,10 +1,10 @@
-# vaultwarden wiki 中文版
+# Vaultwarden Wiki 中文版
 
 {% hint style="success" %}
-[2021-04-27](https://github.com/dani-garcia/vaultwarden/releases/tag/1.21.0)：bitwarden\_rs 更名为 vaultwarden
+[2021-04-27](https://github.com/dani-garcia/vaultwarden/releases/tag/1.21.0)：bitwarden\_rs 项目更名为 vaultwarden
 {% endhint %}
 
-这里是 [vaultwarden wiki 页面](https://github.com/dani-garcia/vaultwarden/wiki)的中文翻译版。
+这里是 [vaultwarden Wiki ](https://github.com/dani-garcia/vaultwarden/wiki)的中文翻译版。
 
 原文有太多口语化内容，翻译起来比较费脑，这里我尽力翻译准确并使之不那么生硬。
 
@@ -13,7 +13,7 @@
 致谢 [Google Translate](https://translate.google.com/) 以及 [DeepL](https://www.deepl.com/) ！
 
 {% hint style="warning" %}
-个人能力有限，具体请以 [vaultwarden](https://github.com/dani-garcia/vaultwarden) 官方页面为准。使用本手册所产生的一切后果，与 @wcjxixi 无关。Use at your own risk！！！
+个人能力有限，具体请以 [vaultwarden Wiki](https://github.com/dani-garcia/vaultwarden/wiki) 官方页面为准。使用本手册所产生的一切后果，与 @wcjxixi 无关。Use at your own risk！！！
 {% endhint %}
 
 ## vaultwarden 是什么

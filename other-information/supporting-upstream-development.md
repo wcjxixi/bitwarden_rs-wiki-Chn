@@ -12,7 +12,7 @@ vaultwarden 仅提供 API（服务器）端实现，用户仍依赖来自上游�
 
 ## 购买许可证 <a id="buying-a-licence"></a>
 
-许多用户只是购买适当的许可证以进行部署，但放在那里从未使用它。这也是一种捐赠，因为 vaultwarden 不能以任何方式使用许可证。
+许多用户只是购买适当的许可证以进行部署，但放那里从未使用它。这也是一种捐赠，因为 vaultwarden 不能以任何方式使用许可证。
 
 ## 帮助翻译应用程序 <a id="help-translating-the-apps"></a>
 
