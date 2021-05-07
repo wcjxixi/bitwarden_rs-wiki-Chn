@@ -78,9 +78,11 @@ git clone https://github.com/bitwarden/web.git web-vault
 cd web-vault
 # 切换到最新的标签
 git checkout "$(git tag --sort=v:refname | tail -n1)"
+# use the matching jslib commit
+git submodule update --init --recursive
 ```
 
-2、从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/tree/master/patches) 下载补丁文件并将其复制到 `web-vault` 文件夹。选择要使用的补丁文件的版本（假设网页密码库版本为 `vX.Y.Z`）：
+2、从 [dani-garcia/bw\_web\_builds](https://github.com/dani-garcia/bw_web_builds/tree/master/patches) 下载补丁文件并将其复制到 `web-vault` 文件夹。补丁文件的版本（假设网页密码库版本为 `vX.Y.Z`）选择：
 
 * 如果有版本为 `vX.Y.Z` 的补丁，则使用该版本
 * 否则，选择小于 `vX.Y.Z` 的最大的那一个版本
