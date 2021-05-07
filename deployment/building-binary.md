@@ -78,7 +78,7 @@ git clone https://github.com/bitwarden/web.git web-vault
 cd web-vault
 # 切换到最新的标签
 git checkout "$(git tag --sort=v:refname | tail -n1)"
-# use the matching jslib commit
+# 使用匹配的 jslib 提交
 git submodule update --init --recursive
 ```
 
