@@ -1,7 +1,7 @@
 # 2.使用 Let's Encrypt 证书运行私有 vaultwarden 实例
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-a-private-bitwarden_rs-instance-with-Let%27s-Encrypt-certs)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Running-a-private-vaultwarden-instance-with-Let%27s-Encrypt-certs)
 {% endhint %}
 
 假设你希望运行一个只能从本地网络访问的 vaultwarden 实例，但你又希望此实例启用 HTTPS，此 HTTPS 证书由一个被广泛接受的 CA 而不是你自己的[私有 CA](../../other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md) 来签署（以避免将专用CA证书加载到所有设备中的麻烦）。
@@ -118,7 +118,7 @@ CLOUDFLARE_API_TOKEN=<your-api-token>
 caddy run -envfile caddy.env
 ```
 
-运行命令以启动 `bitwarden_rs`：
+运行命令以启动 `vaultwarden`：
 
 ```python
 export ROCKET_PORT=8080

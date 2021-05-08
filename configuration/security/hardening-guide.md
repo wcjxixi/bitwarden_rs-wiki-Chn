@@ -76,7 +76,7 @@ services:
 
 一般来说，只有 vaultwarden 正常运行所需要的数据才应该被挂载到 vaultwarden 容器中（通常情况下，这只是你的数据目录，也许还有一个包含 SSL/TLS 证书和私钥的目录）。不要挂载你的整个主目录，例如，`/var/run/docker.sock` 等，除非你有特定的原因，并且知道你在做什么。
 
-另外，如果你不希望 vaultwarden 修改你挂载的数据（例如，certs），可以通过在卷规范中添加 `:ro` 来[只读挂载它](https://docs.docker.com/storage/bind-mounts/#use-a-read-only-bind-mount)（例如，`docker run -v /home/username/bitwarden-ssl:/ssl:ro`）。
+另外，如果你不希望 vaultwarden 修改你挂载的数据（例如，certs），可以通过在卷规范中添加 `:ro` 来[只读挂载它](https://docs.docker.com/storage/bind-mounts/#use-a-read-only-bind-mount)（例如，`docker run -v /home/username/vaultwarden-ssl:/ssl:ro`）。
 
 ## 杂项 <a id="miscellaneous"></a>
 
@@ -86,5 +86,5 @@ services:
 
 ### 隐藏在子目录下 <a id="hiding-under-a-subdir"></a>
 
-通常，Bitwarden 实例驻留在子域的根目录下（即 `bitwarden.example.com`，而不是 `bitwarden.example.com/some/path`）。上游的 Bitwarden 服务器目前只支持子域根目录，而 vaultwarden 则增加了对[备用基础目录](../using-an-alternate-base-dir-subdir-subpath.md)的支持。对于某些用户来说，这很有用，因为他们只能访问一个子域，却想在不同的目录下运行多个服务。在这种情况下，他们通常可以做一些显而易见的选择，比如使用 `mysubdomain.example.com/bitwarden`。然而，你也可以通过把 vaultwarden 放在类似 `mysubdomain.example.com/bitwarden/<mysecretstring>` 这样的目录下来提供额外的保护层，其中 `<mysecretstring>` 有效地充当一个密码。也许有人会说这是[通过隐藏实现安全](https://en.wikipedia.org/wiki/Security_through_obscurity)，但实际上这是深度防御 -- 子目录的隐蔽性只是额外的一层安全保护，而不是为了成为主要的安全手段（用户主密码的强度仍然是主要的安全手段）。
+通常，Bitwarden 实例驻留在子域的根目录下（即 `bitwarden.example.com`，而不是 `bitwarden.example.com/some/path`）。上游的 Bitwarden 服务器目前只支持子域根目录，而 vaultwarden 则增加了对[备用基础目录](../using-an-alternate-base-dir-subdir-subpath.md)的支持。对于某些用户来说，这很有用，因为他们只能访问一个子域，却想在不同的目录下运行多个服务。在这种情况下，他们通常可以做一些显而易见的选择，比如使用 `mysubdomain.example.com/bitwarden`。然而，你也可以通过把 vaultwarden 放在类似 `mysubdomain.example.com/vaultwarden/<mysecretstring>` 这样的目录下来提供额外的保护层，其中 `<mysecretstring>` 有效地充当一个密码。也许有人会说这是[通过隐藏实现安全](https://en.wikipedia.org/wiki/Security_through_obscurity)，但实际上这是深度防御 -- 子目录的隐蔽性只是额外的一层安全保护，而不是为了成为主要的安全手段（用户主密码的强度仍然是主要的安全手段）。
 

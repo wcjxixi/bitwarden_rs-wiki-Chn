@@ -12,7 +12,7 @@
 
 ```python
 [Unit]
-Description=Bitwarden Server (Rust Edition)
+Description=Vaultwarden Server (Rust Edition)
 Documentation=https://github.com/dani-garcia/vaultwarden
 # 如果你使用 mariadb、mysql 或 postgresql 数据库， 
 # 你必须像下面这样添加它们，并去掉前面的 # 以取消注释。
@@ -61,7 +61,7 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 WantedBy=multi-user.target
 ```
 
-更改以上所有路径以匹配您的安装（`WorkingDirectory` 与 `ReadWriteDirectory` 应相同），将此文件命名为 `bitwarden_rs.service` 并将其放入 `/etc/systemd/system` 中。
+更改以上所有路径以匹配您的安装（`WorkingDirectory` 与 `ReadWriteDirectory` 应相同），将此文件命名为 `vaultwarden.service` 并将其放入 `/etc/systemd/system` 中。
 
 如果必须更改现有（而不是像上面那样新建）的 systemd 文件（您安装的软件包提供给您的），可以使用下面的命令来添加更改：
 
@@ -99,7 +99,7 @@ $ sudo systemctl enable vaultwarden.service
 $ sudo systemctl restart vaultwarden.service
 ```
 
-### 卸载 bitwarden\_rs <a id="uninstalling-bitwarden_rs"></a>
+### 卸载 vaultwarden <a id="uninstalling-bitwarden_rs"></a>
 
 在执行其他操作之前，应先停止并禁用该服务：
 
@@ -164,7 +164,7 @@ $ sudo systemctl daemon-reload
 systemd 日志中显示以下错误（`journalctl -eu vaultwarden.service`）：
 
 ```python
-Feb 18 05:29:10 staging-bitwarden systemd[1]: Started Bitwarden Server (Rust Edition).
+Feb 18 05:29:10 staging-bitwarden systemd[1]: Started Vaultwarden Server (Rust Edition).
 Feb 18 05:29:10 staging-bitwarden systemd[49506]: vaultwarden.service: Failed to execute command: Resource temporarily unavailable
 Feb 18 05:29:10 staging-bitwarden systemd[49506]: vaultwarden.service: Failed at step EXEC spawning /usr/bin/vaultwarden: Resource temporarily unavailable
 Feb 18 05:29:10 staging-bitwarden systemd[1]: vaultwarden.service: Main process exited, code=exited, status=203/EXEC

@@ -1,7 +1,7 @@
 # 9.更改持久性数据位置
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Changing-persistent-data-location)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Changing-persistent-data-location)
 {% endhint %}
 
 ## /data 前缀 <a id="data-prefix"></a>

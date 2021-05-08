@@ -1,7 +1,7 @@
 # 5.使用 Podman
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Podman)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Using-Podman)
 {% endhint %}
 
 [Podman](https://podman.io/) 是替代 Docker 的无守护程序，它与大部分 Docker 容器兼容。

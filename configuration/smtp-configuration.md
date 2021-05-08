@@ -1,10 +1,10 @@
 # 12.SMTP 配置
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/SMTP-configuration)
 {% endhint %}
 
-您可以配置 bitwarden\_rs 通过 SMTP 代理来发送电子邮件：
+您可以配置 vaultwarden 通过 SMTP 代理来发送电子邮件：
 
 ```python
 docker run -d --name vaultwarden \

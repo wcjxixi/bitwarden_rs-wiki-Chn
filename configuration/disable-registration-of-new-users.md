@@ -1,7 +1,7 @@
 # 2.禁用新用户注册
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Disable-registration-of-new-users)
 {% endhint %}
 
 默认情况下，可以访问实例的任何人均可以注册新账户。要禁用该功能，请将 `SIGNUPS_ALLOWED` 环境变量设置为 `false`：

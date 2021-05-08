@@ -1,7 +1,7 @@
 # 1.启用 HTTPS
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-HTTPS)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-HTTPS)
 {% endhint %}
 
 现在几乎都需要启用 [HTTPS](https://en.wikipedia.org/wiki/HTTPS)，才能满足 vaultwarden 的正常操作，这是因为 Bitwarden 网络密码库使用的 [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)，大多数浏览器只有在 HTTPS 环境下才能使用。
@@ -56,17 +56,17 @@ ROCKET_TLS={certs="/path/to/certs.pem",key="/path/to/key.pem"}
 * 如果在 Docker 下运行，请记住，vaultwarden 在容器内部运行时将解析 `ROCKET_TLS` 值 ，所以请确保 `certs` 和 `key` 路径是容器内部呈现的样子（可能与 Docker 主机系统上的路径不同）。
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e ROCKET_TLS='{certs="/ssl/certs.pem",key="/ssl/key.pem"}' \
   -v /ssl/keys/:/ssl/ \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 443:80 \
   vaultwarden/server:latest
 ```
 
-您需要挂载 ssl 文件夹（使用 -v 参数），同时需要转发适当的端口（使用 -p 参数），通常是用于 HTTPS 连接的 443 端口。如果您选择的端口号不是 443，例如 3456，请记住在连接到服务时明确提供该端口号，例如：`https://bitwarden.local:3456`。
+您需要挂载 ssl 文件夹（使用 -v 参数），同时需要转发适当的端口（使用 -p 参数），通常是用于 HTTPS 连接的 443 端口。如果您选择的端口号不是 443，例如 3456，请记住在连接到服务时明确提供该端口号，例如：`https://vaultwarden.local:3456`。
 
-有关如何在本地系统上设置和使用私有 CA 的更多信息，请参阅[此页面](../../other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)。如果遵循该指南，您的 ROCKET\_TLS 行看起来应该像这样：`-e ROCKET_TLS='{certs="/ssl/bitwarden.crt",key="/ssl/bitwarden.key"}' \`
+有关如何在本地系统上设置和使用私有 CA 的更多信息，请参阅[此页面](../../other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)。如果遵循该指南，您的 ROCKET\_TLS 行看起来应该像这样：`-e ROCKET_TLS='{certs="/ssl/vaultwarden.crt",key="/ssl/vaultwarden.key"}' \`
 
 {% hint style="warning" %}
 确保你的证书文件包含完整的信任链。对于 certbot，这意味着应使用 `fullchain.pem` 而不是 `cert.pem`。完整的信任链应该包括两个证书：叶证书（与 `cert.pem` 中的内容相同），后面跟随 R3 或 E1 [中间证书](https://letsencrypt.org/certificates/#intermediate-certificates)。例如，Android 默认不在其系统信任存储中包含任何 Let's Encrypt 中间证书，所以如果你不提供完整的证书链，Android 客户端很可能无法连接。
@@ -78,13 +78,13 @@ docker run -d --name bitwarden \
 
 这些文件链接到  `../../archive/mydomain/privkey.pem`。
 
-因此，从 bitwarden 容器中使用，应像这样：
+因此，从 vaultwarden 容器中使用，应像这样：
 
 ```python
-docker run -d --name bitwarden \
+docker run -d --name vaultwarden \
   -e ROCKET_TLS='{certs="/ssl/live/mydomain/fullchain.pem",key="/ssl/live/mydomain/privkey.pem"}' \
   -v /etc/letsencrypt/:/ssl/ \
-  -v /bw-data/:/data/ \
+  -v /vw-data/:/data/ \
   -p 443:80 \
   vaultwarden/server:latest
 ```

@@ -1,7 +1,7 @@
 # 7.启用 U2F 身份验证
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-U2F-authentication)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-U2F-authentication)
 {% endhint %}
 
 要启用 U2F 身份验证，您必须使用带有效证书（使用内置的 HTTPS 选项或使用反向代理）的 HTTPS 域名访问 vaultwarden。我们建议使用 Let's Encrypt 提供的免费证书。

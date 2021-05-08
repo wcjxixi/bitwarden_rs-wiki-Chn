@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Vaultwarden Wiki 中文版](README.md)
+* [vaultwarden Wiki 中文版](README.md)
 * [主页](home.md)
 * [FAQ](faqs.md)
 * [容器镜像的使用](container-image-usage/README.md)
@@ -21,7 +21,7 @@
     * [1.启用 HTTPS](deployment/https/enabling-https.md)
     * [2.使用 Let's Encrypt 证书运行私有 vaultwarden 实例](deployment/https/running-a-private-vaultwarden-instance-with-lets-encrypt-certs.md)
 * [配置](configuration/README.md)
-  * [1.总览](configuration/overview.md)
+  * [1.配置概述](configuration/configuration-overview.md)
   * [2.禁用新用户注册](configuration/disable-registration-of-new-users.md)
   * [3.禁用邀请](configuration/disable-invitations.md)
   * [4.启用管理页面](configuration/enabling-admin-page.md)
