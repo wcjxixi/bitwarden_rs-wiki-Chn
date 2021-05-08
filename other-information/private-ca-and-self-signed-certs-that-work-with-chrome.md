@@ -7,10 +7,10 @@
 {% hint style="warning" %}
 此方法仅用于测试和开发。绝大多数用户不应该使用这种方法，因为它需要在你的每台设备上加载一个证书，这既容易出错，又需要后期的维护。相反，把精力集中在通过 [Let's Encrypt](https://letsencrypt.org/getting-started/) 获取的真实证书上。如果你的 vaultwarden 实例不处于公共互联网中，此方法甚至也可以工作（[示例](../deployment/https/running-a-private-vaultwarden-instance-with-lets-encrypt-certs.md)）。
 
-此方法不受支持。请不要开启 GitHub 问题，也不要在讨论区发帖询问如何让这个方法能正常工作。
+此方法不受支持。请不要开启 GitHub 话题，也不要在讨论区发帖询问如何让这个方法能正常工作。
 {% endhint %}
 
-为了使 bitwarden 能够正常使用自签名证书，Chrome 需要该证书在证书的备用名称字段中包含域名。
+为了使 vaultwarden 能够正常使用自签名证书，Chrome 需要该证书在证书的备用名称字段中包含域名。
 
 创建一个 CA 密钥（您自己的小型本地证书颁发机构）：
 
