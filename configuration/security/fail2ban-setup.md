@@ -1,7 +1,7 @@
 # 2.Fail2Ban 设置
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Fail2Ban-Setup)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Fail2Ban-Setup)
 {% endhint %}
 
 设置 Fail2ban 可以阻止攻击者暴力破解您的密码库登录。如果您的实例是公开的，这一点尤其重要。

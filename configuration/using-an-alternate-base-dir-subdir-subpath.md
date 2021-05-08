@@ -1,7 +1,7 @@
 # 19.使用备用基本目录（子目录/子路径）
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-an-alternate-base-dir)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Using-an-alternate-base-dir)
 {% endhint %}
 
 通常，Bitwarden 被限制驻留在子域的根目录中，比如`https://bitwarden.example.com`。

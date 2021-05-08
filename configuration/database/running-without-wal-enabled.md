@@ -1,7 +1,7 @@
 # 3.在未启用 WAL 的情况下运行
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Running-without-WAL-enabled)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Running-without-WAL-enabled)
 {% endhint %}
 
 > WAL 是仅用于 SQLite 的设置，它在 Postgres 或 MySQL 上不起作用。

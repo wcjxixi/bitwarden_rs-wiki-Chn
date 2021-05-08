@@ -1,7 +1,7 @@
 # 1.强化指南
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Hardening-Guide)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Hardening-Guide)
 {% endhint %}
 
 ## 应用程序配置 <a id="application-configuration"></a>

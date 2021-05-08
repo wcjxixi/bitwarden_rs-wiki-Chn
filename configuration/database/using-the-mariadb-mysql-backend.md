@@ -1,7 +1,7 @@
 # 1.使用 MariaDB（MySQL）后端
 
 {% hint style="success" %}
-对应的[页面地址](https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MariaDB-%28MySQL%29-Backend)
+对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Using-the-MariaDB-%28MySQL%29-Backend)
 {% endhint %}
 
 {% hint style="warning" %}
