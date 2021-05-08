@@ -8,7 +8,7 @@ vaultwarden 是一个使用 Rust 编写的非官方 Bitwarden 服务器实现，
 
 vaultwarden 面向个人、家庭和小型组织。尽管开发主要对大型组织有用的功能（例如，单点登录、目录同步等）并不是优先事项，但欢迎实现此类功能的高质量 PR。
 
-### 支持的特性
+## 支持的特性 <a id="supported-features"></a>
 
 vaultwarden 实现大多数功能所需的 Bitwarden API，其中包括：
 
@@ -33,7 +33,7 @@ vaultwarden 实现大多数功能所需的 Bitwarden API，其中包括：
   * [个人所有权](https://help.bitwarden.in/organizations/enterprise-policies#personal-ownership)
   * [禁用 Send](https://help.bitwarden.in/organizations/enterprise-policies#disable-send)
 
-### 缺少的特性
+## 缺少的特性 <a id="missing-features"></a>
 
 话题 [\#246](https://github.com/dani-garcia/vaultwarden/issues/246) 包含了完整的功能请求列表，既有官方服务器中缺少的功能，也有 vaultwarden 中特有的增强功能。
 
@@ -55,7 +55,7 @@ vaultwarden 实现大多数功能所需的 Bitwarden API，其中包括：
 * [群组](https://help.bitwarden.in/organizations/groups)
 * [自定义角色](https://help.bitwarden.in/organizations/user-types-and-access-control#custom-role)
 
-### 保持联系
+## 保持联系 <a id="get-in-touch"></a>
 
 要提出问题、提供建议、请求新功能或获得有关配置或安装软件的帮助，请[使用论坛](https://vaultwarden.discourse.group/)。
 
