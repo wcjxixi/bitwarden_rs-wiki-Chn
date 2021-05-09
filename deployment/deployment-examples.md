@@ -10,7 +10,7 @@
 
 * [https://github.com/dadatuputi/bitwarden\_gcloud](https://github.com/dadatuputi/bitwarden_gcloud)
 
-针对 Google Cloud 的“永远免费”的 f1-micro 计算实例进行了优化的 Bitwarden 安装。
+针对 Google Cloud 的「永远免费」的 f1-micro 计算实例进行了优化的 Bitwarden 安装。
 
 ## Kubernetes
 
@@ -33,7 +33,7 @@
 * [https://github.com/jjlin/vaultwarden-shared-hosting  ](https://github.com/jjlin/vaultwarden-shared-hosting
   )
 
-在 [DreamHost](https://www.dreamhost.com/) 上运行 `bitwarden_rs` 的配置示例，但应该同样适用于许多其他共享主机服务。
+在 [DreamHost](https://www.dreamhost.com/) 上运行 `bitwarden_rs` 的配置示例，但应该也适用于许多其他共享主机服务。
 
 * [https://lab.uberspace.de/guide\_bitwarden.html](https://lab.uberspace.de/guide_bitwarden.html)
 
@@ -86,4 +86,10 @@
 ```
 
 如果你有任何关于这部分的问题，请随时联系我。我在 matrix 的  @litschi:litschi.xyz 、以及 IRC（hackint 和 freenode）的 litschi，或简单地在 matrix.org 的 vaultwarden 频道中询咨询我。
+
+## QNAP NAS \(ARM 和 x86\) <a id="qnap-nas-arm-and-x-86"></a>
+
+* [https://github.com/umireon/vaultwarden-qnap](https://github.com/umireon/vaultwarden-qnap)
+
+可以通过 Let's Encrypt 将 Vaultwarden 安装到您的安全网络附加存储（NAS）中。但由于 QNAP 内置的 HTTP\(S\) 服务器，您不能在标准的 HTTP\(S\) 端口（80/443）上发布 Vaultwarden。
 
