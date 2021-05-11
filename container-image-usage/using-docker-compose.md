@@ -141,7 +141,7 @@ services:
 
   # 使用 ACME HTTP-01 验证方式为已配置的域名获取证书
   tls {
-    dns lego_deprecated duckdns
+    dns duckdns {$DUCKDNS_TOKEN}
   }
 
   # 此设置可能会在某些浏览器上出现兼容性问题（例如，在 Firefox 上下载附件）
@@ -151,7 +151,7 @@ services:
   # Notifications 重定向到 WebSocket 服务器
   reverse_proxy /notifications/hub vaultwarden:3012
 
-  # 代理所有，但除了 Rocket
+  # 除 Rocket 外，代理所有
   reverse_proxy vaultwarden:80
 }
 ```

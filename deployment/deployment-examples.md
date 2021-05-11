@@ -91,5 +91,5 @@
 
 * [https://github.com/umireon/vaultwarden-qnap](https://github.com/umireon/vaultwarden-qnap)
 
-可以通过 Let's Encrypt 将 Vaultwarden 安装到您的安全网络附加存储（NAS）中。但由于 QNAP 内置的 HTTP\(S\) 服务器，您不能在标准的 HTTP\(S\) 端口（80/443）上发布 Vaultwarden。
+您可以使用 Let's Encrypt 将 Vaultwarden 安装到您的安全网络附加存储（NAS）中。但由于 QNAP 内置的 HTTP\(S\) 服务器，您不能在标准的 HTTP\(S\) 端口（80/443）上发布 Vaultwarden。
 
