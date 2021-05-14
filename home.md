@@ -32,6 +32,7 @@ vaultwarden 实现大多数功能所需的 Bitwarden API，其中包括：
   * [密码生成器](https://help.bitwarden.in/organizations/enterprise-policies#password-generator)
   * [个人所有权](https://help.bitwarden.in/organizations/enterprise-policies#personal-ownership)
   * [禁用 Send](https://help.bitwarden.in/organizations/enterprise-policies#disable-send)
+  * [Send 选项](https://help.bitwarden.in/organizations/enterprise-policies#send-options)
 
 ## 缺少的特性 <a id="missing-features"></a>
 
