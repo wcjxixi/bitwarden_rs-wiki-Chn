@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Running-a-private-vaultwarden-instance-with-Let%27s-Encrypt-certs)
 {% endhint %}
 
-假设你希望运行一个只能从本地网络访问的 vaultwarden 实例，但你又希望此实例启用 HTTPS，此 HTTPS 证书由一个被广泛接受的 CA 而不是你自己的[私有 CA](../../other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md) 来签署（以避免将专用 CA 证书加载到所有设备中的麻烦）。
+假设你希望运行一个只能从本地网络访问的 vaultwarden 实例，但你又希望此实例启用 HTTPS，此 HTTPS 证书由一个被广泛接受的 CA 而不是你自己的[私有 CA](../../other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md) 来签署（以避免将专用CA证书加载到所有设备中的麻烦）。
 
 本文将演示如何使用 [Caddy](https://caddyserver.com/) Web 服务器创建这样的设置，Caddy 内置了对诸多 DNS 提供商的 ACME 支持。我们将通过 ACME [DNS 验证方式](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge)获取 Let's Encrypt 证书来配置 Caddy -- 在这里使用通常的 HTTP 验证方式的话会有问题，因为它依赖于 Let's Encrypt 服务器能够访问到你的内部 Web 服务器。
 
@@ -23,12 +23,12 @@
 
 由于大多数人不使用 DNS 验证方式，为每个 DNS 提供商自定义实现，因此 Caddy 默认没有内置此验证方式的支持。
 
-最简单的方式是通过 [https://caddyserver.com/download](https://caddyserver.com/download) 获取带有 DNS 验证模块的 Caddy 版本。选择您的平台，选中 `github.com/caddy-dns/cloudflare`（用于 Cloudflare）和/或 `github.com/caddy-dns/duckdns`（用于 Duck DNS），然后点击下载。
+最简单的方式是通过 [https://caddyserver.com/download](https://caddyserver.com/download) 获取带有 DNS 验证模块的 Caddy 版本。选择您的平台，选中 `github.com/caddy-dns/cloudflare`（用于 Cloudflare）和/或 `github.com/caddy-dns/lego-deprecated`（用于 Duck DNS），然后点击下载。
 
 如果你喜欢从源代码构建，你可以使用 [`xcaddy`](https://caddyserver.com/docs/build#xcaddy)。例如，要创建一个包含 Cloudflare 和 Duck DNS 支持的构建：
 
 ```python
-xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/caddy-dns/duckdns
+xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/caddy-dns/lego-deprecated
 ```
 
 将 `caddy` 二进制 移动到 `/usr/local/bin/caddy` 或其他合适的目录中。（可选）运行语句 `sudo setcap cap_net_bind_service=+ep /usr/local/bin/caddy` 以允许 `caddy` 而在特权端口（&lt; 1024）上监听，而无须以 root 身份运行。
@@ -42,7 +42,7 @@ xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/caddy-dns/
 ```python
 {$DOMAIN}:443 {
     tls {
-        dns duckdns {$DUCKDNS_TOKEN}
+        dns lego_deprecated duckdns
     }
     reverse_proxy localhost:8080
     reverse_proxy /notifications/hub localhost:3012
@@ -98,7 +98,7 @@ export WEBSOCKET_ENABLED=true
 ```python
 {$DOMAIN}:443 {
     tls {
-        dns cloudflare {$CLOUDFLARE_API_TOKEN}
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
     }
     reverse_proxy localhost:8080
     reverse_proxy /notifications/hub localhost:3012
@@ -161,6 +161,6 @@ export WEBSOCKET_ENABLED=true
 
 ### Caddy Duck DNS 组件 <a id="caddy-duck-dns-module"></a>
 
-* [https://github.com/caddy-dns/duckdns](https://github.com/caddy-dns/duckdns)
+* [https://github.com/caddy-dns/lego-deprecated](https://github.com/caddy-dns/lego-deprecated)
 * [https://go-acme.github.io/lego/dns/duckdns/](https://go-acme.github.io/lego/dns/duckdns/)
 
