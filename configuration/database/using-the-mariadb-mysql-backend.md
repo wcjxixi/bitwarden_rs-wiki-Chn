@@ -9,7 +9,7 @@
 {% endhint %}
 
 {% hint style="warning" %}
-Alpine 目前不支持 MariaDB（MySQL）。在 amd64 上 Alpine 支持 SQLite 和 PostgreSQL，在 arm32v7 上它仅支持 SQLite。
+Alpine 目前**不支持** MariaDB（MySQL）。在 amd64 上，Alpine 支持 SQLite 和 PostgreSQL，在 arm32v7 上它仅支持 SQLite。
 {% endhint %}
 
 要使用 MySQL 后端，你可以使用[官方 Docker 镜像](https://hub.docker.com/r/bitwardenrs/server-mysql)，也可以构建你自己的启用了 [MySQL](../../deployment/building-binary.md#mysql-backend) 的二进制。
@@ -30,7 +30,7 @@ DATABASE_URL=mysql://[[user]:[password]@]host[:port][/database]
 
 完整的代码列表可以在 [Wikipedia 的百分号编码页面](https://zh.wikipedia.org/wiki/%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81)上找到。
 
-### 使用 Docker 的示例 <a id="example-using-docker"></a>
+## 使用 Docker 的示例 <a id="example-using-docker"></a>
 
 ```python
 # 启动 mysql 容器
