@@ -19,7 +19,7 @@
 * （推荐）如果你信任 [Cloudflare](https://www.cloudflare.com/) 来代理你的流量，你可以让他们处理你的 SSL/TLS 证书的发放。请注意，上游的 Bitwarden 网络密码库（[https://vault.bitwarden.com/](https://vault.bitwarden.com/)）运行在 Cloudflare 后面。
 * （不推荐）[建立一个私人 CA](../../other-information/private-ca-and-self-signed-certs-that-work-with-chrome.md)，并发行你自己的（自签名）证书。这有各种陷阱和不便，所以请自行考虑是否使用此选项。
 
-参考[获取 SSL/TLS 证书](enabling-https.md#getting-ssl-tls-certificates)部分，以了解这些选项的更多细节。
+参考[获取 SSL/TLS 证书](enabling-https.md#getting-ssl-tls-certificates)部分，以了解这些选项的更多细节。要使移动应用程序正常运行，必须设置正确的 [OCSP 装订](https://en.wikipedia.org/wiki/OCSP_stapling)设置。
 
 ## 启用 HTTPS <a id="enabling-https"></a>
 
@@ -91,19 +91,19 @@ docker run -d --name vaultwarden \
 
 #### 检查证书是否有效 <a id="check-if-certificate-is-valid"></a>
 
-当您的 vaultwarden 服务器对外界可用时，您可以使用 [https://comodosslstore.com/ssltools/ssl-checker.php](https://comodosslstore.com/ssltools/ssl-checker.php) 网站来检查 SSL 证书是否包含证书链。缺少证书链，Android 设备将无法连接。
+当您的 vaultwarden 服务器对外界可用时，您可以使用 [Comodo SSL Checker](https://comodosslstore.com/ssltools/ssl-checker.php)，[Qualys' SSL Labs](https://www.ssllabs.com/ssltest/) 或 [Digicert SSL Certficate Checker](https://www.digicert.com/help/) 来检查您的 SSL 证书（包括证书链）是否有效。缺少证书链，Android 设备将连接失败。
 
-您也可以使用 [https://www.ssllabs.com/ssltest/analyze.html](https://www.ssllabs.com/ssltest/analyze.html) 网站进行检查，但是它不支持自定义端口。另外，请记住选中“Do not show the results on the boards”复选框，否则您的系统将在「Recently Seen」列表中可见。
+您可以使用 [Qualys' SSL Labs](https://www.ssllabs.com/ssltest/analyze.html) 检查，但它不支持自定义端口。另外，请记住选中「Do not show the results on the boards」复选框，否则您的系统将在「Recently Seen」列表中可见。
 
-如果您运行的是没有与公共 Internet 连接的本地服务器，则可以使用 openssl 工具来验证您的证书。
+如果您运行的是没有与公共 Internet 连接的本地服务器，则可以使用 `openssl` 命令，[testssl.sh](https://testssl.sh/) 或 [SSLScan](https://github.com/rbsec/sslscan/) 来验证证书的有效性。
 
 执行以下操作以验证证书是否随链安装（注意将 vault.domain.com 改为您自己的域名）：
 
 ```python
-openssl s_client -showcerts -connect vault.domain.com:443
+openssl s_client -showcerts -connect vault.domain.com:443 -servername vault.domain.com
 
-# 或者您使用的其他端口，比如 7070
-openssl s_client -showcerts -connect vault.domain.com:7070
+# 或者不同的端口，比如 7070
+openssl s_client -showcerts -connect vault.domain.com:7070 -servername vault.domain.com
 ```
 
 输出的开头应类似于以下内容（使用 Let's Encrypt 证书）：
@@ -119,6 +119,10 @@ verify return:1
 ```
 
 有 3 个不同深度（请注意，它是从 0 开始的）级别的验证。在接下来的输出中，您应该看到来自 Let's Encryptbase 的使用 base64 编码的证书信息。
+
+#### 检查 OSCP 有效性 <a id="check-oscp-validity"></a>
+
+如果 OCSP 装订无法正常工作，则连接移动应用程序将失败，并显 `Chain validation failed` 消息。正确设置 OCSP 装订后，[Digicert SSL Checker](https://www.digicert.com/help/) 的吊销检查部分将包含「OCSP Staple: Good」。您的网络服务器必须能够连接到证书的 X509v3 扩展中的「Authority Information Access」URL，才能使 OCSP 装订工作。
 
 ## 获取 SSL/TLS 证书 <a id="getting-ssl-tls-certificates"></a>
 

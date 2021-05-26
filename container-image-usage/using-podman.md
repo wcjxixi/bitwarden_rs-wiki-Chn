@@ -19,7 +19,7 @@ $ podman generate systemd --name vaultwarden
 # Tue Nov 19 15:49:15 CET 2019
 
 [Unit]
-Description=Podman container-foo.service
+Description=Podman container-vaultwarden.service
 Documentation=man:podman-generate-systemd(1)
 
 [Service]
@@ -34,16 +34,22 @@ PIDFile=/run/user/1000/overlay-containers/54502f309f3092d32b4c496ef3d099b270b2af
 WantedBy=multi-user.target default.target
 ```
 
-您可以提供一个 `--files` 标志来专用于特定文件，以将 systemd 服务文件输出到该文件。这样，我们就可以将容器作为任何常规服务文件来启用和启动。
+您可以提供一个 `--files` 标志来告诉 Podman 将 systemd 服务放入文件中。这样，我们就可以将容器作为任何常规服务文件来启用并启动。
 
 ```python
-$ systemctl --user enable /etc/systemd/system/container-vaultwarden.service
-$ systemctl --user start container-vaultwarden.service
+$ systemctl enable /etc/systemd/system/container-vaultwarden.service
+$ systemctl start container-vaultwarden.service
 ```
 
 ### 每次重启时新建容器 <a id="new-container-every-restart"></a>
 
-如果我们希望每次服务启动时都创建一个新的容器，我们可以编辑服务文件以包含以下内容：
+如果我们希望每次服务启动时都创建一个新的容器，我们可以使用 `podman generate systemd --new` 命令来生成一个服务文件，该文件用于重新创建容器：
+
+```text
+$ podman generate systemd --new --name vaultwarden
+```
+
+如果您使用的是较旧的 Podman，则可以编辑服务文件以包含以下内容：
 
 ```python
 [Unit]
@@ -75,7 +81,7 @@ ROCKET_PORT=8080
 
 ### 调试 systemd 服务文件 <a id="debugging-systemd-service-file"></a>
 
-如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。可以通过 `journalctl --user -u container-vaultwarden -t 100` 来定位错误。
+如果主机出现故障或容器崩溃，则 systemd 服务文件应自动停止现有容器并将其重新启动。可以通过 `journalctl -u container-vaultwarden -t 100` 来定位错误。
 
-在大多数情况下，我们可以通过简单地增加服务文件中的 podman 命令的超时来解决我们看到的错误。
+在大多数情况下，我们可以通过简单地增加服务文件中的 Podman 命令的超时来解决我们看到的错误。
 
