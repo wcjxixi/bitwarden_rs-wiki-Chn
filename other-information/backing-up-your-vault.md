@@ -62,7 +62,7 @@ sqlite3 data/db.sqlite3 "VACUUM INTO '/path/to/backups/db-$(date '+%Y%m%d-%H%M')
 
 假设此命令在 2021 年 1 月 1 日中午 12:34（当地时间）运行，这将备份你的 SQLite 数据库文件到 `/path/to/backups/db-20210101-1234.sqlite3`。
 
-你可以通过一个 cron 作业定期运行这个命令（最好每天至少一次）。
+你可以通过一个 cron 作业定期运行这个命令（最好每天至少一次）。如果您通过 Docker 运行，请注意 Docker 映像不包含 sqlite3 二进制文件或 cron 守护程序，因此通常会将它们安装在 Docker 主机本身上并在容器外运行 cron 作业。如果您出于某种原因确实想从容器内运行备份，您可以在[容器启动](../container-image-usage/starting-a-container.md#customizing-container-startup)期间安装任何必要的包，或者使用您首选的 `vaultwarden/server:<tag>` 镜像作为父镜像创建您自己的自定义 Docker 镜像。
 
 如果你想把备份数据复制到云存储上，[Rclone](https://rclone.org/) 是一个有用的工具，可以与各种云存储系统进行对接。[restic](https://restic.net/) 是另一个不错的选择，特别是如果您有较大的附件，并想避免每次都将其作为备份的一部分的时候。
 
@@ -121,4 +121,5 @@ _**可选备份。**_
 * [https://github.com/shivpatel/bitwarden\_rs\_dropbox\_backup](https://github.com/shivpatel/bitwarden_rs_dropbox_backup)
 * [https://gitlab.com/1O/bitwarden\_rs-backup](https://gitlab.com/1O/bitwarden_rs-backup)
 * [https://github.com/jjlin/vaultwarden-backup](https://github.com/jjlin/vaultwarden-backup)
+* [https://github.com/jmqm/vaultwarden\_backup](https://github.com/jmqm/vaultwarden_backup)
 
