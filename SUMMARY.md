@@ -1,6 +1,6 @@
 # Table of contents
 
-* [vaultwarden Wiki 中文版](README.md)
+* [Vaultwarden Wiki 中文版](README.md)
 * [主页](home.md)
 * [FAQ](faqs.md)
 * [容器镜像的使用](container-image-usage/README.md)
