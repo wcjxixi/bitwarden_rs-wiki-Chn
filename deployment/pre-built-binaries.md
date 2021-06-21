@@ -12,10 +12,10 @@ vaultwarden 目前并没有提供独立的二进制文件作为单独的下载�
 
 ```python
 docker pull vaultwarden/server:alpine
-docker create --name bwrs vaultwarden/server:alpine
-docker cp bwrs:/vaultwarden .
-docker cp bwrs:/web-vault .
-docker rm bwrs
+docker create --name vm vaultwarden/server:alpine
+docker cp vm:/vaultwarden .
+docker cp vm:/web-vault .
+docker rm vm
 ```
 
 如果您想获取不同平台的二进制文件（例如，你的 x86-64 机器上只安装了 Docker，但您想在 Raspberry Pi 上运行 vaultwarden）， 将 `--platform` 选项添加到 `docker pull` 命令中：
@@ -34,8 +34,8 @@ docker pull --platform linux/arm/v7 vaultwarden/server:alpine
 如果您不能或不想安装 Docker，您可以使用 [docker-imag-extract](https://github.com/jjlin/docker-image-extract) 脚本来拉取和提取 Docker 镜像。例如，要拉取和提取 x86-64 镜像：
 
 ```python
-$ mkdir bwrs-image
-$ cd bwrs-image
+$ mkdir vm-image
+$ cd vm-image
 $ wget https://raw.githubusercontent.com/jjlin/docker-image-extract/main/docker-image-extract
 $ chmod +x docker-image-extract
 $ ./docker-image-extract vaultwarden/server:alpine

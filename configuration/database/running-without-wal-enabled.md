@@ -4,7 +4,7 @@
 对应的[页面地址](https://github.com/dani-garcia/vaultwarden/wiki/Running-without-WAL-enabled)
 {% endhint %}
 
-> WAL 是仅用于 SQLite 的设置，它在 Postgres 或 MySQL 上不起作用。
+> WAL 是专用于 SQLite 的设置，它在 Postgres 或 MySQL 上不起作用；如果您使用这些后端之一，则 `ENABLE_DB_WAL` 配置选项无效。
 
 默认情况下，`vaultwarden` 在启动期间将尝试为数据库启用 [WAL](https://sqlite.org/wal.html)。添加此功能可以提高性能，并且在某些情况下有助于避免请求失败。
 
@@ -13,9 +13,7 @@
 一般而言，除非您相当确定需要关闭 WAL，否则应将其保持为启用状态。但是，可能有一些情况需要将其关闭，比如：
 
 * 某些文件系统不支持 WAL（对于网络文件系统尤其如此）。如果您使用的是这样的文件系统，该服务将无法启动并显示 `Failed to turn on WAL` 错误。
-* （要启用 WAL）数据库要求 sqlite 的版本为 `3.7.0` 或更高，因此，出于某种原因（例如备份）您需要使用无法更新的低版本工具来直接访问数据库，此时也需要禁用 WAL。
-* 您正在[使用](using-the-mariadb-mysql-backend.md) [MySQL](using-the-mariadb-mysql-backend.md) [后端](using-the-mariadb-mysql-backend.md)。
-* 您正在[使用 PostgreSQL 后端](using-the-postgresql-backend.md)。
+* 数据库要求 sqlite 的版本为 `3.7.0` 或更高，因此，出于某种原因（例如备份）您需要使用无法更新的低版本工具来直接访问数据库，此时也需要禁用 WAL。
 * [这里](https://sqlite.org/wal.html#advantages)描述的某个缺陷也会影响您（不得不禁用 WAL）。
 
 ## 关闭 WAL 的步骤 <a id="how-to-turn-wal-off"></a>

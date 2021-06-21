@@ -12,9 +12,10 @@
 
 通常使用 [Docker Compose](https://docs.docker.com/compose/) 将容器化的服务（例如，vaultwarden 和反向代理）链接在一起。请参阅[使用 Docker Compose](../container-image-usage/using-docker-compose.md) 了解这方面的示例。
 
+ Web 服务器的安全 TLS 协议和密码配置可以使用 Mozilla 的 [SSL Configuration Generator](https://ssl-config.mozilla.org/) 来生成。所有支持的浏览器和移动应用程序都可以使用这个「流行的」配置方式。
+
 ## 目录 <a id="table-of-contents"></a>
 
-* [Caddy 1.x](proxy-examples.md#caddy-1-x)（不推荐）
 * [Caddy 2.x](proxy-examples.md#caddy-2-x)
 * [Nginx](proxy-examples.md#nginx-by-shauder) \(by shauder\)
 * [Nginx with sub-path](proxy-examples.md#nginx-with-sub-path-by-blackdex) \(by BlackDex\)
@@ -26,37 +27,6 @@
 * [Traefik v2](proxy-examples.md#traefik-v-2-docker-compose-example-by-hwwilliams) \(docker-compose 示例 by hwwilliams\)
 * [HAproxy](proxy-examples.md#haproxy-by-blackdex) \(by BlackDex\)
 * [HAproxy](proxy-examples.md#haproxy-by-williamdes) \(by [@williamdes](https://github.com/williamdes)\)
-
-## Caddy 1.x（不推荐） <a id="caddy-1-x-deprecated"></a>
-
-Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://caddyserver.com/v1/docs/automatic-https)。
-
-```python
-:443 {
-  tls ${SSLCERTIFICATE} ${SSLKEY}
-  # 或使用 'tls self_signed' 生成自签名证书
-
-  # 此设置可能会对某些浏览器产生兼容性问题
-  # （例如，在 Firefox 上下载附件时）。
-  # 如果遇到问题，请尝试禁用此功能。
-  gzip
-
-  # 协商端点也被代理到 Rocket
-  proxy /notifications/hub/negotiate <SERVER>:80 {
-    transparent
-  }
-
-  # Notifications 重定向到 WebSocket 服务器
-  proxy /notifications/hub <SERVER>:3012 {
-    websocket
-  }
-
-  # 将 Root 目录代理到 Rocket
-  proxy / <SERVER>:80 {
-    transparent
-  }
-}
-```
 
 ## Caddy 2.x
 
@@ -105,9 +75,6 @@ Caddy 在某些情况下可以自动启用 HTTPS，参考[此文档](https://cad
   #   path /admin*
   # }
   # redir @insecureadmin /
-  
-  # 协商端点也代理到 Rocket
-  reverse_proxy /notifications/hub/negotiate <SERVER>:8081
 
   # Notifications 重定向到 websockets 服务器
   reverse_proxy /notifications/hub <SERVER>:3012
@@ -261,14 +228,14 @@ bitwarden__fqdn: 'vault.example.org'
 
 nginx__upstreams:
 
-  - name: 'vaultwarden'
+  - name: 'bitwarden'
     type: 'default'
     enabled: True
     server: 'localhost:8000'
 
 nginx__servers:
 
-  - name: '{{ vaultwarden__fqdn }}'
+  - name: '{{ bitwarden__fqdn }}'
     filename: 'debops.bitwarden'
     by_role: 'debops.bitwarden'
     favicon: False
@@ -495,17 +462,17 @@ frontend vaultwarden
     bind 0.0.0.0:80
     option forwardfor header X-Real-IP
     http-request set-header X-Real-IP %[src]
-    default_backend bitwarden_rs_http
+    default_backend vaultwarden_http
     use_backend vaultwarden_ws if { path_beg /notifications/hub } !{ path_beg /notifications/hub/negotiate }
 
 backend vaultwarden_http
     # 启用压缩（如果您需要）
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
-    server bwrshttp 0.0.0.0:8080
+    server vwhttp 0.0.0.0:8080
 
 backend vaultwarden_ws
-    server bwrsws 0.0.0.0:3012
+    server vwws 0.0.0.0:3012
 ```
 
 ##  HAproxy \(by [@williamdes](https://github.com/williamdes)\)
@@ -526,7 +493,7 @@ frontend http-in
     default_backend static-success-default
 
     # 定义主机
-    acl host_vaultwarden_domain_tld hdr_dom(Host) -i vaultwarden.domain.tld
+    acl host_vaultwarden_domain_tld hdr(Host) -i vaultwarden.domain.tld
 
     ## 找出要使用哪一个
     use_backend vaultwarden_http if host_vaultwarden_domain_tld !{ path_beg /notifications/hub } or { path_beg /notifications/hub/negotiate }
@@ -537,10 +504,10 @@ backend vaultwarden_http
     # 压缩算法 gzip
     # 压缩类型 text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
     # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名
-    server bwrs_http 0.0.0.0:8080
+    server vw_http 0.0.0.0:8080
 
 backend vaultwarden_ws
     # 如果您在 docker-compose 中使用 haproxy，则可以使用容器主机名
-    server bwrs_ws 0.0.0.0:3012
+    server vw_ws 0.0.0.0:3012
 ```
 
