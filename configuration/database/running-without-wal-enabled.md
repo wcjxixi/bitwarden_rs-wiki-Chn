@@ -43,11 +43,11 @@ sqlite> PRAGMA journal_mode=delete;
 delete
 ```
 
-5）键入 `.quit` 并按 Enter 退出 sqlite 实用程序（注意前面的点）。
+5）键入 `.quit` 并按回车退出 sqlite 实用程序（注意前面的点）。
 
 ### 2、在 `vaultwarden` 中禁用 WAL  <a id="2-disable-wal-in-vaultwarden"></a>
 
-要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `false` 以启动 `vaultwarden`。
+要关闭 WAL，你需要通过将 `ENABLE_DB_WAL` 变量的值设置为 `false` 来启动 `vaultwarden`。
 
 ```python
 docker run -d --name vaultwarden \
@@ -67,5 +67,5 @@ docker run -d --name vaultwarden \
 sqlite3 db.sqlite3 'PRAGMA journal_mode'
 ```
 
-`db.sqlite3` 是 `vaultwarden` 所使用的数据库文件。此命令将报告当前使用的模式，在我们的例子中将返回 `wal`。如果已禁用 WAL，通常默认返回 `delete` 。
+`db.sqlite3` 是 `vaultwarden` 所使用的数据库文件。此命令将报告当前使用的模式，在我们的例子中将返回 `wal`。如果已禁用 WAL，默认通常返回 `delete` 。
 
