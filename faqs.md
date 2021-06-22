@@ -52,12 +52,6 @@ Bitwarden 客户端需要一个安全的连接，才能正常工作且没有任�
 
 这也可能是 Vaultwarden 服务器无法访问互联网或未解决 DNS 查询。你可以检查 `/admin/diagnostics` 页面，看看你是否能解决 DNS 查询以及是否有连接到互联网。如果都没问题，也有可能是防火墙或外发互联网代理阻止了这些请求。
 
-## Websocket 连接显示错误的 IP 地址 <a id="websocket-connections-show-wrong-ip-address"></a>
-
-这不是我们可以解决的问题。我们使用的库不支持任何形式的 `X-Forwarded-For` 或 `Forward` 标头。
-
-它会始终显示所使用的反向代理的 IP，除非您在没有任何代理的情况下直接运行 Vaultwarden，或者运行透明代理，这可能会导致它显示正确的 IP。这不是一个重要的日志记录部分，并且如果您使用反向代理，您可能还会在其日志中看到此请求，其具有正确的 IP。
-
 ## 可以将 Vaultwarden 作为 Azure WebApp 运行吗？ <a id="can-i-run-bitwarden_rs-as-an-azure-webapp"></a>
 
 不幸的是，Azure WebApp 使用 CIFS/Samba 作为卷存储，不支持锁定。这导致 Vaultwarden 不能使用 SQLite 数据库文件。
