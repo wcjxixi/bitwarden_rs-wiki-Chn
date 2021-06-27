@@ -181,6 +181,17 @@ Feb 18 05:29:10 staging-bitwarden systemd[1]: vaultwarden.service: Failed with r
 
 然后重新加载守护程序并重新启动。
 
+### 环境变量未被加载 <a id="environment-variable-its-not-loaded"></a>
+
+请注意，systemd 不支持环境文件中与变量在同一行的注释。比如下面这个 `.env` 文件示例中，变量 `WEBSOCKET_ENABLED` 将不会被加载：
+
+```python
+ROCKET_PORT=XXXX
+WEBSOCKET_ENABLED=true # enable websocket
+```
+
+ 来源：[\#1607](https://github.com/dani-garcia/vaultwarden/issues/1607)
+
 ## 更多信息 <a id="more-information"></a>
 
 有关 .service 文件的更多信息，请参阅 [systemd.service](https://www.freedesktop.org/software/systemd/man/systemd.service.html) 和 [systemd.exec](https://www.freedesktop.org/software/systemd/man/systemd.exec.html)（用于安全性配置）手册页。
