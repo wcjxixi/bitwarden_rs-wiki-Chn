@@ -176,14 +176,14 @@ mysql --force --password --user=vaultwarden --database=vaultwarden < mysqldump.s
 
 6、重新启动 vaultwarden。
 
-_注意：使用_ _`--show-warnings`_ _加载_ _MySQL_ _转储时，会突出显示 datetime_ _字段在导入期间被截断了，这**似乎**也不会有问题。_
+_注意：使用_ _`--show-warnings`_ _加载_ _MySQL_ _转储时，会突出显示 datetime_ _字段在导入期间被截断了，这**似乎**还可以。_
 
 ```python
 Note (Code 1265): Data truncated for column 'created_at' at row 1
 Note (Code 1265): Data truncated for column 'updated_at' at row 1
 ```
 
-_注意 1：加载 mysqldump.sql 数据过程中出现加载错误_
+_注意：加载 mysqldump.sql 数据过程中出现加载错误_
 
 ```python
 error (1064): Syntax error near '"users" VALUES('9b5c2d13-8c4f-47e9-bd94-f0d7036ff581'*********)
@@ -201,12 +201,4 @@ use vaultwarden
 source /vw-data/mysqldump.sql
 exit
 ```
-
-_注意 2：如果 SQLite 数据库是从以前的某个旧版本迁移而来 ，MariaDB 可能会提示不匹配的值计数，例如：_
-
-```text
-ERROR 1136 (21S01) at line ###: Column count doesn't match value count at row 1
-```
-
-由于版本跳转，可能添加了新的数据库列。首先使用 SQLite 后端升级 vaultwarden 以在 SQLite 数据库上运行迁移，切换到 MariaDB 后端，然后重复上述迁移步骤。或者，查找自您安装的版本以来添加迁移的提交并使用 `sqlite3` 手动运行迁移。
 

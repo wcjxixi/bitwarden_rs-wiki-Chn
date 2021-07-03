@@ -8,7 +8,7 @@
 
 ## Arch Linux
 
-可在[官方库](https://www.archlinux.org/packages/community/x86_64/bitwarden_rs/)中获取，同时包含了[网页密码库](https://www.archlinux.org/packages/community/any/bitwarden_rs-web/)。
+可在[官方库](https://archlinux.org/packages/community/x86_64/vaultwarden/)中获取，同时包含了[网页版密码库](https://archlinux.org/packages/community/any/vaultwarden-web/)。
 
 ## Debian
 
@@ -48,5 +48,5 @@ Dinger1986 创建了一个在 Ubuntu 20.04 上从源代码安装 bitwarden\_rs �
 
 ## FreeBSD
 
-在 FreeBSD 端口树中可用，并在 FreeBSD pkg 存储库中作为二进制包提供：`pkg install bitwarden_rs`
+在 [FreeBSD 端口树](https://www.freshports.org/security/vaultwarden/)中可用，并在 FreeBSD pkg 存储库中作为二进制包提供：`pkg install vaultwarden`
 
