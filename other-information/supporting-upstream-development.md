@@ -18,9 +18,9 @@ vaultwarden 仅提供 API（服务器）端实现，用户仍依赖来自上游�
 
 每一个应用程序都有 [Crowdin 项目](https://crowdin.com/profile/kspearrin)。如果您精通英语以外的其他语言，则可以帮助翻译应用程序。
 
-## 测试并报告客户端中的错误 <a id="testing-reporting-bugs-in-clients"></a>
+## 测试并报告客户端中的 bug <a id="testing-reporting-bugs-in-clients"></a>
 
-**请始终先报告在这里发现的所有错误。**这些不是上游错误，而是我们实施或您配置中的错误。[我们不想浪费 Kyle 的时间](https://github.com/dani-garcia/vaultwarden/issues/336)来排除第三方服务器上的错误。在极少数情况下，上游会有一个错误，但是在此阶段，我们将排除其他任何原因，并在上游服务器上确认该错误。因此，重点是_不要_在上游报告错误，而是在这里报告它，即使您认为这是客户端问题。我们可以一起查看问题出在哪里。
+**请始终先在这里报告发现的 bug。**这有可能不是上游的 bug，而是我们的实现或者您的配置中的 bug。[我们不想浪费 Kyle 的时间](https://github.com/dani-garcia/vaultwarden/issues/336)来排除第三方服务器上的 bug。在极少数情况下，上游会存在 bug，但是在此阶段，我们将排除其他可能的原因，以及确认上游服务器也存在该 bug。因此，重点是_不要_在上游报告 bug，而是在这里报告它，即使您认为这是客户端问题。我们可以一起查看问题出在哪里。
 
 ## 帮助社区中的其他用户 <a id="helping-other-users-in-the-community"></a>
 
