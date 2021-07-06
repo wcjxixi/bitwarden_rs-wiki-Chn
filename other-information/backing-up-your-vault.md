@@ -6,17 +6,17 @@
 
 ## 概览 <a id="overview"></a>
 
-应该定期备份 vaultwarden 数据，并且最好是通过自动化的流程（例如，cron 作业）。理想情况下，应该远程（例如，云存储或不同的计算机）存储至少一个副本。避免依赖文件系统或虚拟机快照作为备份方法，因为这些都是比较复杂的操作，可能会出现更多的问题，在这种情况下的恢复操作对普通用户来说是困难的，甚至是不可能的。在备份上添加额外的加密层通常是个好主意（尤其是当您的备份还包括配置数据时，例如您的[管理员令牌](../configuration/enabling-admin-page.md)），但如果您确信您的主密码（以及您的其他用户的主密码，如果有的话）足够强大，也可以选择跳过这一步。
+应该定期备份 vaultwarden 数据，并且最好是通过自动化的流程（例如，cron 作业）。理想情况下，应该远程（例如，云存储或不同的计算机）存储至少一个副本。避免依赖文件系统或虚拟机快照作为备份方法，因为这些都是比较复杂的操作，可能会出现更多的问题，在这种情况下的恢复操作对普通用户来说是困难的，甚至是不可能的。在备份上添加额外的加密层通常是个好主意（尤其是当您的备份还包含配置数据时，例如您的[管理员令牌](../configuration/enabling-admin-page.md)），但如果您确信您的主密码（以及您的其他用户的主密码，如果有的话）足够强大，也可以选择跳过这一步。
 
 ## 备份您的数据 <a id="backing-up-data"></a>
 
-默认情况下，vaultwarden 将所有的数据存储在一个名为 `data` 的目录下（与 `vaultwarden` 可执行文件位于同一目录）。这个位置可以通过设置 [DATA\_FOLDER](../configuration/changing-persistent-data-location.md) 环境变量来改变。如果你使用 SQLite 运行 vaultwarden（这是最常见的设置），那么 SQL 数据库只是 data 文件夹中的一个文件。如果你使用 MySQL 或 PostgreSQL 运行，则必须单独转储这些数据 -- 这超出了本文的范围，但在网上搜索会发现有许多涵盖了这个主题的教程。
+默认情况下，vaultwarden 将所有的数据存储在一个名为 `data` 的目录下（与 `vaultwarden` 可执行文件位于同一目录下）。这个位置可以通过设置 [DATA\_FOLDER](../configuration/changing-persistent-data-location.md) 环境变量来改变。如果你使用 SQLite 运行 vaultwarden（这是最常见的设置），那么 SQL 数据库只是 data 文件夹中的一个文件。如果你使用 MySQL 或 PostgreSQL 运行，则必须单独转储这些数据 -- 这超出了本文的范围，但在网上搜索会发现有许多涵盖了这个主题的教程。
 
 当使用默认的 SQLite 后端运行时，vaultwarden 的 `data` 目录具有如下的结构：
 
 ```text
 data
-├── attachments          # 每个附件都作为单独的文件存储在此目录下。
+├── attachments          # 每一个附件都作为单独的文件存储在此目录下。
 │   └── <uuid>           # （如果未创建附件，则此 attachments 目录将不存在）
 │       └── <random_id>
 ├── config.json          # 存储管理页面配置；仅在之前已启用管理页面的情况下存在。
@@ -31,7 +31,7 @@ data
 ├── rsa_key.der          # ‘rsa_key.*’文件用于签署验证令牌。
 ├── rsa_key.pem
 ├── rsa_key.pub.der
-└── sends                # 每个 Send 的附件都作为单独的文件存储在此目录下。
+└── sends                # 每一个 Send 的附件都作为单独的文件存储在此目录下。
     └── <uuid>           # （如果未创建 Send 附件，则此 sends 目录将不存在）
         └── <random_id>
 ```
