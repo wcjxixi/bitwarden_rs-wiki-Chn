@@ -24,9 +24,9 @@
 
 ## Raspberry Pi
 
-* [https://github.com/martient/bitwardenrs-ansible](https://github.com/martient/bitwardenrs-ansible)
+* [https://github.com/martient/vaultwarden-ansible](https://github.com/martient/vaultwarden-ansible)
 
-在 raspberry pi 上为 bitwarden\_rs 进行 Ansible 部署。
+raspberry pi 上 vaultwarden 的 Ansible 部署。要从以前的配置迁移，请遵循本指南 [https://martient.medium.com/migrate-from-bitwarden-rs-to-vaultwarden-199aeb6927a3](https://martient.medium.com/migrate-from-bitwarden-rs-to-vaultwarden-199aeb6927a3)
 
 ## 共享主机 <a id="shared-hosting"></a>
 
@@ -91,5 +91,5 @@
 
 * [https://github.com/umireon/vaultwarden-qnap](https://github.com/umireon/vaultwarden-qnap)
 
-可以通过 Let's Encrypt 将 Vaultwarden 安装到您的安全网络附加存储（NAS）中。但由于 QNAP 内置的 HTTP\(S\) 服务器，您不能在标准的 HTTP\(S\) 端口（80/443）上发布 Vaultwarden。
+您可以使用 Let's Encrypt 将 Vaultwarden 安装到您的安全网络附加存储（NAS）中。但由于 QNAP 内置的 HTTP\(S\) 服务器，您不能在标准的 HTTP\(S\) 端口（80/443）上发布 Vaultwarden。
 
